@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>Modern Work Conference Seoul 2026</title>
+  <style>
+    :root { --navy:#071b4d; --blue:#0b4d95; --line:#cbd5e1; --soft:#f4f7fb; --text:#17233d; }
+    * { box-sizing:border-box; }
+    html, body { margin:0; padding:0; background:#e9eef5; color:var(--text); }
+    body { font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif; }
+    a { color:inherit; }
+    .page { width:920px; max-width:calc(100% - 24px); margin:24px auto; background:#fff; box-shadow:0 16px 48px rgba(7,27,77,.14); }
+    .top-label { padding:12px 18px 10px; border-bottom:1px solid #dce4ef; color:#53627a; font-size:11px; line-height:1; font-weight:800; letter-spacing:1.1px; text-align:right; text-transform:uppercase; }
+    .hero { overflow:hidden; background:#071b4d; }
+    .hero img { width:100%; height:auto; display:block; }
+    .top-cta { padding:18px 40px; background:var(--navy); text-align:center; }
+    .top-cta p { margin:12px 0 0; color:#ddecff; font-size:18px; font-weight:800; }
+    .button { display:inline-block; padding:15px 34px; border-radius:8px; background:#1689e5; color:#fff; font-size:17px; font-weight:800; text-decoration:none; box-shadow:0 7px 18px rgba(22,137,229,.25); }
+    .content { padding:30px 42px 34px; }
+    .intro { margin:0; font-size:15px; line-height:1.7; letter-spacing:-.15px; word-break:keep-all; }
+    .intro + .intro { margin-top:8px; }
+    .highlight { color:var(--navy); font-weight:800; }
+    .section { margin-top:22px; }
+    .section-title { margin:0 0 10px; padding-bottom:8px; border-bottom:2px solid var(--navy); color:var(--navy); font-size:20px; line-height:1.35; font-weight:900; letter-spacing:-.4px; }
+    .facts { margin:0; padding:14px 20px 14px 42px; border:1px solid #dbe3ee; border-radius:10px; background:var(--soft); font-size:14px; line-height:1.75; }
+    .agenda-wrap { width:100%; overflow-x:auto; border:1px solid #aebcd0; border-radius:9px; }
+    .agenda { width:100%; min-width:790px; border-collapse:collapse; table-layout:fixed; }
+    .agenda th { padding:10px 8px; border-right:1px solid #8ea3bf; background:var(--navy); color:#fff; font-size:13px; line-height:1.3; }
+    .agenda td { padding:10px 9px; border-top:1px solid var(--line); border-right:1px solid var(--line); text-align:center; vertical-align:middle; font-size:12.5px; line-height:1.48; word-break:keep-all; }
+    .agenda th:last-child, .agenda td:last-child { border-right:0; }
+    .agenda .time { width:112px; font-weight:800; white-space:nowrap; }
+    .agenda .speaker { width:104px; color:var(--navy); font-weight:900; }
+    .agenda .session { font-weight:750; }
+    .agenda .common { padding:9px; background:#f6f8fb; color:#263858; font-weight:800; }
+    .agenda .lunch { background:#eef3f8; }
+    .credential { display:block; margin-top:3px; color:#3970ac; font-size:10.5px; line-height:1.25; font-weight:800; }
+    .note { margin:9px 2px 0; color:#6e7b8e; font-size:11px; line-height:1.6; }
+    .community { margin-top:22px; padding-top:20px; border-top:2px solid #d8e0eb; }
+    .community p { margin:0; font-size:13px; line-height:1.65; word-break:keep-all; }
+    .sponsors { margin-top:22px; padding-top:18px; border-top:1px solid #d8e0eb; }
+    .sponsors h3 { margin:0 0 12px; color:var(--navy); font-size:16px; }
+    .sponsor-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .sponsor { display:flex; align-items:center; justify-content:center; height:82px; padding:12px; border:1px solid #dfe6ef; border-radius:9px; background:#fff; overflow:hidden; }
+    .sponsor img { display:block; width:auto; max-width:100%; max-height:48px; object-fit:contain; }
+    .sponsor img.tdg { width:150px; max-height:none; height:74px; object-fit:cover; }
+    .sponsor.metanet-card { border-color:#071b4d; background:#071b4d; }
+    .inquiry-block { margin-top:16px; padding-top:14px; border-top:1px solid #e1e7ef; }
+    .inquiry-block h3 { margin:0 0 7px; color:var(--navy); font-size:16px; }
+    .inquiry-block p { margin:0; color:#4d5d73; font-size:12.5px; line-height:1.5; }
+    .bottom-cta { padding:28px 24px 32px; background:#f2f6fb; text-align:center; }
+    .bottom-cta p { margin:0 0 13px; color:var(--navy); font-size:17px; font-weight:800; }
+    @media (max-width:680px) {
+      .page { max-width:100%; margin:0; box-shadow:none; }
+      .hero, .hero img { height:auto; min-height:0; }
+      .content { padding:26px 20px 30px; }
+      .top-cta { padding:15px 20px; }
+      .button { width:100%; max-width:360px; padding:14px 22px; }
+      .sponsor-grid { grid-template-columns:repeat(2,1fr); }
+      .agenda th, .agenda td { font-size:11.5px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="top-label">MWC Seoul 2026</div>
+    <header class="hero">
+      <img src="https://raw.githubusercontent.com/youni202/class/main/assets/mwc-seoul-2026-main.jpg" alt="2026년 9월 17일 Modern Work Conference Seoul 2026">
+    </header>
+
+    <div class="top-cta">
+      <a class="button" href="https://ticketa.co/event/796zfanx" target="_blank" rel="noopener">Modern Work Conference 신청하기 →</a>
+      <p>AI로 혁신하는 업무의 미래</p>
+    </div>
+
+    <section class="content">
+      <p class="intro">안녕하세요.<br>오는 <strong>2026년 9월 17일(목)</strong>, <strong>Modern Work Conference Seoul 2026</strong>을 개최합니다.</p>
+      <p class="intro">이번 컨퍼런스는 AI 기반 업무 혁신을 선도하는 <strong>Microsoft 365 Copilot, Copilot Studio, Cowork</strong>를 중심으로 기업 환경에서의 생성형 AI 활용 전략과 실제 업무 적용 사례를 공유하는 자리입니다.</p>
+      <p class="intro">AI 기술은 더 이상 단순한 생산성 도구를 넘어 일하는 방식을 혁신하고 있습니다. 본 행사는 임직원 개개인의 업무 효율 향상부터 조직 차원의 업무 자동화, 그리고 AI 에이전트를 활용한 새로운 업무 모델까지 다양한 주제를 폭넓게 다룹니다.</p>
+      <p class="intro">특히 Microsoft의 최신 AI 기술과 고객 성공 사례를 기반으로 <span class="highlight">▲ 업무 생산성 향상 ▲ AI 에이전트 구축 및 활용 ▲ 협업 환경 혁신 ▲ 보안에 대한 실질적인 인사이트</span>를 제공합니다.</p>
+      <p class="intro">AI 시대의 새로운 업무 환경을 준비하는 기업 관계자 여러분께 의미 있는 학습과 네트워킹의 기회가 될 것으로 기대하며, 많은 관심과 참여 부탁드립니다.</p>
+
+      <section class="section">
+        <h2 class="section-title">행사 및 세션 개요</h2>
+        <ul class="facts">
+          <li><strong>행사일시:</strong> 2026년 9월 17일(목), 09:00~18:00</li>
+          <li><strong>행사장소:</strong> 한국마이크로소프트 13층 (서울시 종로구 종로1길 50 A동)</li>
+          <li><strong>인원:</strong> 선착순 100명</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">아젠다</h2>
+        <div class="agenda-wrap">
+          <table class="agenda" aria-label="Modern Work Conference Seoul 2026 아젠다">
+            <thead>
+              <tr><th class="time">시간</th><th>트랙 1</th><th class="speaker">연사</th><th>트랙 2</th><th class="speaker">연사</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="time">09:00~09:40</td><td class="common" colspan="4">등록 시작</td></tr>
+              <tr><td class="time">09:40~10:00</td><td class="common" colspan="4">행사 소개 및 스폰서 인사</td></tr>
+              <tr>
+                <td class="time">10:00~10:50</td>
+                <td class="session">Copilot Notebook을 품은<br>OneNote의 이해</td>
+                <td class="speaker">전경수<span class="credential">Microsoft MVP</span></td>
+                <td class="session">Copilot Chat Harness, Standard Harness,<br>GitHub Copilot Harness 비교 분석</td>
+                <td class="speaker">한석희<span class="credential">Microsoft MVP</span></td>
+              </tr>
+              <tr>
+                <td class="time">11:00~11:50</td>
+                <td class="session">휴가 중에 떨어진 발등의 불,<br>GitHub Copilot × Codespaces × Copilot Space로 꺼보자</td>
+                <td class="speaker">김도균<span class="credential">Microsoft MVP</span></td>
+                <td class="session">Copilot Agent에서 참조 자료를 다루는 여러 가지 방법<br><span class="credential">MIP 암호화 문서 · 문서 내용 그대로 읽기 · Dataverse 데이터 활용</span></td>
+                <td class="speaker">한석희<span class="credential">Microsoft MVP</span></td>
+              </tr>
+              <tr><td class="time">12:00~13:00</td><td class="common lunch" colspan="4">점심식사</td></tr>
+              <tr>
+                <td class="time">13:00~13:50</td>
+                <td class="session">Copilot Chat(무료)으로<br>가능한 모든 것</td>
+                <td class="speaker">윤미영<span class="credential">Microsoft MCT</span></td>
+                <td class="session" rowspan="2"><span class="credential">13:00–14:50</span>GitHub Copilot Harness로<br>업무 파트너 만들기</td>
+                <td class="speaker" rowspan="2">전대호<span class="credential">Microsoft MVP</span></td>
+              </tr>
+              <tr>
+                <td class="time">14:00~14:50</td>
+                <td class="session">AI 업무 혁신의 다음 단계,<br>Copilot 최신 동향과 미래 전망</td>
+                <td class="speaker">최재형<span class="credential">Microsoft</span></td>
+              </tr>
+              <tr>
+                <td class="time">15:00~15:50</td>
+                <td class="session">M365 Copilot, Cowork,<br>Copilot Studio 도입 및 활용 기준</td>
+                <td class="speaker">정윤아<span class="credential">Microsoft</span><div style="margin-top:8px;">이희진<span class="credential">Microsoft</span></div></td>
+                <td class="session">Copilot을 활용해 단숨에<br>Power BI 전문가 되기</td>
+                <td class="speaker">윤재웅</td>
+              </tr>
+              <tr>
+                <td class="time">16:00~16:50</td>
+                <td class="session">AI의 속도로 위협에 대응하고<br>완성하는 통합 보안 생태계</td>
+                <td class="speaker">권순만 · 이준형<span class="credential">Microsoft MVP</span></td>
+                <td class="session">코워크는 뭐고 깃헙은 뭐고<br>도대체 뭐가 뭔지 모르겠네</td>
+                <td class="speaker">최정우<span class="credential">Microsoft</span></td>
+              </tr>
+              <tr><td class="time">17:00~17:30</td><td class="common" colspan="4">경품 추첨 및 마무리</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="community">
+        <h2 class="section-title">Modern Work Community (MWC)에 대하여</h2>
+        <p>Modern Work Community(MWC)는 “실무자에게 가장 필요한 것은 실무자의 경험”이라는 생각에서 시작된 커뮤니티입니다. Microsoft 365, Copilot, Azure, Power Platform을 실제 현장에 적용하고 운영하는 사람들이 모여 서로의 경험을 나누고 배우는 커뮤니티입니다.</p>
+        <p style="margin-top:7px;">잘된 사례뿐 아니라 예상치 못한 문제와 시행착오까지 함께 공유하면서 모두가 조금 더 빠르게 성장할 수 있도록 돕고 있습니다. MWC는 제품을 홍보하거나 판매하기 위한 커뮤니티가 아닙니다. 실제 업무에서 얻은 경험과 배움, 그리고 현장의 인사이트를 함께 나누는 것을 가장 중요한 가치로 생각합니다.</p>
+        <p style="margin-top:7px;">글로벌 aOS → aMS → aMP 커뮤니티 전통을 이어받아 서울을 포함한 전 세계 여러 도시에서 다양한 커뮤니티 행사를 진행해 왔으며, Microsoft 365와 Azure, Power Platform을 중심으로 수많은 실무 경험과 노하우가 공유되었습니다. 앞으로도 MWC는 기술 자체보다 기술을 활용하는 사람들의 경험에 집중하며, AI 시대에 더 나은 업무 방식과 협업 문화를 함께 만들어 가고자 합니다.</p>
+      </section>
+
+      <section class="sponsors" aria-label="후원사">
+        <h3>후원사</h3>
+        <div class="sponsor-grid">
+          <a class="sponsor" href="https://www.tdgl.co.kr/" target="_blank" rel="noopener" aria-label="TDG 공식 홈페이지"><img class="tdg" src="https://raw.githubusercontent.com/youni202/class/main/assets/tdg.jpg" alt="주식회사 TDG"></a>
+          <a class="sponsor metanet-card" href="https://metanetglobal.com/ko/company/metanetx/" target="_blank" rel="noopener" aria-label="메타넷엑스 공식 홈페이지"><img src="https://raw.githubusercontent.com/youni202/class/main/assets/metanetx.png" alt="메타넷엑스 주식회사"></a>
+          <a class="sponsor" href="https://www.cnthoth.com/" target="_blank" rel="noopener" aria-label="씨앤토트 공식 홈페이지"><img src="https://raw.githubusercontent.com/youni202/class/main/assets/cnthoth.png" alt="씨앤토트 주식회사"></a>
+          <a class="sponsor" href="https://www.microsoft.com/ko-kr/" target="_blank" rel="noopener" aria-label="한국마이크로소프트 공식 홈페이지"><img src="https://raw.githubusercontent.com/youni202/class/main/assets/microsoft.png" alt="한국마이크로소프트 유한회사"></a>
+        </div>
+        <div class="inquiry-block">
+          <h3>문의사항</h3>
+          <p>MWC Seoul 2026 · <a href="mailto:mwcs@mcloudtutor.com">mwcs@mcloudtutor.com</a></p>
+        </div>
+      </section>
+    </section>
+
+    <footer class="bottom-cta">
+      <p>AI로 혁신하는 업무의 미래, 현장에서 만나보세요.</p>
+      <a class="button" href="https://ticketa.co/event/796zfanx" target="_blank" rel="noopener">지금 신청하기 →</a>
+    </footer>
+  </main>
+</body>
+</html>
