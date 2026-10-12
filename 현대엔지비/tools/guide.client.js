@@ -40,3 +40,18 @@ $$('.shot img[data-src]').forEach(img=>{
   img.onload=()=>{const f=img.closest('.shot');f.hidden=false;f.closest('.shots').hidden=false};
   img.src=img.dataset.src;
 });
+
+// 장별 파일 받기: 온라인 가이드는 downloads 기능, 로컬 HTML은 브라우저 다운로드
+function fileBlob(name){const b=atob(FILEDATA[name]);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);
+  return new Blob([u],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'})}
+let dlNs; const dlReady=(window.claude&&window.claude.use)?window.claude.use('downloads').then(n=>dlNs=n).catch(()=>dlNs=null):Promise.resolve(null);
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('button[data-dl]');if(!b)return;
+  const name=b.dataset.dl;const blob=fileBlob(name);
+  if(window.claude&&window.claude.use){
+    await dlReady;
+    if(dlNs){try{await dlNs.save({filename:name,data:blob});say(name+' 받기를 시작했습니다')}catch(err){say(err&&err.code==='declined'?'받기를 취소했습니다':'이 화면에서는 파일을 받을 수 없습니다. 강사에게 파일을 요청하세요')}return}
+  }
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);say(name+' 받기를 시작했습니다');
+});

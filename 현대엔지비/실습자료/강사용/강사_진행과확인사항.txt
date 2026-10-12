@@ -31,6 +31,11 @@
 - Gamma 무료 크레딧, 생성 전 구성 계획 화면, /ai·AI editing·Smart Layouts, Export → PowerPoint
 화면 메뉴 이름은 날짜·계정에 따라 다를 수 있으니 당일 화면을 기준으로 안내합니다.
 
+Gamma가 안 될 때 (6·7장)
+1순위 미리캔버스 AI 프레젠테이션: 「월간 무료 체험 ○회 남음」 확인 → 요청 ⑫+8장 원고를 입력창에 붙임(「내용 첨부하기」는 유료) → 장수 8장 → 생성 → 다운로드. 2026-10 사용자 화면 캡처에서 무료 체험 3회 남음, 장수 6~30장, 첨부는 왕관 표시를 확인. PPT 무료 다운로드 여부는 리허설에서 확인.
+2순위 Kimi 슬라이드(kimi.com): 원고 붙여 생성 → PPTX 내보내기. 무료 사용량 제한.
+마지막 PowerPoint·Google Slides 직접 작성: 항상 가능. 글 수정은 Gemini 요청 ⑮로 받아 붙임.
+
 3단계 검색이 막힐 때의 원문 후보
 원본 PPTX 발표자 노트에 강사 사전 확인 후보로 적힌 링크:
 https://support.zendesk.com/hc/en-us/articles/4408882663194-Getting-started-with-self-service-Part-7-Maintaining-and-improving-your-knowledge-base

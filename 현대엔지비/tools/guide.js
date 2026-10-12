@@ -1,5 +1,10 @@
 const fs=require('fs');
-const {P,M,PE,STEPS,FILES}=require('./content.js');
+const {P,M,PE,STEPS,FILES,ALT}=require('./content.js');
+const imgData=f=>{const p=require('path').join(__dirname,'..','captures',f);if(!fs.existsSync(p))return '';
+  const out=require('child_process').execFileSync('python3',['-c',`import sys,io,base64
+from PIL import Image
+im=Image.open(sys.argv[1]).convert('RGB');im.thumbnail((1400,1400));b=io.BytesIO();im.save(b,'JPEG',quality=80);print(base64.b64encode(b.getvalue()).decode())`,p]);
+  return 'data:image/jpeg;base64,'+out.toString().trim()};
 const ROOT=require('path').join(__dirname,'..','실습자료')+'/';
 const ex=fs.readFileSync(ROOT+'강사용/강사작성_가상예시_간결교안용.txt','utf8');
 const EX={};
@@ -20,6 +25,13 @@ function promptHTML(n,cond){
   <div class="pbar"><span class="pno">${M[n-1]}</span><span class="ptitle">요청 ${M[n-1]}${cond?' <em>필요할 때만</em>':''}</span><button type="button" class="copy" data-copy="${n}">복사</button></div>
   <pre>${body}</pre>${fields?`<div class="fills">${fields}<p class="hint">칸을 채우면 「복사」에 내 내용이 들어간 요청문이 복사됩니다. 비워 두면 대괄호 그대로 복사됩니다.</p></div>`:''}</div>`;
 }
+function altHTML(n){
+  const a=ALT[n]; if(!a) return '';
+  const img=a.img?imgData(a.img):'';
+  return `<div class="alt"><h3>${n===6?'Gamma가 안 될 때':'Gamma 대신 다른 도구로 만든 경우'}</h3>
+  ${img?`<figure class="altshot"><img src="${img}" alt="${esc(a.cap)}"><figcaption>${esc(a.cap)} · 빨간 번호는 아래 순서와 같습니다</figcaption></figure>`:''}
+  ${a.routes.map(r=>`<div class="route"><p class="rname">${r.tag?`<span class="rtag">${r.tag}</span>`:''}${esc(r.name)}${r.url?` <a href="${r.url}" target="_blank" rel="noopener">${r.url.replace('https://','')}</a>`:''}</p><ol>${r.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>${r.note?`<p class="hint">${esc(r.note)}</p>`:''}</div>`).join('')}</div>`;
+}
 function chapter(s){
   const all=[...new Set([...s.prompts,...s.cond])].sort((a,b)=>a-b);
   const pe=PE[s.n]?`<div class="four"><h4>이 요청에 들어 있는 네 가지</h4><dl>${PE[s.n].map(([k,v])=>`<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></div>`:'';
@@ -38,10 +50,10 @@ function chapter(s){
     <h3>따라 하기</h3><ol class="steps">${s.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
     ${shots}
     <h3>복사할 요청</h3>${all.map(n=>promptHTML(n,s.cond.includes(n))).join('')}
-    ${pe}${extra}
+    ${pe}${extra}${altHTML(s.n)}
    </div>
    <aside class="col-side">
-    ${FILES[s.n]?`<div class="files"><h4>이 장에서 쓰는 파일</h4><ul>${FILES[s.n].map(([f,k,why])=>`<li><span class="ftag ${k==='업로드'?'up':''}">${k}</span><a href="${FOLDER(s.n)}/${f}">${f}</a><small>${why}</small></li>`).join('')}</ul><p class="file">폴더: <code>${FOLDER(s.n)}/</code></p></div>`:''}
+    ${FILES[s.n]?`<div class="files"><h4>이 장에서 쓰는 파일</h4><ul>${FILES[s.n].map(([f,k,why])=>`<li><span class="ftag ${k==='업로드'?'up':''}">${k}</span><span class="fname">${f}</span><button type="button" class="dl" data-dl="${f}">받기</button><small>${why}</small></li>`).join('')}</ul><p class="file">폴더: <code>${FOLDER(s.n)}/</code></p></div>`:''}
     <div class="ok"><h4>이렇게 나오면 성공</h4>${s.ok.map((x,i)=>`<label class="chk" for="ok${s.n}_${i}"><input type="checkbox" id="ok${s.n}_${i}" data-keep> <span>${esc(x)}</span></label>`).join('')}</div>
     <div class="fb"><h4>안 되면</h4><ul>${s.fb.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
     <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">${esc(e.body)}</pre><button type="button" class="ghost" data-copyex="${s.n}">예시 복사</button></details></div>
@@ -75,7 +87,8 @@ ${STEPS.map(chapter).join('\n')}
 <footer class="foot">교육용 가상사례 · 강사 예시는 AI 실행 결과가 아닙니다 · 화면 메뉴 이름은 날짜와 계정에 따라 다를 수 있습니다</footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script>const PROMPTS=${JSON.stringify(P)};const EXAMPLES=${JSON.stringify(Object.fromEntries(Object.entries(EX).map(([k,v])=>[k,v.body])))};
+<script>const FILEDATA=${JSON.stringify(Object.fromEntries(Object.entries(FILES).flatMap(([n,arr])=>arr.map(([f])=>[f,fs.readFileSync(require('path').join(ROOT,FOLDER(+n),f)).toString('base64')]))))};
+const PROMPTS=${JSON.stringify(P)};const EXAMPLES=${JSON.stringify(Object.fromEntries(Object.entries(EX).map(([k,v])=>[k,v.body])))};
 ${js}</script>`;
 fs.writeFileSync(require('path').join(__dirname,'.artifact.html'),html);
 fs.writeFileSync(ROOT+'실습가이드.html','<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+html.replace('<div class="wrap">','</head>\n<body>\n<div class="wrap">')+'\n</body>\n</html>\n');

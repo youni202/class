@@ -104,8 +104,21 @@ code{font:12px var(--f-mono)}
 .shot figcaption b{font:500 11px var(--f-mono);color:var(--accent);margin-right:4px}
 .files{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:14px 16px;margin-bottom:14px}
 .files ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.files li{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:baseline;min-width:0}
+.files li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 8px;align-items:center;min-width:0}
 .files a{color:var(--accent);font-weight:600;font-size:14px;overflow-wrap:anywhere}
-.files small{grid-column:2;color:var(--muted);font-size:13px;line-height:1.5}
+.files small{grid-column:1/-1;color:var(--muted);font-size:13px;line-height:1.5}
 .ftag{font:500 11px/1.8 var(--f-mono);border:1px solid var(--line);border-radius:4px;padding:0 6px;color:var(--muted)}
 .ftag.up{border-color:var(--accent);color:var(--accent)}
+.alt{margin-top:24px;border:1px solid var(--warn);border-radius:10px;padding:16px;background:var(--surface)}
+.alt h3{margin:0 0 12px!important;color:var(--warn)!important;font-size:16px!important}
+.altshot{margin:0 0 14px}.altshot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+.altshot figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+.route{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+.route:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.rname{font-weight:600;margin:0 0 6px;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:baseline}
+.rname a{font-weight:400;font-size:13px;color:var(--accent)}
+.rtag{font:500 11px/1.8 var(--f-mono);background:var(--warn-soft);color:var(--warn);border-radius:4px;padding:0 6px}
+.route ol{margin:0;padding-left:20px;font-size:15px}.route li{margin:3px 0}
+.fname{font-weight:600;font-size:14px;overflow-wrap:anywhere;min-width:0}
+.dl{background:var(--accent);color:var(--surface);border:0;min-height:30px;font-size:13px;padding:0 12px}
+.dl:hover{filter:brightness(1.1)}
