@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>한결생활 AI 실습 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>/* 레이아웃: 한 줄 본문 + 장별 2단(왼쪽 실습 흐름, 오른쪽 확인 패널), 상단 장 이동 바 */
+:root{
+ --bg:#F4F6F5;--surface:#FFFFFF;--ink:#17211F;--muted:#5A6764;--line:#DCE3E0;
+ --accent:#0E5A66;--accent-soft:#E2EFF0;--warn:#A85F0C;--warn-soft:#FBF0DF;--mark:#FFF1C9;--ok:#1F7A4D;
+ --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111716;--surface:#18201F;--ink:#E4ECE9;--muted:#9AAAA6;--line:#2B3735;--accent:#5FB6C2;--accent-soft:#18363A;--warn:#E3A14E;--warn-soft:#33270F;--mark:#4A3D12;--ok:#5CC48F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111716;--surface:#18201F;--ink:#E4ECE9;--muted:#9AAAA6;--line:#2B3735;--accent:#5FB6C2;--accent-soft:#18363A;--warn:#E3A14E;--warn-soft:#33270F;--mark:#4A3D12;--ok:#5CC48F;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.7 var(--f-body)}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:28px 64px}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.3;margin:0}
+.eyebrow{font:500 12px/1.4 var(--f-mono);letter-spacing:.06em;color:var(--accent);margin:0 0 6px}
+.top h1{font-size:clamp(28px,4.6vw,42px);font-weight:700;letter-spacing:-.01em}
+.lead{max-width:62ch;color:var(--muted);margin:12px 0 18px}
+.outcome{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px 20px;font-size:15px}
+.outcome span{font:500 11px var(--f-mono);letter-spacing:.06em;color:var(--muted);margin-right:8px}
+.chapnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-block:1px solid var(--line);margin:24px 0 8px;padding-block:8px;display:flex;gap:6px 18px;overflow-x:auto}
+.navgroup{display:flex;align-items:center;gap:4px;flex:none}
+.navcs{font:500 11px var(--f-mono);color:var(--muted);letter-spacing:.06em;margin-right:4px}
+.chapnav a{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink);font-size:14px;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.chapnav a b{font:500 12px var(--f-mono);color:var(--accent)}
+.chapnav a:hover,.chapnav a:focus-visible{background:var(--accent-soft);outline:none}
+.basics{padding-block:28px}
+.basics>h2,.chead h2{font-size:24px;font-weight:700}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px 32px;margin-top:14px}
+.bgrid h3{font-size:16px;margin-bottom:8px}
+.fourtable,.four dl{margin:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.fourtable div,.four dl div{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}
+dt{font-weight:600;color:var(--accent)}dd{margin:0;min-width:0}
+.rules{margin:0;padding-left:20px}.rules li{margin:3px 0}
+mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 3px}
+.chap{border-top:2px solid var(--ink);padding-block:28px 12px;scroll-margin-top:64px}
+.chead{display:flex;gap:16px;align-items:flex-start}
+.cno{flex:none;font:500 40px/1 var(--f-mono);color:var(--accent);min-width:1.4em}
+.cmeta{min-width:0}
+.tools{margin:4px 0 0;color:var(--muted);font-size:15px}
+.req{margin:14px 0 0;font-size:14px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+.req span{font:500 11px/2 var(--f-mono);letter-spacing:.06em;border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.cbody{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;margin-top:18px}
+@media (max-width:880px){.cbody{grid-template-columns:minmax(0,1fr)}}
+.col-main,.col-side{min-width:0}
+.col-main h3{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin:22px 0 8px}
+.col-main h3:first-child{margin-top:0}
+.goal{margin:0;font-size:17px;max-width:62ch}
+.steps{margin:0;padding-left:0;list-style:none;counter-reset:s;display:grid;gap:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:10px;max-width:68ch}
+.steps li::before{content:counter(s);font:500 13px/26px var(--f-mono);text-align:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--surface)}
+.prompt{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:0 0 14px;overflow:hidden}
+.prompt.cond{border-color:var(--warn)}
+.pbar{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 14px;border-bottom:1px solid var(--line)}
+.pno{font-size:20px;color:var(--accent);line-height:1}
+.prompt.cond .pno{color:var(--warn)}
+.ptitle{flex:1;font-weight:600;font-size:15px}
+.ptitle em{font-style:normal;font-size:12px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:4px;padding:1px 6px;margin-left:6px}
+.prompt pre{margin:0;padding:12px 14px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:keep-all;font:15px/1.75 var(--f-body)}
+button{font:600 14px var(--f-body);cursor:pointer;border-radius:8px;min-height:36px;padding:0 16px}
+.copy{background:var(--accent);color:var(--surface);border:0}
+.copy:hover{filter:brightness(1.1)}
+.copy.done{background:var(--ok)}
+.copy.wide{width:100%;margin-top:10px}
+.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);min-height:30px;font-size:13px;padding:0 10px}
+button:focus-visible,textarea:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.fills{padding:4px 14px 12px;border-top:1px dashed var(--line);display:grid;gap:10px}
+.fill{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.fill span{font-weight:600}
+.fill .ghost{justify-self:start}
+textarea{width:100%;font:14px/1.6 var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;resize:vertical}
+.hint{font-size:13px;color:var(--muted);margin:4px 0 0}
+.four{margin-top:6px}
+.four h4,.tool-box h4,.ok h4,.fb h4{font-size:15px;margin-bottom:8px}
+.tool-box{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+fieldset{border:1px solid var(--line);border-radius:8px;margin:12px 0 0;padding:10px 12px 12px;display:grid;gap:4px;min-width:0}
+legend{font-weight:600;padding:0 4px}
+fieldset label{font-size:13px;color:var(--muted);margin-top:6px}
+label.inline{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink)}
+.scroll{overflow-x:auto}
+.log{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0 14px;font-variant-numeric:tabular-nums}
+.log th,.log td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left}
+.log td:nth-child(n+3),.log th:nth-child(n+3){text-align:center;width:72px}
+.tool-box>label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.ok{background:var(--accent-soft);border-radius:10px;padding:14px 16px}
+.chk{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start;font-size:15px;margin:6px 0;cursor:pointer}
+.chk input{margin-top:6px}
+.chk input:checked+span{color:var(--muted);text-decoration:line-through}
+.fb{margin-top:14px;border-left:3px solid var(--warn);padding:2px 0 2px 14px}
+.fb ul{margin:0;padding-left:18px;font-size:15px}
+details{margin-top:12px}
+summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--warn)}
+.ex{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 var(--f-body);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0;max-height:320px;overflow-y:auto}
+.file{font-size:12px;color:var(--muted);margin:12px 0 0;overflow-wrap:anywhere}
+code{font:12px var(--f-mono)}
+.foot{border-top:1px solid var(--line);margin-top:28px;padding-top:16px;font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+@media (max-width:520px){.cno{font-size:30px}.chead{gap:10px}.pbar{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <p class="eyebrow">현대엔지비 · 생성형 AI 기초 실습 · 2차시</p>
+ <h1>한결생활 AI 실습 가이드</h1>
+ <p class="lead">가상의 작은 온라인 판매점 「한결생활」을 돕는 서비스를 AI와 함께 기획합니다. 아이디어를 고르고, 근거를 찾아 사업기획서를 쓰고, 그 내용으로 발표자료 8장을 만듭니다. 장마다 순서대로 따라 하고, 요청문은 「복사」 버튼으로 붙여넣으세요.</p>
+ <ul class="outcome"><li><span>결과물 1</span>사업기획서(최종 보고서) 1개</li><li><span>결과물 2</span>발표자료 8장 (PPTX)</li><li><span>도구</span>Gemini 또는 ChatGPT · Perplexity · Gamma 무료 계정</li></ul>
+</header>
+<nav class="chapnav" aria-label="실습 장 이동"><div class="navgroup"><span class="navcs">1차시</span><a href="#idea"><b>1</b>AI와 사업 아이디어 고르기</a><a href="#canvas"><b>2</b>Canvas로 문서 만들기</a><a href="#research"><b>3</b>Perplexity로 근거 찾기</a><a href="#draft"><b>4</b>사업기획서 초안 완성하기</a></div><div class="navgroup"><span class="navcs">2차시</span><a href="#review"><b>5</b>검토해서 최종 보고서 만들기</a><a href="#gamma"><b>6</b>Gamma로 발표자료 만들기</a><a href="#edit"><b>7</b>이미지·배치·글 고치기</a><a href="#share"><b>8</b>결과 공유하고 피드백 받기</a></div></nav>
+<section class="basics" id="basics" aria-labelledby="hb">
+ <h2 id="hb">시작 전에</h2>
+ <div class="bgrid">
+  <div><h3>좋은 요청의 네 가지</h3><dl class="fourtable"><div><dt>상황</dt><dd>누구의 어떤 상황인지</dd></div><div><dt>할 일</dt><dd>AI가 해야 할 일</dd></div><div><dt>형식</dt><dd>답을 받을 모양 (표, 카드)</dd></div><div><dt>조건</dt><dd>지킬 것과 하지 말 것</dd></div></dl><p class="hint">1장과 3장에서 실제 요청문에 이 네 가지가 어떻게 들어 있는지 확인합니다.</p></div>
+  <div><h3>공통 약속</h3><ul class="rules"><li>요청문은 통째로 복사해서 <b>한 번만</b> 보냅니다.</li><li><mark>[대괄호]</mark>는 내 결과로 바꿀 자리입니다.</li><li>「필요할 때만」 요청은 문제가 있을 때만 씁니다.</li><li>모르는 것은 [가설], 확인 못 한 것은 「미확인」으로 남깁니다.</li><li>실제 고객 정보·회사 기밀은 넣지 않습니다. 유료 가입은 하지 않습니다.</li><li>시간은 참고용입니다. 결과 문장이 강사와 달라도 괜찮습니다.</li></ul></div>
+ </div>
+</section>
+<section class="chap" id="idea" aria-labelledby="h1">
+  <header class="chead"><div class="cno">1</div><div class="cmeta"><p class="eyebrow">1차시 · 1장 · 약 20분</p><h2 id="h1">AI와 사업 아이디어 고르기</h2><p class="tools">Gemini (또는 ChatGPT)</p></div></header>
+  <p class="req"><span>요청서</span>AI와 사업 아이디어 구상 (프롬프트 엔지니어링 실습)</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">AI에게 서비스 아이디어 세 가지를 비교하게 하고, 하나를 골라 &quot;아이디어 카드&quot;로 정리합니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>Gemini(gemini.google.com)에서 「새 채팅」을 누릅니다. ChatGPT를 써도 됩니다.</li><li>아래 요청 ①을 복사해 붙여넣고 한 번만 보냅니다.</li><li>답이 나오면 카드 여섯 항목(고객·문제·가치·제공물·수익·확인 질문)만 복사해 둡니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt" data-p="1">
+  <div class="pbar"><span class="pno">①</span><span class="ptitle">요청 ①</span><button type="button" class="copy" data-copy="1">복사</button></div>
+  <pre>가상 판매점 ‘한결생활’은 상품·배송·교환 문의가 반복되고 안내문이 흩어져 있다.
+외부 서비스 ①FAQ 일회성 정리 ②FAQ·답변 초안 정기 관리 ③문의 분석·월간 보고를 고객·제공물·준비 부담·4주 검증 질문으로 비교해 줘.
+②의 고객/문제/가치/제공물/수익 가설/확인 질문 카드를 써 줘. 수요·지불 의향은 가설로 표시해 줘.
+새 수치·실적은 만들지 마. 담당자가 검토하고 자동 발송·주문 조회·환불·보상 판단은 제외해 줘.</pre></div><div class="prompt cond" data-p="2">
+  <div class="pbar"><span class="pno">②</span><span class="ptitle">요청 ② <em>필요할 때만</em></span><button type="button" class="copy" data-copy="2">복사</button></div>
+  <pre>필요할 때만: 선택한 서비스의 고객·제공물이 모호하면 그 부분만 고쳐 줘.
+고객은 직접 문의를 처리하는 소규모 온라인 판매점 운영자, 제공물은 외부에서 정리해 주는 FAQ·답변 초안·안내문 갱신으로 써 줘.
+수요·지불 의향은 [가설]로 표시하고, 담당자 검토와 자동 발송·주문 조회·환불·보상 판단 제외를 유지해 줘. 다른 비교 내용과 여섯 항목 카드 구조는 유지해 줘.</pre></div>
+    <div class="four"><h4>이 요청에 들어 있는 네 가지</h4><dl><div><dt>상황</dt><dd>가상 판매점 한결생활은 같은 문의가 반복되고 안내문이 흩어져 있다</dd></div><div><dt>할 일</dt><dd>서비스 세 가지를 비교하고 ②번 안을 카드로 정리</dd></div><div><dt>형식</dt><dd>비교표 + 여섯 항목 카드</dd></div><div><dt>조건</dt><dd>모르는 것은 [가설], 숫자 지어내지 않기, 사람이 검토</dd></div></dl></div>
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok1_0"><input type="checkbox" id="ok1_0" data-keep> <span>세 가지 안의 비교와 여섯 항목 카드가 보인다</span></label><label class="chk" for="ok1_1"><input type="checkbox" id="ok1_1" data-keep> <span>&quot;돈을 낼 것이다&quot; 같은 말이 [가설]로 표시돼 있다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>한도 안내가 뜨면 멈추고 강사가 나눠 준 예시 카드로 이어갑니다.</li><li>카드 내용이 막연할 때만 요청 ②를 같은 채팅에 보냅니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">세 가지 안 비교 (요약)
+- ① FAQ 일회성 정리: 준비 부담이 작다. 다만 한 번 정리한 뒤 안내문이 다시 흩어질 수 있다.
+- ② FAQ·답변 초안 정기 관리: FAQ와 답변 초안을 만들고 안내문 변경을 계속 반영한다. 4주 안에 운영 방식을 시험해 볼 수 있다.
+- ③ 문의 분석·월간 보고: 문의 기록이 쌓여야 의미가 있어 4주 안에 확인하기 어렵다.
+
+②번 안 아이디어 카드
+- 고객: 상품·배송·교환 문의를 직접 처리하는 작은 온라인 판매점 운영자
+- 문제: 같은 문의가 반복되고, 안내문이 여러 곳에 흩어져 있다
+- 가치: 담당자가 답변을 더 쉽게 준비하도록 돕는다
+- 제공물: FAQ 정리, 답변 초안, 안내문 갱신 관리 (담당자가 검토한 뒤 답변)
+- 수익: [가설] 초기 정리비 + 월 관리비
+- 확인 질문: 판매점이 이 서비스에 돈을 낼 의향이 있는가? [가설]
+- 하지 않는 일: 자동 발송, 주문 조회, 환불·보상 판단</pre><button type="button" class="ghost" data-copyex="1">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>1차시/01_사업아이디어/</code></p>
+   </aside>
+  </div>
+  </section>
+<section class="chap" id="canvas" aria-labelledby="h2">
+  <header class="chead"><div class="cno">2</div><div class="cmeta"><p class="eyebrow">1차시 · 2장 · 약 10분</p><h2 id="h2">Canvas로 문서 만들기</h2><p class="tools">Gemini Canvas (또는 ChatGPT Canvas)</p></div></header>
+  <p class="req"><span>요청서</span>ChatGPT Canvas 또는 Gemini Canvas를 이용한 문서 작성 실습</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">아이디어 카드를 편집할 수 있는 문서(Canvas)로 만들고, 한 문단만 고쳐 봅니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>새 채팅을 열고 입력창 아래 도구 메뉴에서 「Canvas」를 고릅니다.</li><li>요청 ③을 붙이고, 「카드:」 뒤를 내가 복사한 카드로 바꾼 뒤 보냅니다.</li><li>오른쪽에 문서가 열리면 「서비스·가치」 문단을 드래그해 선택하고, 요청 ④를 보냅니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt" data-p="3">
+  <div class="pbar"><span class="pno">③</span><span class="ptitle">요청 ③</span><button type="button" class="copy" data-copy="3">복사</button></div>
+  <pre>Canvas로 편집 가능한 기획 문서를 만들어 줘. 교육용 가상사례라고 표시해 줘.
+소제목: 고객·문제 / 서비스·가치 / 비교·차별점 / 운영·수익 가설 / 4주 계획 / 확인 질문.
+카드: 고객=작은 판매점, 문제=반복 문의, 가치=답변 준비 지원, 제공물=FAQ·답변 초안·안내문 갱신, 수익=초기 정리비·월 관리비 가설, 질문=유료 이용 의향.
+미확인 내용은 [가설], 확인한 사실에는 출처를 표시해 줘. 새 수치·실적을 만들지 마.</pre></div><div class="prompt" data-p="4">
+  <div class="pbar"><span class="pno">④</span><span class="ptitle">요청 ④</span><button type="button" class="copy" data-copy="4">복사</button></div>
+  <pre>선택한 ‘서비스·가치’만 두 문장으로 고쳐 줘.
+FAQ·답변 초안·안내문 갱신을 제공하고 담당자가 검토한 뒤 답변한다고 써 줘.
+자동 발송·주문 조회·환불·보상 판단은 제외해 줘.
+다른 문단·출처·가설 표시는 그대로 유지해 줘.</pre></div>
+    
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok2_0"><input type="checkbox" id="ok2_0" data-keep> <span>오른쪽에 제목과 소제목 6개가 있는 문서가 열렸다</span></label><label class="chk" for="ok2_1"><input type="checkbox" id="ok2_1" data-keep> <span>선택한 문단만 바뀌고 나머지는 그대로다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>Canvas 버튼이 안 보이면 강사 예시 문서를 Word에 붙여 한 문단 고치기만 연습합니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">[교육용 가상사례] 작은 판매점을 위한 FAQ·답변 초안 정리 서비스 기획서
+
+1. 고객·문제
+상품·배송·교환 문의를 직접 처리하는 작은 온라인 판매점 운영자. 같은 문의가 반복되고 안내문이 흩어져 있어 답변 준비에 시간이 든다.
+
+2. 서비스·가치
+판매점의 문의와 안내문을 정리해 FAQ와 답변 초안을 만들어 준다. 답변을 준비하는 부담을 줄이는 것이 목표다.
+(← 2단계에서 이 문단만 선택해 고칩니다)
+
+3. 비교·차별점
+비슷한 고객지원 도구가 있다. 우리 안은 초기 안내문 정리와 담당자 검토를 함께 지원하는 운영 방식이다. [가설]
+
+4. 운영·수익 가설
+초기 정리비와 월 관리비를 받는 방식. [가설] 가격과 지불 의향은 아직 확인하지 않았다.
+
+5. 4주 계획
+1주 준비 → 2주 적용 → 3주 관찰 → 4주 평가 (세부는 4단계에서 채움)
+
+6. 확인 질문
+판매점이 유료로 이용할 의향이 있는가? 담당자가 초안을 얼마나 고치는가?
+
+근거: (3단계에서 직접 확인한 원문만 넣습니다 — 비워 둠)</pre><button type="button" class="ghost" data-copyex="2">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>1차시/02_Canvas문서/</code></p>
+   </aside>
+  </div>
+  </section>
+<section class="chap" id="research" aria-labelledby="h3">
+  <header class="chead"><div class="cno">3</div><div class="cmeta"><p class="eyebrow">1차시 · 3장 · 약 20분</p><h2 id="h3">Perplexity로 근거 찾기</h2><p class="tools">Perplexity</p></div></header>
+  <p class="req"><span>요청서</span>Perplexity로 리서치 하기 (프롬프트 엔지니어링 실습)</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">AI 검색 결과를 그대로 믿지 않고, 출처 원문 두 개를 직접 열어 확인합니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>Perplexity(perplexity.ai)에서 새 검색을 엽니다. 기본 검색 그대로 씁니다(Pro는 켜지 않음).</li><li>요청 ⑤를 붙여넣고 보냅니다.</li><li>답변 옆 출처 링크를 눌러 원문 두 개를 엽니다.</li><li>근거메모_작성양식에 원문마다 &quot;확인한 내용·제목과 날짜·주소·아직 모르는 점&quot;을 적습니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt" data-p="5">
+  <div class="pbar"><span class="pno">⑤</span><span class="ptitle">요청 ⑤</span><button type="button" class="copy" data-copy="5">복사</button></div>
+  <pre>가상 판매점 ‘한결생활’의 FAQ·답변 초안·안내문 갱신 외부 서비스에 쓸 공식 원문 2개를 찾아 줘.
+①온라인 판매점의 문의·FAQ 운영을 설명하는 공공기관 또는 공식 안내 ②고객지원 서비스 한 곳의 FAQ·답변 지원 기능과 대상 고객을 설명하는 공식 자료.
+각각 기관·서비스/제목/발행·갱신일(없으면 날짜 미표시)/원문 URL/확인 내용/근거 위치/한계를 써 줘.
+제품 기능과 우리 사업 수요를 구분해 줘. 수치·실적을 만들지 말고 못 찾으면 미확인으로 표시해 줘.</pre></div><div class="prompt cond" data-p="6">
+  <div class="pbar"><span class="pno">⑥</span><span class="ptitle">요청 ⑥ <em>필요할 때만</em></span><button type="button" class="copy" data-copy="6">복사</button></div>
+  <pre>필요할 때만: 앞서 제시한 각 주장을 원문과 다시 대조해 줘.
+뒷받침하는 절·문단·페이지를 짚고, 확인할 수 없는 주장은 삭제하거나 [미확인]으로 바꿔 줘. 제품 기능 설명을 우리 사업의 고객 수요·지불 의향·효과 근거로 쓰지 마.
+더 적합한 공식 원문이 있으면 기관·서비스/제목/날짜/URL/확인 내용/근거 위치/한계를 갖춘 메모로 제시해 줘. 수치·실적은 만들지 마.</pre></div>
+    <div class="tool-box"><h4>근거 메모 쓰기</h4><p class="hint">원문을 직접 열어 본 내용만 적습니다. 이 브라우저에 자동 저장되며, 4장 요청 ⑦에 불러올 수 있습니다.</p><fieldset><legend>근거 메모 1</legend><label for="m1fact">확인한 내용</label><textarea id="m1fact" data-memo rows="2" placeholder="원문에 실제로 적힌 내용 한두 문장"></textarea><label for="m1title">제목과 날짜</label><textarea id="m1title" data-memo rows="2" placeholder="기관·문서 제목·날짜 (없으면 날짜 미표시)"></textarea><label for="m1url">원문 주소(URL)</label><textarea id="m1url" data-memo rows="2" placeholder="내가 직접 열어 본 주소"></textarea><label for="m1limit">쓸 곳과 한계</label><textarea id="m1limit" data-memo rows="2" placeholder="기획서에 쓸 내용 / 아직 모르는 점"></textarea><label class="inline"><input type="checkbox" id="m1open" data-memo> 원문을 직접 열어 봤어요 (안 열었으면 「원문 미확인」으로 들어갑니다)</label></fieldset><fieldset><legend>근거 메모 2</legend><label for="m2fact">확인한 내용</label><textarea id="m2fact" data-memo rows="2" placeholder="원문에 실제로 적힌 내용 한두 문장"></textarea><label for="m2title">제목과 날짜</label><textarea id="m2title" data-memo rows="2" placeholder="기관·문서 제목·날짜 (없으면 날짜 미표시)"></textarea><label for="m2url">원문 주소(URL)</label><textarea id="m2url" data-memo rows="2" placeholder="내가 직접 열어 본 주소"></textarea><label for="m2limit">쓸 곳과 한계</label><textarea id="m2limit" data-memo rows="2" placeholder="기획서에 쓸 내용 / 아직 모르는 점"></textarea><label class="inline"><input type="checkbox" id="m2open" data-memo> 원문을 직접 열어 봤어요 (안 열었으면 「원문 미확인」으로 들어갑니다)</label></fieldset><button type="button" class="copy wide" id="copymemo">근거 메모 2건 복사</button><p class="file">양식 파일: <code>1차시/03_근거찾기/근거메모_작성양식.docx</code></p></div>
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok3_0"><input type="checkbox" id="ok3_0" data-keep> <span>원문을 직접 열어 본 메모가 두 개 있다</span></label><label class="chk" for="ok3_1"><input type="checkbox" id="ok3_1" data-keep> <span>못 찾은 내용은 &quot;미확인&quot;이라고 적었다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>검색이 안 되면 강사가 알려 주는 원문 후보로 메모를 씁니다.</li><li>원문과 AI 요약이 다를 때만 요청 ⑥을 보냅니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">근거 메모 1
+- 확인한 내용: (직접 연 원문에서만)
+- 제목과 날짜: (없으면 날짜 미표시)
+- 원문 주소: (직접 연 주소)
+- 쓸 곳과 한계:
+- 직접 열어 봤나요? 예 / 아니요(원문 미확인)
+
+※ 원문을 열지 못했다면 &quot;원문 미확인&quot;으로 남기고 기획서의 확정 근거로 쓰지 않습니다.</pre><button type="button" class="ghost" data-copyex="3">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>1차시/03_근거찾기/</code></p>
+   </aside>
+  </div>
+  </section>
+<section class="chap" id="draft" aria-labelledby="h4">
+  <header class="chead"><div class="cno">4</div><div class="cmeta"><p class="eyebrow">1차시 · 4장 · 약 10분</p><h2 id="h4">사업기획서 초안 완성하기</h2><p class="tools">2단계의 같은 Canvas</p></div></header>
+  <p class="req"><span>요청서</span>사업기획서 초안 완성하기</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">찾은 근거를 처음 만든 Canvas 문서에 넣어 기획서 초안을 완성합니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>2단계의 Canvas 채팅으로 돌아갑니다(새 채팅을 만들지 않습니다).</li><li>요청 ⑦을 붙이고, 맨 끝 「근거:」 뒤에 내 근거 메모 두 개를 붙여 보냅니다.</li><li>문서에 4주 계획(준비→적용→관찰→평가)이 들어갔는지 봅니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt" data-p="7">
+  <div class="pbar"><span class="pno">⑦</span><span class="ptitle">요청 ⑦</span><button type="button" class="copy" data-copy="7">복사</button></div>
+  <pre>같은 Canvas를 근거 메모로 2쪽 안팎 제안서로 고쳐 줘. 여섯 소제목·가상사례 표시는 유지해 줘.
+한결생활 1곳의 4주 계획은 준비→적용→관찰→평가로 써 줘. 초안 작성시간·사람의 수정·FAQ 갱신 누락·유료 이용 의향의 확인 방법을 넣어 줘.
+초기 정리비·월 관리비·수요·차별점·효과는 [가설], 외부 사실은 출처를 붙여 줘. 새 수치·실적은 금지하고 담당자 검토·제외 범위는 유지해 줘.
+끝에는 4주 시범 운영 검토를 요청해 줘.
+근거: <mark>[직접 확인한 공식 원문 2개 메모]</mark></pre><div class="fills"><label class="fill" for="p7f0"><span>직접 확인한 공식 원문 2개 메모</span><button type="button" class="ghost" data-loadmemo="p7f0">3장 근거 메모 불러오기</button><textarea id="p7f0" data-ph="[직접 확인한 공식 원문 2개 메모]" rows="3" placeholder="여기에 내 결과를 붙여넣으면 대괄호 자리에 들어갑니다"></textarea></label><p class="hint">칸을 채우면 「복사」에 내 내용이 들어간 요청문이 복사됩니다. 비워 두면 대괄호 그대로 복사됩니다.</p></div></div>
+    
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok4_0"><input type="checkbox" id="ok4_0" data-keep> <span>같은 문서에 근거(출처)와 4주 계획이 들어갔다</span></label><label class="chk" for="ok4_1"><input type="checkbox" id="ok4_1" data-keep> <span>가격·수요·효과는 [가설]로 남아 있다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>AI가 막히면 문서에 직접 메모를 붙여 넣어도 됩니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">가상 시범 고객 한결생활 1곳에서 4주 동안 운영 방식을 확인한다.
+- 1주 준비: 자주 묻는 문의와 흩어진 안내문을 모아 FAQ 초안을 만든다.
+- 2주 적용: 담당자가 답변 초안을 검토한 뒤 실제 답변에 쓴다.
+- 3주 관찰: 초안 작성 시간, 사람이 고친 정도, FAQ 갱신 누락을 기록한다.
+- 4주 평가: 유료 이용 의향을 묻고 다음 진행 여부를 정한다. [가설]</pre><button type="button" class="ghost" data-copyex="4">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>1차시/04_기획서초안/</code></p>
+   </aside>
+  </div>
+  </section>
+<section class="chap" id="review" aria-labelledby="h5">
+  <header class="chead"><div class="cno">5</div><div class="cmeta"><p class="eyebrow">2차시 · 5장 · 약 20분</p><h2 id="h5">검토해서 최종 보고서 만들기</h2><p class="tools">같은 Canvas</p></div></header>
+  <p class="req"><span>요청서</span>사업 기획서 내용 검토를 통해 최종 보고서 생성하기</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">AI에게 먼저 &quot;검토만&quot; 받고, 내가 고른 것만 고쳐 최종 보고서를 저장합니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>요청 ⑧을 보내 검토 의견(최대 5개)을 받습니다. 이때 문서는 바뀌지 않습니다.</li><li>의견 중 고칠 것 2~3개를 고르고, 요청 ⑨의 「선택사항:」에 번호를 적어 보냅니다.</li><li>문서 오른쪽 위 「공유 및 내보내기」 → 「Docs로 내보내기」로 저장합니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt" data-p="8">
+  <div class="pbar"><span class="pno">⑧</span><span class="ptitle">요청 ⑧</span><button type="button" class="copy" data-copy="8">복사</button></div>
+  <pre>현재 사업기획서를 검토만 해 줘.
+①고객·문제의 구체성 ②서비스·가치의 연결 ③차별점의 근거 ④수익·비용·효과의 가설 표시 ⑤4주 실행·확인 가능성 ⑥담당자 검토와 서비스 제외 범위를 살펴봐 줘.
+중요한 항목 최대 5개를 ‘문제 문장/확인할 이유/수정 제안’으로 보여 줘. 없는 오류나 수치·실적을 만들지 마.
+지금은 Canvas를 고치지 말고 내가 반영할 항목을 선택할 때까지 기다려 줘.</pre></div><div class="prompt" data-p="9">
+  <div class="pbar"><span class="pno">⑨</span><span class="ptitle">요청 ⑨</span><button type="button" class="copy" data-copy="9">복사</button></div>
+  <pre>아래에서 내가 선택한 수정사항만 현재 Canvas에 반영해 줘.
+선택하지 않은 문단·출처·[가설] 표시·교육용 가상사례 표시는 유지해 줘. 담당자 검토와 자동 발송·주문 조회·환불·보상 판단 제외도 유지해 줘.
+새 수치·실적을 넣지 말고, 수정 후 바뀐 문장과 변경 이유만 짧게 보여 줘.
+선택사항: <mark>[실제 검토의 항목 번호와 내가 정한 수정 방향]</mark></pre><div class="fills"><label class="fill" for="p9f0"><span>실제 검토의 항목 번호와 내가 정한 수정 방향</span><textarea id="p9f0" data-ph="[실제 검토의 항목 번호와 내가 정한 수정 방향]" rows="3" placeholder="여기에 내 결과를 붙여넣으면 대괄호 자리에 들어갑니다"></textarea></label><p class="hint">칸을 채우면 「복사」에 내 내용이 들어간 요청문이 복사됩니다. 비워 두면 대괄호 그대로 복사됩니다.</p></div></div><div class="prompt cond" data-p="10">
+  <div class="pbar"><span class="pno">⑩</span><span class="ptitle">요청 ⑩ <em>필요할 때만</em></span><button type="button" class="copy" data-copy="10">복사</button></div>
+  <pre>필요할 때만: 내가 선택한 아래 두 문제만 현재 문서에서 고쳐 줘.
+유료 이용 의향을 단정한 문장은 ‘아직 확인하지 않은 가설’로 바꿔 줘. 차별점은 ‘초기 안내문 정리와 담당자 검토를 함께 지원하는 운영 방식’이라는 검증할 제안으로 써 줘.
+다른 문단·확인된 출처·가설 표시는 유지하고 새 수치·실적은 넣지 마. 바뀐 문장만 짧게 알려 줘.</pre></div>
+    <div class="four"><h4>이 요청에 들어 있는 네 가지</h4><dl><div><dt>상황</dt><dd>한결생활 FAQ·답변 정리 서비스를 준비 중</dd></div><div><dt>할 일</dt><dd>공식 원문 2개 찾기</dd></div><div><dt>형식</dt><dd>기관·제목·날짜·URL·확인 내용·한계</dd></div><div><dt>조건</dt><dd>못 찾으면 &quot;미확인&quot;, 숫자 지어내지 않기</dd></div></dl></div>
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok5_0"><input type="checkbox" id="ok5_0" data-keep> <span>고른 것만 바뀌었고 왜 바꿨는지 설명할 수 있다</span></label><label class="chk" for="ok5_1"><input type="checkbox" id="ok5_1" data-keep> <span>저장한 최종 보고서를 다시 열 수 있다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>고칠 게 없으면 억지로 고치지 않아도 됩니다.</li><li>내보내기가 안 되면 내용을 복사해 Word에 저장합니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">- 문제 문장: &quot;판매점은 이 서비스에 돈을 낼 것이다.&quot;
+- 확인할 이유: 지불 의향을 실제로 조사하지 않았다.
+- 수정 제안: &quot;판매점의 유료 이용 의향은 4주 시범 운영 중 확인할 가설이다.&quot;</pre><button type="button" class="ghost" data-copyex="5">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>2차시/05_최종보고서/</code></p>
+   </aside>
+  </div>
+  </section>
+<section class="chap" id="gamma" aria-labelledby="h6">
+  <header class="chead"><div class="cno">6</div><div class="cmeta"><p class="eyebrow">2차시 · 6장 · 약 10분</p><h2 id="h6">Gamma로 발표자료 만들기</h2><p class="tools">Canvas → Gamma</p></div></header>
+  <p class="req"><span>요청서</span>Gamma AI로 PPT 생성하기</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">최종 보고서로 8장 발표 원고를 만들고, Gamma에 넣어 발표자료를 만듭니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>Canvas 채팅에 요청 ⑪을 보내 8장 원고를 받고 전체를 복사합니다.</li><li>Gamma(gamma.app)에 로그인해 새로 만들기 입력창에 요청 ⑫를 붙이고, 「확정 원고:」 뒤에 원고를 붙입니다.</li><li>8장 구성 계획이 맞는지 보고 생성합니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt" data-p="11">
+  <div class="pbar"><span class="pno">⑪</span><span class="ptitle">요청 ⑪</span><button type="button" class="copy" data-copy="11">복사</button></div>
+  <pre>검토를 마친 현재 보고서만으로 8장 발표 원고를 별도로 써 줘.
+순서: ①사업 제안 ②대상 고객과 문제 ③제공 서비스 ④유사 서비스와 검증할 차별점 ⑤운영·수익 방식 가설 ⑥4주 시범 운영 ⑦확인할 지표와 위험 ⑧결정 요청.
+각 장은 짧은 제목·핵심 문장 1개·본문 최대 3개로 해 줘. 출처·가설·교육용 가상사례 표시·서비스 범위를 유지해 줘.
+새 수치·실적을 넣지 말고 최종 보고서 본문은 바꾸지 마.</pre></div><div class="prompt" data-p="12">
+  <div class="pbar"><span class="pno">⑫</span><span class="ptitle">요청 ⑫</span><button type="button" class="copy" data-copy="12">복사</button></div>
+  <pre>아래 확정 원고로 동료에게 설명할 한국어 발표자료 8장을 만들어 줘. 먼저 원고 순서대로 8장 구성 계획을 보여 줘.
+한 장에 핵심 하나, 큰 글자와 짧은 문장을 써 줘. 먼저 글과 기본 배치만 만들고 이미지는 새로 생성하지 마. 고객·제공물·범위·4주 기간·출처·가설 표시를 유지해 줘.
+새 조사·주장·숫자를 추가하지 말고 실제 고객 로고나 구현 완료 화면을 만들지 마. 교육용 가상사례임을 표시해 줘.
+확정 원고: <mark>[검토한 8장 발표 원고 전체]</mark></pre><div class="fills"><label class="fill" for="p12f0"><span>검토한 8장 발표 원고 전체</span><textarea id="p12f0" data-ph="[검토한 8장 발표 원고 전체]" rows="3" placeholder="여기에 내 결과를 붙여넣으면 대괄호 자리에 들어갑니다"></textarea></label><p class="hint">칸을 채우면 「복사」에 내 내용이 들어간 요청문이 복사됩니다. 비워 두면 대괄호 그대로 복사됩니다.</p></div></div>
+    
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok6_0"><input type="checkbox" id="ok6_0" data-keep> <span>발표자료가 8장이다</span></label><label class="chk" for="ok6_1"><input type="checkbox" id="ok6_1" data-keep> <span>3장(제공 서비스)과 8장(결정 요청)이 보고서 내용과 같다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>크레딧이 부족하면 원고만 저장하고 강사 화면을 보며 따라갑니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">1. 사업 제안 — 작은 판매점의 반복 문의를 FAQ·답변 초안으로 정리하는 서비스를 4주간 시험해 보자.
+2. 대상 고객과 문제 — 문의를 직접 처리하는 작은 판매점. 같은 문의 반복, 안내문 분산.
+3. 제공 서비스 — FAQ 정리 · 답변 초안 · 안내문 갱신. 담당자가 검토한 뒤 답변. (자동 발송·주문 조회·환불·보상 판단 제외)
+4. 유사 서비스와 차별점 — 초기 정리와 담당자 검토를 함께 지원하는 운영 방식. [가설]
+5. 운영·수익 방식 — 초기 정리비 + 월 관리비. [가설]
+6. 4주 시범 운영 — 준비 → 적용 → 관찰 → 평가
+7. 확인할 지표와 위험 — 초안 작성 시간, 사람의 수정, FAQ 갱신 누락, 유료 이용 의향 / 잘못된 안내 위험은 담당자 검토로 줄인다.
+8. 결정 요청 — 가상 시범 고객 1곳에서 4주 시범 운영 검토를 요청합니다.
+(모든 장: 교육용 가상사례 표시, 외부 사실은 3단계 출처만)</pre><button type="button" class="ghost" data-copyex="6">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>2차시/06_Gamma생성/</code></p>
+   </aside>
+  </div>
+  </section>
+<section class="chap" id="edit" aria-labelledby="h7">
+  <header class="chead"><div class="cno">7</div><div class="cmeta"><p class="eyebrow">2차시 · 7장 · 약 20분</p><h2 id="h7">이미지·배치·글 고치기</h2><p class="tools">Gamma</p></div></header>
+  <p class="req"><span>요청서</span>AI를 이용해 PPT의 이미지, 레이아웃, 글 수정하기</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">이미지, 배치, 글을 각각 한 번씩 고쳐 보고 PowerPoint 파일로 내려받습니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>이미지: 3장에서 /ai를 입력하고 요청 ⑬을 붙입니다(크레딧이 있을 때만).</li><li>배치: 3장을 2단(왼쪽 서비스·오른쪽 검토)으로 바꿉니다. AI 편집에 요청 ⑭를 쓰거나 Insert → Smart Layouts로 직접 바꿉니다.</li><li>글: 8장 글을 요청 ⑮로 고치거나 직접 고칩니다.</li><li>Share(또는 …) → Export → PowerPoint로 내려받고, 파일을 다시 열어 봅니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt cond" data-p="13">
+  <div class="pbar"><span class="pno">⑬</span><span class="ptitle">요청 ⑬ <em>필요할 때만</em></span><button type="button" class="copy" data-copy="13">복사</button></div>
+  <pre>작은 온라인 판매점 담당자가 반복 문의를 정리하고 답변 초안을 검토하는 단순한 평면 일러스트를 만들어 줘.
+문의 카드·정리된 안내문·사람이 검토하는 모습이 보이게 해 줘. 밝은 배경, 파랑·회색, 가로형 발표자료에 어울리는 구성이면 돼.
+읽을 수 있는 글자·숫자·로고·실제 고객정보는 넣지 마. 실제 고객센터 화면이나 구축 완료된 서비스처럼 보이지 않게 해 줘.
+설명용 이미지만 만들고 슬라이드 글과 레이아웃은 바꾸지 마.</pre></div><div class="prompt" data-p="14">
+  <div class="pbar"><span class="pno">⑭</span><span class="ptitle">요청 ⑭</span><button type="button" class="copy" data-copy="14">복사</button></div>
+  <pre>선택한 3장 ‘제공 서비스’ 카드만 왼쪽 텍스트, 오른쪽 설명용 이미지의 2열로 바꿔 줘. 이미지가 없으면 오른쪽에 담당자 검토·제외 범위를 놓아 줘.
+기존 제목·핵심 문장과 FAQ 정리·답변 초안·안내문 갱신을 읽기 쉽게 배치해 줘.
+담당자 검토와 서비스 제외 범위를 포함해 기존 문장·숫자·출처·가설·교육용 가상사례 표시는 바꾸거나 삭제하지 마.
+기존 이미지의 내용과 다른 카드는 그대로 유지해 줘.</pre></div><div class="prompt" data-p="15">
+  <div class="pbar"><span class="pno">⑮</span><span class="ptitle">요청 ⑮</span><button type="button" class="copy" data-copy="15">복사</button></div>
+  <pre>선택한 8장 ‘결정 요청’의 글만 제목 한 줄과 본문 두 문장으로 짧게 고쳐 줘.
+‘가상 시범 고객 한 곳을 대상으로 4주간 서비스 운영 방식과 유료 이용 의향을 검토하자’는 요청이 보이게 해 줘.
+검증되지 않은 성공·매출·절감 효과를 말하지 마. 기존 출처·가설·교육용 가상사례 표시는 유지해 줘.
+이미지·레이아웃·다른 카드는 바꾸지 마.</pre></div>
+    
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok7_0"><input type="checkbox" id="ok7_0" data-keep> <span>이미지·배치·글이 각각 한 번씩 바뀌었다</span></label><label class="chk" for="ok7_1"><input type="checkbox" id="ok7_1" data-keep> <span>내려받은 PPTX를 열어 8장을 확인했다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>이미지는 선택입니다. 안 되면 글과 도형만으로 충분합니다.</li><li>AI 편집이 안 되면 직접 클릭해서 고칩니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">제목: 4주 시범 운영 검토
+본문: 가상 고객 1곳에서 운영 방식을 살펴봅니다. 유료 이용 의향을 확인하고 다음 진행을 정합니다.</pre><button type="button" class="ghost" data-copyex="7">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>2차시/07_PPT수정/</code></p>
+   </aside>
+  </div>
+  </section>
+<section class="chap" id="share" aria-labelledby="h8">
+  <header class="chead"><div class="cno">8</div><div class="cmeta"><p class="eyebrow">2차시 · 8장 · 약 10분</p><h2 id="h8">결과 공유하고 피드백 받기</h2><p class="tools">Teams → 같은 Canvas</p></div></header>
+  <p class="req"><span>요청서</span>실습 결과 공유 및 피드백</p>
+  <div class="cbody">
+   <div class="col-main">
+    <h3>이번에 할 일</h3><p class="goal">만든 발표자료의 핵심 한 장을 소개하고, 받은 질문으로 문장 하나를 고칩니다.</p>
+    <h3>따라 하기</h3><ol class="steps"><li>희망자 1~2명이 화면을 공유해 1분 동안 소개합니다: 누구의 어떤 문제? 무엇을 제공? 4주 동안 무엇을 확인?</li><li>모두 Teams 채팅에 내 아이디어를 한 줄로 쓰고, 다른 사람 글에 질문을 하나 남깁니다.</li><li>받은 질문이 있으면 요청 ⑯으로 고칠 문장 하나를 제안받아 직접 반영합니다.</li></ol>
+    <h3>복사할 요청</h3><div class="prompt cond" data-p="16">
+  <div class="pbar"><span class="pno">⑯</span><span class="ptitle">요청 ⑯ <em>필요할 때만</em></span><button type="button" class="copy" data-copy="16">복사</button></div>
+  <pre>필요할 때만: 아래 피드백과 관련 원문을 보고 고칠 한 문장만 제안해 줘.
+새 사업 아이디어나 수치·실적을 더하지 마. 답할 근거가 없으면 ‘추가 확인할 질문’으로 남겨 줘.
+기존 출처·가설·대상 고객·4주 기간을 유지해 줘. 아직 문서나 발표자료는 자동으로 고치지 마.
+피드백: <mark>[받은 질문 또는 피드백]</mark>
+관련 원문: <mark>[고칠 문서 문단 또는 카드 문장]</mark></pre><div class="fills"><label class="fill" for="p16f0"><span>받은 질문 또는 피드백</span><textarea id="p16f0" data-ph="[받은 질문 또는 피드백]" rows="3" placeholder="여기에 내 결과를 붙여넣으면 대괄호 자리에 들어갑니다"></textarea></label><label class="fill" for="p16f1"><span>고칠 문서 문단 또는 카드 문장</span><textarea id="p16f1" data-ph="[고칠 문서 문단 또는 카드 문장]" rows="3" placeholder="여기에 내 결과를 붙여넣으면 대괄호 자리에 들어갑니다"></textarea></label><p class="hint">칸을 채우면 「복사」에 내 내용이 들어간 요청문이 복사됩니다. 비워 두면 대괄호 그대로 복사됩니다.</p></div></div>
+    <div class="tool-box"><h4>실습기록표</h4><p class="hint">도구가 안 돼서 다른 방법으로 한 부분은 「대체 실습」에 체크합니다.</p><div class="scroll"><table class="log"><thead><tr><th>장</th><th>하는 일</th><th>완료</th><th>대체 실습</th></tr></thead><tbody><tr><td>1</td><td>AI와 사업 아이디어 고르기</td><td><input type="checkbox" id="log1done" data-keep aria-label="1장 완료"></td><td><input type="checkbox" id="log1alt" data-keep aria-label="1장 대체 실습"></td></tr><tr><td>2</td><td>Canvas로 문서 만들기</td><td><input type="checkbox" id="log2done" data-keep aria-label="2장 완료"></td><td><input type="checkbox" id="log2alt" data-keep aria-label="2장 대체 실습"></td></tr><tr><td>3</td><td>Perplexity로 근거 찾기</td><td><input type="checkbox" id="log3done" data-keep aria-label="3장 완료"></td><td><input type="checkbox" id="log3alt" data-keep aria-label="3장 대체 실습"></td></tr><tr><td>4</td><td>사업기획서 초안 완성하기</td><td><input type="checkbox" id="log4done" data-keep aria-label="4장 완료"></td><td><input type="checkbox" id="log4alt" data-keep aria-label="4장 대체 실습"></td></tr><tr><td>5</td><td>검토해서 최종 보고서 만들기</td><td><input type="checkbox" id="log5done" data-keep aria-label="5장 완료"></td><td><input type="checkbox" id="log5alt" data-keep aria-label="5장 대체 실습"></td></tr><tr><td>6</td><td>Gamma로 발표자료 만들기</td><td><input type="checkbox" id="log6done" data-keep aria-label="6장 완료"></td><td><input type="checkbox" id="log6alt" data-keep aria-label="6장 대체 실습"></td></tr><tr><td>7</td><td>이미지·배치·글 고치기</td><td><input type="checkbox" id="log7done" data-keep aria-label="7장 완료"></td><td><input type="checkbox" id="log7alt" data-keep aria-label="7장 대체 실습"></td></tr><tr><td>8</td><td>결과 공유하고 피드백 받기</td><td><input type="checkbox" id="log8done" data-keep aria-label="8장 완료"></td><td><input type="checkbox" id="log8alt" data-keep aria-label="8장 대체 실습"></td></tr></tbody></table></div><label for="takeaway">내 업무에 써 볼 한 가지</label><textarea id="takeaway" data-keep rows="2" placeholder="예: 반복 문의 답변 초안을 만들 때 [가설]과 출처를 구분해 쓰기"></textarea><p class="file">인쇄용 양식: <code>2차시/08_공유피드백/실습기록표.docx</code></p></div>
+   </div>
+   <aside class="col-side">
+    <div class="ok"><h4>이렇게 나오면 성공</h4><label class="chk" for="ok8_0"><input type="checkbox" id="ok8_0" data-keep> <span>최종 보고서 1개와 발표자료 8장을 열 수 있다</span></label><label class="chk" for="ok8_1"><input type="checkbox" id="ok8_1" data-keep> <span>받은 질문으로 문장 하나를 고쳤다</span></label></div>
+    <div class="fb"><h4>안 되면</h4><ul><li>도구가 안 돼서 못 한 부분은 실습기록표에 &quot;대체 실습&quot;이라고 적으면 됩니다.</li></ul>
+    <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">받은 질문: &quot;월 관리비는 얼마로 생각하나요?&quot;
+고칠 문장 제안: 가격은 아직 정하지 않았고, 4주 시범 운영에서 판매점의 유료 이용 의향과 함께 확인할 추가 질문으로 남긴다.</pre><button type="button" class="ghost" data-copyex="8">예시 복사</button></details></div>
+    <p class="file">이 장 자료 폴더: <code>2차시/08_공유피드백/</code></p>
+   </aside>
+  </div>
+  </section>
+<footer class="foot">교육용 가상사례 · 강사 예시는 AI 실행 결과가 아닙니다 · 화면 메뉴 이름은 날짜와 계정에 따라 다를 수 있습니다</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>const PROMPTS=["가상 판매점 ‘한결생활’은 상품·배송·교환 문의가 반복되고 안내문이 흩어져 있다.\n외부 서비스 ①FAQ 일회성 정리 ②FAQ·답변 초안 정기 관리 ③문의 분석·월간 보고를 고객·제공물·준비 부담·4주 검증 질문으로 비교해 줘.\n②의 고객/문제/가치/제공물/수익 가설/확인 질문 카드를 써 줘. 수요·지불 의향은 가설로 표시해 줘.\n새 수치·실적은 만들지 마. 담당자가 검토하고 자동 발송·주문 조회·환불·보상 판단은 제외해 줘.","필요할 때만: 선택한 서비스의 고객·제공물이 모호하면 그 부분만 고쳐 줘.\n고객은 직접 문의를 처리하는 소규모 온라인 판매점 운영자, 제공물은 외부에서 정리해 주는 FAQ·답변 초안·안내문 갱신으로 써 줘.\n수요·지불 의향은 [가설]로 표시하고, 담당자 검토와 자동 발송·주문 조회·환불·보상 판단 제외를 유지해 줘. 다른 비교 내용과 여섯 항목 카드 구조는 유지해 줘.","Canvas로 편집 가능한 기획 문서를 만들어 줘. 교육용 가상사례라고 표시해 줘.\n소제목: 고객·문제 / 서비스·가치 / 비교·차별점 / 운영·수익 가설 / 4주 계획 / 확인 질문.\n카드: 고객=작은 판매점, 문제=반복 문의, 가치=답변 준비 지원, 제공물=FAQ·답변 초안·안내문 갱신, 수익=초기 정리비·월 관리비 가설, 질문=유료 이용 의향.\n미확인 내용은 [가설], 확인한 사실에는 출처를 표시해 줘. 새 수치·실적을 만들지 마.","선택한 ‘서비스·가치’만 두 문장으로 고쳐 줘.\nFAQ·답변 초안·안내문 갱신을 제공하고 담당자가 검토한 뒤 답변한다고 써 줘.\n자동 발송·주문 조회·환불·보상 판단은 제외해 줘.\n다른 문단·출처·가설 표시는 그대로 유지해 줘.","가상 판매점 ‘한결생활’의 FAQ·답변 초안·안내문 갱신 외부 서비스에 쓸 공식 원문 2개를 찾아 줘.\n①온라인 판매점의 문의·FAQ 운영을 설명하는 공공기관 또는 공식 안내 ②고객지원 서비스 한 곳의 FAQ·답변 지원 기능과 대상 고객을 설명하는 공식 자료.\n각각 기관·서비스/제목/발행·갱신일(없으면 날짜 미표시)/원문 URL/확인 내용/근거 위치/한계를 써 줘.\n제품 기능과 우리 사업 수요를 구분해 줘. 수치·실적을 만들지 말고 못 찾으면 미확인으로 표시해 줘.","필요할 때만: 앞서 제시한 각 주장을 원문과 다시 대조해 줘.\n뒷받침하는 절·문단·페이지를 짚고, 확인할 수 없는 주장은 삭제하거나 [미확인]으로 바꿔 줘. 제품 기능 설명을 우리 사업의 고객 수요·지불 의향·효과 근거로 쓰지 마.\n더 적합한 공식 원문이 있으면 기관·서비스/제목/날짜/URL/확인 내용/근거 위치/한계를 갖춘 메모로 제시해 줘. 수치·실적은 만들지 마.","같은 Canvas를 근거 메모로 2쪽 안팎 제안서로 고쳐 줘. 여섯 소제목·가상사례 표시는 유지해 줘.\n한결생활 1곳의 4주 계획은 준비→적용→관찰→평가로 써 줘. 초안 작성시간·사람의 수정·FAQ 갱신 누락·유료 이용 의향의 확인 방법을 넣어 줘.\n초기 정리비·월 관리비·수요·차별점·효과는 [가설], 외부 사실은 출처를 붙여 줘. 새 수치·실적은 금지하고 담당자 검토·제외 범위는 유지해 줘.\n끝에는 4주 시범 운영 검토를 요청해 줘.\n근거: [직접 확인한 공식 원문 2개 메모]","현재 사업기획서를 검토만 해 줘.\n①고객·문제의 구체성 ②서비스·가치의 연결 ③차별점의 근거 ④수익·비용·효과의 가설 표시 ⑤4주 실행·확인 가능성 ⑥담당자 검토와 서비스 제외 범위를 살펴봐 줘.\n중요한 항목 최대 5개를 ‘문제 문장/확인할 이유/수정 제안’으로 보여 줘. 없는 오류나 수치·실적을 만들지 마.\n지금은 Canvas를 고치지 말고 내가 반영할 항목을 선택할 때까지 기다려 줘.","아래에서 내가 선택한 수정사항만 현재 Canvas에 반영해 줘.\n선택하지 않은 문단·출처·[가설] 표시·교육용 가상사례 표시는 유지해 줘. 담당자 검토와 자동 발송·주문 조회·환불·보상 판단 제외도 유지해 줘.\n새 수치·실적을 넣지 말고, 수정 후 바뀐 문장과 변경 이유만 짧게 보여 줘.\n선택사항: [실제 검토의 항목 번호와 내가 정한 수정 방향]","필요할 때만: 내가 선택한 아래 두 문제만 현재 문서에서 고쳐 줘.\n유료 이용 의향을 단정한 문장은 ‘아직 확인하지 않은 가설’로 바꿔 줘. 차별점은 ‘초기 안내문 정리와 담당자 검토를 함께 지원하는 운영 방식’이라는 검증할 제안으로 써 줘.\n다른 문단·확인된 출처·가설 표시는 유지하고 새 수치·실적은 넣지 마. 바뀐 문장만 짧게 알려 줘.","검토를 마친 현재 보고서만으로 8장 발표 원고를 별도로 써 줘.\n순서: ①사업 제안 ②대상 고객과 문제 ③제공 서비스 ④유사 서비스와 검증할 차별점 ⑤운영·수익 방식 가설 ⑥4주 시범 운영 ⑦확인할 지표와 위험 ⑧결정 요청.\n각 장은 짧은 제목·핵심 문장 1개·본문 최대 3개로 해 줘. 출처·가설·교육용 가상사례 표시·서비스 범위를 유지해 줘.\n새 수치·실적을 넣지 말고 최종 보고서 본문은 바꾸지 마.","아래 확정 원고로 동료에게 설명할 한국어 발표자료 8장을 만들어 줘. 먼저 원고 순서대로 8장 구성 계획을 보여 줘.\n한 장에 핵심 하나, 큰 글자와 짧은 문장을 써 줘. 먼저 글과 기본 배치만 만들고 이미지는 새로 생성하지 마. 고객·제공물·범위·4주 기간·출처·가설 표시를 유지해 줘.\n새 조사·주장·숫자를 추가하지 말고 실제 고객 로고나 구현 완료 화면을 만들지 마. 교육용 가상사례임을 표시해 줘.\n확정 원고: [검토한 8장 발표 원고 전체]","작은 온라인 판매점 담당자가 반복 문의를 정리하고 답변 초안을 검토하는 단순한 평면 일러스트를 만들어 줘.\n문의 카드·정리된 안내문·사람이 검토하는 모습이 보이게 해 줘. 밝은 배경, 파랑·회색, 가로형 발표자료에 어울리는 구성이면 돼.\n읽을 수 있는 글자·숫자·로고·실제 고객정보는 넣지 마. 실제 고객센터 화면이나 구축 완료된 서비스처럼 보이지 않게 해 줘.\n설명용 이미지만 만들고 슬라이드 글과 레이아웃은 바꾸지 마.","선택한 3장 ‘제공 서비스’ 카드만 왼쪽 텍스트, 오른쪽 설명용 이미지의 2열로 바꿔 줘. 이미지가 없으면 오른쪽에 담당자 검토·제외 범위를 놓아 줘.\n기존 제목·핵심 문장과 FAQ 정리·답변 초안·안내문 갱신을 읽기 쉽게 배치해 줘.\n담당자 검토와 서비스 제외 범위를 포함해 기존 문장·숫자·출처·가설·교육용 가상사례 표시는 바꾸거나 삭제하지 마.\n기존 이미지의 내용과 다른 카드는 그대로 유지해 줘.","선택한 8장 ‘결정 요청’의 글만 제목 한 줄과 본문 두 문장으로 짧게 고쳐 줘.\n‘가상 시범 고객 한 곳을 대상으로 4주간 서비스 운영 방식과 유료 이용 의향을 검토하자’는 요청이 보이게 해 줘.\n검증되지 않은 성공·매출·절감 효과를 말하지 마. 기존 출처·가설·교육용 가상사례 표시는 유지해 줘.\n이미지·레이아웃·다른 카드는 바꾸지 마.","필요할 때만: 아래 피드백과 관련 원문을 보고 고칠 한 문장만 제안해 줘.\n새 사업 아이디어나 수치·실적을 더하지 마. 답할 근거가 없으면 ‘추가 확인할 질문’으로 남겨 줘.\n기존 출처·가설·대상 고객·4주 기간을 유지해 줘. 아직 문서나 발표자료는 자동으로 고치지 마.\n피드백: [받은 질문 또는 피드백]\n관련 원문: [고칠 문서 문단 또는 카드 문장]"];const EXAMPLES={"1":"세 가지 안 비교 (요약)\n- ① FAQ 일회성 정리: 준비 부담이 작다. 다만 한 번 정리한 뒤 안내문이 다시 흩어질 수 있다.\n- ② FAQ·답변 초안 정기 관리: FAQ와 답변 초안을 만들고 안내문 변경을 계속 반영한다. 4주 안에 운영 방식을 시험해 볼 수 있다.\n- ③ 문의 분석·월간 보고: 문의 기록이 쌓여야 의미가 있어 4주 안에 확인하기 어렵다.\n\n②번 안 아이디어 카드\n- 고객: 상품·배송·교환 문의를 직접 처리하는 작은 온라인 판매점 운영자\n- 문제: 같은 문의가 반복되고, 안내문이 여러 곳에 흩어져 있다\n- 가치: 담당자가 답변을 더 쉽게 준비하도록 돕는다\n- 제공물: FAQ 정리, 답변 초안, 안내문 갱신 관리 (담당자가 검토한 뒤 답변)\n- 수익: [가설] 초기 정리비 + 월 관리비\n- 확인 질문: 판매점이 이 서비스에 돈을 낼 의향이 있는가? [가설]\n- 하지 않는 일: 자동 발송, 주문 조회, 환불·보상 판단","2":"[교육용 가상사례] 작은 판매점을 위한 FAQ·답변 초안 정리 서비스 기획서\n\n1. 고객·문제\n상품·배송·교환 문의를 직접 처리하는 작은 온라인 판매점 운영자. 같은 문의가 반복되고 안내문이 흩어져 있어 답변 준비에 시간이 든다.\n\n2. 서비스·가치\n판매점의 문의와 안내문을 정리해 FAQ와 답변 초안을 만들어 준다. 답변을 준비하는 부담을 줄이는 것이 목표다.\n(← 2단계에서 이 문단만 선택해 고칩니다)\n\n3. 비교·차별점\n비슷한 고객지원 도구가 있다. 우리 안은 초기 안내문 정리와 담당자 검토를 함께 지원하는 운영 방식이다. [가설]\n\n4. 운영·수익 가설\n초기 정리비와 월 관리비를 받는 방식. [가설] 가격과 지불 의향은 아직 확인하지 않았다.\n\n5. 4주 계획\n1주 준비 → 2주 적용 → 3주 관찰 → 4주 평가 (세부는 4단계에서 채움)\n\n6. 확인 질문\n판매점이 유료로 이용할 의향이 있는가? 담당자가 초안을 얼마나 고치는가?\n\n근거: (3단계에서 직접 확인한 원문만 넣습니다 — 비워 둠)","3":"근거 메모 1\n- 확인한 내용: (직접 연 원문에서만)\n- 제목과 날짜: (없으면 날짜 미표시)\n- 원문 주소: (직접 연 주소)\n- 쓸 곳과 한계:\n- 직접 열어 봤나요? 예 / 아니요(원문 미확인)\n\n※ 원문을 열지 못했다면 \"원문 미확인\"으로 남기고 기획서의 확정 근거로 쓰지 않습니다.","4":"가상 시범 고객 한결생활 1곳에서 4주 동안 운영 방식을 확인한다.\n- 1주 준비: 자주 묻는 문의와 흩어진 안내문을 모아 FAQ 초안을 만든다.\n- 2주 적용: 담당자가 답변 초안을 검토한 뒤 실제 답변에 쓴다.\n- 3주 관찰: 초안 작성 시간, 사람이 고친 정도, FAQ 갱신 누락을 기록한다.\n- 4주 평가: 유료 이용 의향을 묻고 다음 진행 여부를 정한다. [가설]","5":"- 문제 문장: \"판매점은 이 서비스에 돈을 낼 것이다.\"\n- 확인할 이유: 지불 의향을 실제로 조사하지 않았다.\n- 수정 제안: \"판매점의 유료 이용 의향은 4주 시범 운영 중 확인할 가설이다.\"","6":"1. 사업 제안 — 작은 판매점의 반복 문의를 FAQ·답변 초안으로 정리하는 서비스를 4주간 시험해 보자.\n2. 대상 고객과 문제 — 문의를 직접 처리하는 작은 판매점. 같은 문의 반복, 안내문 분산.\n3. 제공 서비스 — FAQ 정리 · 답변 초안 · 안내문 갱신. 담당자가 검토한 뒤 답변. (자동 발송·주문 조회·환불·보상 판단 제외)\n4. 유사 서비스와 차별점 — 초기 정리와 담당자 검토를 함께 지원하는 운영 방식. [가설]\n5. 운영·수익 방식 — 초기 정리비 + 월 관리비. [가설]\n6. 4주 시범 운영 — 준비 → 적용 → 관찰 → 평가\n7. 확인할 지표와 위험 — 초안 작성 시간, 사람의 수정, FAQ 갱신 누락, 유료 이용 의향 / 잘못된 안내 위험은 담당자 검토로 줄인다.\n8. 결정 요청 — 가상 시범 고객 1곳에서 4주 시범 운영 검토를 요청합니다.\n(모든 장: 교육용 가상사례 표시, 외부 사실은 3단계 출처만)","7":"제목: 4주 시범 운영 검토\n본문: 가상 고객 1곳에서 운영 방식을 살펴봅니다. 유료 이용 의향을 확인하고 다음 진행을 정합니다.","8":"받은 질문: \"월 관리비는 얼마로 생각하나요?\"\n고칠 문장 제안: 가격은 아직 정하지 않았고, 4주 시범 운영에서 판매점의 유료 이용 의향과 함께 확인할 추가 질문으로 남긴다."};
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const store={get(k){try{return localStorage.getItem('hg:'+k)}catch(e){return null}},set(k,v){try{localStorage.setItem('hg:'+k,v)}catch(e){}}};
+const toast=$('#toast');let tt;
+function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),1800)}
+async function copyText(text,btn,msg){
+  let ok=true;
+  try{await navigator.clipboard.writeText(text)}catch(e){
+    ok=false;const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(_){}ta.remove();
+  }
+  if(ok){say(msg||'복사했습니다. 입력창에 붙여넣으세요');if(btn){const o=btn.textContent;btn.textContent='복사됨';btn.classList.add('done');setTimeout(()=>{btn.textContent=o;btn.classList.remove('done')},1600)}}
+  else say('복사가 막혔습니다. 요청문을 드래그해서 복사해 주세요');
+}
+function buildPrompt(n){
+  let t=PROMPTS[n-1];
+  $$(`.prompt[data-p="${n}"] textarea[data-ph]`).forEach(f=>{const v=f.value.trim();if(v)t=t.split(f.dataset.ph).join(v)});
+  return t;
+}
+function memoText(){
+  return [1,2].map(k=>{
+    const g=f=>($('#m'+k+f)?.value||'').trim();const opened=$('#m'+k+'open')?.checked;
+    return `근거 메모 ${k}\n- 확인한 내용: ${g('fact')||'(비어 있음)'}\n- 제목과 날짜: ${g('title')||'날짜 미표시'}\n- 원문 주소: ${g('url')||'(없음)'}\n- 쓸 곳과 한계: ${g('limit')||'(비어 있음)'}\n- 원문 확인: ${opened?'직접 열어 확인함':'원문 미확인'}`;
+  }).join('\n\n');
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.copy)copyText(buildPrompt(+b.dataset.copy),b);
+  else if(b.dataset.copyex)copyText(EXAMPLES[b.dataset.copyex],b,'예시를 복사했습니다');
+  else if(b.id==='copymemo')copyText(memoText(),b,'근거 메모를 복사했습니다');
+  else if(b.dataset.loadmemo){const f=$('#'+b.dataset.loadmemo);if(f){f.value=memoText();f.dispatchEvent(new Event('input',{bubbles:true}));say('3장 근거 메모를 넣었습니다')}}
+});
+// 입력값·체크 상태를 이 브라우저에 보관
+$$('textarea,input[type=checkbox]').forEach(el=>{
+  const v=store.get(el.id);
+  if(v!==null){if(el.type==='checkbox')el.checked=v==='1';else el.value=v}
+  el.addEventListener(el.type==='checkbox'?'change':'input',()=>store.set(el.id,el.type==='checkbox'?(el.checked?'1':'0'):el.value));
+});
+</script>
+</body>
+</html>
