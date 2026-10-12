@@ -5,12 +5,12 @@ const imgData=f=>{const p=require('path').join(__dirname,'..','captures',f);if(!
 from PIL import Image
 im=Image.open(sys.argv[1]).convert('RGB');im.thumbnail((1400,1400));b=io.BytesIO();im.save(b,'JPEG',quality=80);print(base64.b64encode(b.getvalue()).decode())`,p]);
   return 'data:image/jpeg;base64,'+out.toString().trim()};
-const ROOT=require('path').join(__dirname,'..','실습자료')+'/';
-const ex=fs.readFileSync(ROOT+'강사용/강사작성_가상예시_간결교안용.txt','utf8');
+const ROOT=require('path').join(__dirname,'..')+'/';
+const ex=fs.readFileSync(ROOT+'05_강사용/강사작성_가상예시_간결교안용.txt','utf8');
 const EX={};
 for(const m of ex.matchAll(/-{20,}\n예시 (\d)\s+(.+?)\n-{20,}\n([\s\S]*?)(?=\n\n-{20,}|\s*$)/g)) EX[+m[1]]={title:m[2].trim(),body:m[3].trim()};
 if(Object.keys(EX).length!==8) throw new Error('examples '+Object.keys(EX).length);
-const GUIDE=fs.readFileSync(require('path').join(__dirname,'..','교안.html'),'utf8');
+const GUIDE=fs.readFileSync(require('path').join(__dirname,'..','03_교안.html'),'utf8');
 const CAPS=JSON.parse(GUIDE.match(/<script id="data" type="application\/json">([\s\S]*?)<\/script>/)[1]).steps;
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const SLUG=['','idea','canvas','research','draft','review','gamma','edit','share'];
@@ -39,7 +39,7 @@ function chapter(s){
   if(s.n===3) extra=`<div class="tool-box"><h4>근거 메모 쓰기</h4><p class="hint">원문을 직접 열어 본 내용만 적습니다. 이 브라우저에 자동 저장되며, 4장 요청 ⑦에 불러올 수 있습니다.</p>${[1,2].map(k=>`<fieldset><legend>근거 메모 ${k}</legend>${[['fact','확인한 내용','원문에 실제로 적힌 내용 한두 문장'],['title','제목과 날짜','기관·문서 제목·날짜 (없으면 날짜 미표시)'],['url','원문 주소(URL)','내가 직접 열어 본 주소'],['limit','쓸 곳과 한계','기획서에 쓸 내용 / 아직 모르는 점']].map(([f,l,ph])=>`<label for="m${k}${f}">${l}</label><textarea id="m${k}${f}" data-memo rows="2" placeholder="${ph}"></textarea>`).join('')}<label class="inline"><input type="checkbox" id="m${k}open" data-memo> 원문을 직접 열어 봤어요 (안 열었으면 「원문 미확인」으로 들어갑니다)</label></fieldset>`).join('')}<button type="button" class="copy wide" id="copymemo">근거 메모 2건 복사</button></div>`;
   if(s.n===8) extra=`<div class="tool-box"><h4>실습기록표</h4><p class="hint">도구가 안 돼서 다른 방법으로 한 부분은 「대체 실습」에 체크합니다.</p><div class="scroll"><table class="log"><thead><tr><th>장</th><th>하는 일</th><th>완료</th><th>대체 실습</th></tr></thead><tbody>${STEPS.map(t=>`<tr><td>${t.n}</td><td>${t.title}</td><td><input type="checkbox" id="log${t.n}done" data-keep aria-label="${t.n}장 완료"></td><td><input type="checkbox" id="log${t.n}alt" data-keep aria-label="${t.n}장 대체 실습"></td></tr>`).join('')}</tbody></table></div><label for="takeaway">내 업무에 써 볼 한 가지</label><textarea id="takeaway" data-keep rows="2" placeholder="예: 반복 문의 답변 초안을 만들 때 [가설]과 출처를 구분해 쓰기"></textarea></div>`;
   const caps=CAPS.filter(c=>c.stage===s.n);
-  const shots=`<div class="shots" hidden><h3>실제 화면</h3><div class="shotgrid">${caps.map(c=>`<figure class="shot" hidden><img data-src="../captures/${c.id}.png" alt="${esc(c.title)} 화면"><figcaption><b>${c.id}</b> ${esc(c.title)}</figcaption></figure>`).join('')}</div></div>`;
+  const shots=`<div class="shots" hidden><h3>실제 화면</h3><div class="shotgrid">${caps.map(c=>`<figure class="shot" hidden><img data-src="captures/${c.id}.png" alt="${esc(c.title)} 화면"><figcaption><b>${c.id}</b> ${esc(c.title)}</figcaption></figure>`).join('')}</div></div>`;
   const e=EX[s.n];
   return `<section class="chap" id="${SLUG[s.n]}" aria-labelledby="h${s.n}">
   <header class="chead"><div class="cno">${s.n}</div><div class="cmeta"><p class="eyebrow">${s.cs}차시 · ${s.n}장 · 약 ${s.min}분</p><h2 id="h${s.n}">${esc(s.title)}</h2><p class="tools">${esc(s.tool)}</p></div></header>
@@ -53,7 +53,7 @@ function chapter(s){
     ${pe}${extra}${altHTML(s.n)}
    </div>
    <aside class="col-side">
-    ${FILES[s.n]?`<div class="files"><h4>이 장에서 쓰는 파일</h4><ul>${FILES[s.n].map(([f,k,why])=>`<li><span class="ftag ${k==='업로드'?'up':''}">${k}</span><span class="fname">${f}</span><button type="button" class="dl" data-dl="${f}">받기</button><small>${why}</small></li>`).join('')}</ul><p class="file">폴더: <code>${FOLDER(s.n)}/</code></p></div>`:''}
+    ${FILES[s.n]?`<div class="files"><h4>이 장에서 쓰는 파일</h4><ul>${FILES[s.n].map(([f,k,why])=>`<li><span class="ftag ${k==='업로드'?'up':''}">${k}</span><span class="fname">${f}</span><button type="button" class="dl" data-dl="${f}">받기</button><small>${why}</small></li>`).join('')}</ul><p class="file">폴더: <code>02_실습파일/</code></p></div>`:''}
     <div class="ok"><h4>이렇게 나오면 성공</h4>${s.ok.map((x,i)=>`<label class="chk" for="ok${s.n}_${i}"><input type="checkbox" id="ok${s.n}_${i}" data-keep> <span>${esc(x)}</span></label>`).join('')}</div>
     <div class="fb"><h4>안 되면</h4><ul>${s.fb.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
     <details><summary>도구가 안 될 때 쓰는 예시</summary><p class="hint">강사가 쓴 교육용 예시입니다. AI 실행 결과가 아니니, 쓴 경우 실습기록표에 「대체 실습」으로 표시하세요.</p><pre class="ex">${esc(e.body)}</pre><button type="button" class="ghost" data-copyex="${s.n}">예시 복사</button></details></div>
@@ -87,9 +87,9 @@ ${STEPS.map(chapter).join('\n')}
 <footer class="foot">교육용 가상사례 · 강사 예시는 AI 실행 결과가 아닙니다 · 화면 메뉴 이름은 날짜와 계정에 따라 다를 수 있습니다</footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script>const FILEDATA=${JSON.stringify(Object.fromEntries(Object.entries(FILES).flatMap(([n,arr])=>arr.map(([f])=>[f,fs.readFileSync(require('path').join(ROOT,FOLDER(+n),f)).toString('base64')]))))};
+<script>const FILEDATA=${JSON.stringify(Object.fromEntries(Object.entries(FILES).flatMap(([n,arr])=>arr.map(([f])=>[f,fs.readFileSync(require('path').join(ROOT,'02_실습파일',f)).toString('base64')]))))};
 const PROMPTS=${JSON.stringify(P)};const EXAMPLES=${JSON.stringify(Object.fromEntries(Object.entries(EX).map(([k,v])=>[k,v.body])))};
 ${js}</script>`;
 fs.writeFileSync(require('path').join(__dirname,'.artifact.html'),html);
-fs.writeFileSync(ROOT+'실습가이드.html','<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+html.replace('<div class="wrap">','</head>\n<body>\n<div class="wrap">')+'\n</body>\n</html>\n');
+fs.writeFileSync(ROOT+'01_실습가이드.html','<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+html.replace('<div class="wrap">','</head>\n<body>\n<div class="wrap">')+'\n</body>\n</html>\n');
 console.log('ok',html.length);

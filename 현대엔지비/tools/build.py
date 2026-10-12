@@ -2,7 +2,7 @@ import re,json
 import os
 HERE=os.path.dirname(os.path.abspath(__file__))
 base=os.path.join(HERE,'..')+'/'
-md=open(base+'프롬프트집.md',encoding='utf8').read()
+md=open(os.path.join(HERE,'prompts.md'),encoding='utf8').read()
 heads=re.findall(r'^## ([①-⑯]) (.+)$',md,flags=re.M)
 blocks=re.findall(r'```\n(.*?)\n```',md,flags=re.S)
 assert len(heads)==16 and len(blocks)==16,(len(heads),len(blocks))
@@ -28,7 +28,7 @@ STEPS=[
    check='빈 입력창이 열려 있고 이전 대화 내용이 없다',fallback='한도 안내가 뜨면 멈추고 강사 가상 카드로 읽기·선택만 진행, 대체 실습으로 기록',slides='슬라이드 3–4'),
  S('cap-02',1,'14:06–14:13 (7분)','프롬프트① 붙여넣고 한 번만 전송','Gemini','chat',
    [(470,390,'프롬프트①을 한 덩어리로 붙여넣기 (처음·끝 포함 확인)'),(715,390,'전송은 한 번만 — 생성 중 재전송 금지'),(470,200,'응답: 세 안 비교표 + 여섯 항목 카드')],
-   ['입력창의 「+」로 엔지비기업_상황자료.docx 첨부 (안 되면 건너뜀)','복사 버튼으로 아래 프롬프트 전체를 복사','입력창에 붙여넣고 처음과 끝이 들어갔는지 확인 (Ctrl+V / Mac Command+V)','한 번 전송하고 5분간 화면 유지 → Teams에 "완료" 또는 "멈춘 위치" 남기기'],
+   ['입력창의 「+」로 1장_엔지비기업_상황자료.docx 첨부 (안 되면 건너뜀)','복사 버튼으로 아래 프롬프트 전체를 복사','입력창에 붙여넣고 처음과 끝이 들어갔는지 확인 (Ctrl+V / Mac Command+V)','한 번 전송하고 5분간 화면 유지 → Teams에 "완료" 또는 "멈춘 위치" 남기기'],
    prompts=[1],check='세 서비스 비교와 여섯 항목 카드가 나왔다. 수요·지불 의향은 가설로 표시, 새 수치·실적 없음',fallback='입력 위치·전송 여부 확인. 반복 생성/새 계정 금지. 강사 예시로 내용 작성만 진행',slides='슬라이드 5–6'),
  S('cap-03',1,'14:13–14:20 (7분)','비교 결과 읽기 → 카드 여섯 항목 복사','Gemini','chat',
    [(470,130,'세 안 비교: ①FAQ 일회성 정리 ②정기 관리 ③문의 분석·월간 보고'),(470,270,'카드 6항목: 고객·문제·가치·제공물·수익 가설·확인 질문'),(470,390,'모호할 때만 프롬프트②를 같은 대화에 전송')],
@@ -129,5 +129,5 @@ STEPS=[
 ]
 data=dict(stages=[dict(n=a,name=b,time=c,tool=d,goal=e) for a,b,c,d,e in STAGES],steps=STEPS,prompts=PROMPTS)
 tpl=open(os.path.join(HERE,'tpl.html'),encoding='utf8').read()
-open(base+'교안.html','w',encoding='utf8').write(tpl.replace('__DATA__',json.dumps(data,ensure_ascii=False)))
+open(base+'03_교안.html','w',encoding='utf8').write(tpl.replace('__DATA__',json.dumps(data,ensure_ascii=False)))
 print(len(STEPS),'steps')

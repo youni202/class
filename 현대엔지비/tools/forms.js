@@ -3,7 +3,7 @@ const fs=require('fs'),path=require('path');
 const d=require('docx');
 const {Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,WidthType,ShadingType,BorderStyle,AlignmentType,Header,Footer,PageNumber,LevelFormat}=d;
 const {STEPS}=require('./content.js');
-const OUT=path.join(__dirname,'..','실습자료');
+const OUT=path.join(__dirname,'..','02_실습파일');
 const FONT='Malgun Gothic',NAVY='0E5A66',GRAY='5A6764',AMBER='A85F0C';
 const W=9026;
 const t=(text,o={})=>new TextRun({text,font:FONT,size:o.size||21,bold:o.bold,color:o.color});
@@ -24,7 +24,7 @@ const blank=(n=1)=>Array.from({length:n},()=>p('',{after:240}));
 
 (async()=>{
 // 1장 업로드 자료
-await save('1차시/01_사업아이디어/엔지비기업_상황자료.docx',[
+await save('1장_엔지비기업_상황자료.docx',[
  title('엔지비기업 상황자료'),meta('1장에서 AI 채팅에 첨부하는 자료입니다. 교육용으로 만든 가상 회사이며, 숫자는 일부러 넣지 않았습니다.'),
  h('회사 개요'),
  li('가상의 중소 무역·납품 업체입니다. 국내외 거래처에 산업용 부품을 납품합니다.'),
@@ -48,7 +48,7 @@ await save('1차시/01_사업아이디어/엔지비기업_상황자료.docx',[
 ]);
 // 5장 사업기획서 양식
 const sec=(no,name,guide)=>[h(`${no}. ${name}`),p([t(guide,{size:19,color:'9AA7B3'})],{after:60}),...blank(2)];
-await save('2차시/05_최종보고서/사업기획서_양식.docx',[
+await save('5장_사업기획서_양식.docx',[
  title('사업기획서'),meta('[교육용 가상사례]  Canvas에서 다듬은 최종 보고서를 붙이거나, Canvas가 안 될 때 직접 씁니다.'),
  table([['항목','내용'],['서비스 이름',''],['작성자',''],['작성일','']],[2400,6626]),
  ...sec(1,'고객·문제','누가, 어떤 문제를 겪고 있나요? (상황자료의 반복 문의를 근거로)'),
@@ -64,10 +64,10 @@ await save('2차시/05_최종보고서/사업기획서_양식.docx',[
 ]);
 // 3장 근거메모 양식
 const memo=i=>[h(`근거 메모 ${i}`),table([['항목','적을 내용'],['확인한 내용','(원문에 실제로 적힌 내용 한두 문장)'],['제목과 날짜','(기관·문서 제목·날짜, 없으면 「날짜 미표시」)'],['원문 주소(URL)','(내가 직접 열어 본 주소)'],['쓸 곳과 한계','(기획서에 쓸 내용 / 아직 모르는 점)'],['직접 열어 봤나요?','☐ 예   ☐ 아니요(원문 미확인)']],[2300,6726])];
-await save('1차시/03_근거찾기/근거메모_작성양식.docx',[title('근거 메모 작성양식'),meta('Perplexity 답변의 출처 원문을 직접 열어 확인한 내용만 적습니다.'),...memo(1),...memo(2),
+await save('3장_근거메모_작성양식.docx',[title('근거 메모 작성양식'),meta('Perplexity 답변의 출처 원문을 직접 열어 확인한 내용만 적습니다.'),...memo(1),...memo(2),
  p([t('제품 설명서가 「이런 기능이 있다」고 해도, 우리 고객이 돈을 낼 것이라는 증거는 아닙니다. 그런 내용은 기획서에서 [가설]로 둡니다.',{size:19,color:GRAY})],{before:160})]);
 // 8장 실습기록표
-await save('2차시/08_공유피드백/실습기록표.docx',[title('실습기록표'),meta('도구가 안 돼서 다른 방법으로 한 부분은 「대체 실습」에 표시합니다.'),
+await save('8장_실습기록표.docx',[title('실습기록표'),meta('도구가 안 돼서 다른 방법으로 한 부분은 「대체 실습」에 표시합니다.'),
  p([t('이름: ______________     사용한 도구:  ☐ Gemini   ☐ ChatGPT   ☐ Perplexity   ☐ Gamma',{size:20})],{after:160}),
  table([['장','하는 일','완료','대체 실습','메모'],...STEPS.map(s=>[String(s.n),s.title,'☐','☐',''])],[700,3926,900,1300,2200]),
  h('오늘 결과물'),li('사업기획서:  ☐ Google Docs   ☐ Word   (파일 이름: ______________ )','c'),li('발표자료 8장:  ☐ PPTX 내려받아 다시 열어 봄','c'),
