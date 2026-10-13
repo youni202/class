@@ -38,9 +38,9 @@ $$('textarea,input[type=checkbox]').forEach(el=>{
   el.addEventListener(el.type==='checkbox'?'change':'input',()=>store.set(el.id,el.type==='checkbox'?(el.checked?'1':'0'):el.value));
 });
 
-// 실제 캡처가 있으면 보여 주고, 없으면 자리를 숨긴 채로 둔다
+// 실제 캡처가 있으면 설명용 그림 대신 보여 준다
 $$('.shot img[data-src]').forEach(img=>{
-  img.onload=()=>{const f=img.closest('.shot');f.hidden=false;f.closest('.shots').hidden=false};
+  img.onload=()=>img.closest('.shot').classList.add('has');
   img.src=img.dataset.src;
 });
 
