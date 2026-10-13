@@ -1,22 +1,21 @@
-"""03_교안.html의 화면 목록(cap-01~26)으로 브라우저 실행 시나리오와 실행 기록표를 만든다."""
+"""steps.json의 화면 목록(cap-01~26)으로 브라우저 실행 시나리오와 실행 기록표를 만든다."""
 import json,os,re
 HERE=os.path.dirname(os.path.abspath(__file__)); BASE=os.path.join(HERE,'..')
-h=open(os.path.join(BASE,'03_교안.html'),encoding='utf8').read()
-d=json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>',h,re.S).group(1))
+d=json.load(open(os.path.join(HERE,'steps.json'),encoding='utf8'))
 MARK='①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯'
 FOLDER={1:'1차시/01_사업아이디어',2:'1차시/02_Canvas문서',3:'1차시/03_근거찾기',4:'1차시/04_기획서초안',5:'2차시/05_최종보고서',6:'2차시/06_Gamma생성',7:'2차시/07_PPT수정',8:'2차시/08_공유피드백'}
 URL={'Gemini':'https://gemini.google.com','Perplexity':'https://www.perplexity.ai','Gamma':'https://gamma.app'}
-os.makedirs(os.path.join(BASE,'07_실행점검'),exist_ok=True)
+os.makedirs(os.path.join(BASE,'tools','리허설'),exist_ok=True)
 L=[]
 L+=['# 브라우저 실행 시나리오 (엔지비기업 실습 리허설)','',
 '실습가이드의 8개 장을 **실제 로그인된 브라우저에서 처음부터 끝까지 한 번 실행**하고, 화면 캡처와 실제 결과를 남기기 위한 시나리오입니다.',
 '사람이 직접 해도 되고, 사용자 컴퓨터에서 도는 Claude 세션(Claude 데스크톱 앱 + Chrome 연동, 또는 이 폴더에서 `claude remote-control`)에게 맡겨도 됩니다.','',
 '## Claude 세션에 맡길 때 붙여넣을 지시문','','```',
-'현대엔지비/07_실행점검/브라우저_실행_시나리오.md 를 읽고 cap-01부터 cap-26까지 순서대로 내 Chrome에서 실행해 줘.',
+'현대엔지비/tools/리허설/브라우저_실행_시나리오.md 를 읽고 cap-01부터 cap-26까지 순서대로 내 Chrome에서 실행해 줘.',
 '- 이미 로그인된 내 무료 계정만 사용하고, 유료 업그레이드·결제·새 계정 만들기는 하지 마.',
 '- 요청문은 현대엔지비/01_실습가이드.html 해당 장의 「복사할 요청」을 그대로 쓰고, [대괄호]는 바로 앞 단계의 실제 결과로 바꿔. 1장에서는 02_실습파일/1장_엔지비기업_회사소개.docx 를 첨부해.',
 '- 각 cap마다 화면을 1280x800 정도로 캡처해 현대엔지비/captures/cap-XX.png 로 저장해. 이메일·계정명·프로필 사진은 가려.',
-'- 결과는 현대엔지비/07_실행점검/실행기록.md 의 해당 칸에 사실대로 적어. 실행이 안 된 것은 "미실행"과 이유를 적고, 결과를 지어내지 마.',
+'- 결과는 현대엔지비/tools/리허설/실행기록.md 의 해당 칸에 사실대로 적어. 실행이 안 된 것은 "미실행"과 이유를 적고, 결과를 지어내지 마.',
 '- 메뉴 이름이나 순서가 가이드와 다르면 실행기록의 "가이드와 다른 점"에 적어. 가이드 문구는 마지막에 한꺼번에 고칠게.',
 '- 한도 안내가 뜨면 멈추고 나에게 알려 줘.','```','',
 '## 지킬 것','',
@@ -51,9 +50,9 @@ for st in d['steps']:
         '| 실제 메뉴·버튼 이름 | |','| 결과 요약 (실제 출력에서) | |','| 성공 기준 충족 | ☐ 예 ☐ 아니요 — |','| 가이드와 다른 점 | |','| 걸린 시간 | |','']
 L+=['## 실행이 끝나면','',
 '1. `실행기록.md`의 「가이드와 다른 점」을 모아 `tools/content.js`(실습가이드 문구)와 `tools/build.py`(교안 화면 문구·핀 위치)를 고칩니다.',
-'2. 핀이 캡처와 어긋나면 `03_교안.html` 주소 뒤에 `#edit`를 붙여 캡처 위를 클릭해 좌표를 읽고 `tools/build.py`의 pins 값을 고칩니다.',
+'2. 핀이 캡처와 어긋나면 `tools/build.py`의 pins 값(800×450 기준 좌표)을 고칩니다.',
 '3. 다시 만들기: `python3 tools/build.py` → `node tools/forms.js` → `node tools/guide.js` → `python3 tools/lesson.py` (순서대로).',
-'4. 캡처는 `03_교안.html`(핀 위에 표시)과 `01_실습가이드.html`(각 장 「실제 화면」)에 자동으로 나타납니다.','']
-open(os.path.join(BASE,'07_실행점검','브라우저_실행_시나리오.md'),'w',encoding='utf8').write('\n'.join(L))
-open(os.path.join(BASE,'07_실행점검','실행기록.md'),'w',encoding='utf8').write('\n'.join(R))
+'4. 캡처는 `01_실습가이드.html`의 각 단계 그림 자리에 자동으로 나타납니다.','']
+open(os.path.join(BASE,'tools','리허설','브라우저_실행_시나리오.md'),'w',encoding='utf8').write('\n'.join(L))
+open(os.path.join(BASE,'tools','리허설','실행기록.md'),'w',encoding='utf8').write('\n'.join(R))
 print('ok',len(L),len(R))

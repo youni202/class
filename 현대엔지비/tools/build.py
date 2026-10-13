@@ -128,6 +128,5 @@ STEPS=[
    check='최종 기획서 1개 + 발표자료 8장',slides='8장'),
 ]
 data=dict(stages=[dict(n=a,name=b,time=c,tool=d,goal=e) for a,b,c,d,e in STAGES],steps=STEPS,prompts=PROMPTS)
-tpl=open(os.path.join(HERE,'tpl.html'),encoding='utf8').read()
-open(base+'03_교안.html','w',encoding='utf8').write(tpl.replace('__DATA__',json.dumps(data,ensure_ascii=False)))
+open(os.path.join(HERE,'steps.json'),'w',encoding='utf8').write(json.dumps(data,ensure_ascii=False,indent=1))
 print(len(STEPS),'steps')

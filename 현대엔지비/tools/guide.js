@@ -6,12 +6,11 @@ from PIL import Image
 im=Image.open(sys.argv[1]).convert('RGB');im.thumbnail((1400,1400));b=io.BytesIO();im.save(b,'JPEG',quality=80);print(base64.b64encode(b.getvalue()).decode())`,p]);
   return 'data:image/jpeg;base64,'+out.toString().trim()};
 const ROOT=require('path').join(__dirname,'..')+'/';
-const ex=fs.readFileSync(ROOT+'05_강사용/강사작성_가상예시_간결교안용.txt','utf8');
+const ex=fs.readFileSync(require('path').join(__dirname,'examples.txt'),'utf8');
 const EX={};
 for(const m of ex.matchAll(/-{20,}\n예시 (\d)\s+(.+?)\n-{20,}\n([\s\S]*?)(?=\n\n-{20,}|\s*$)/g)) EX[+m[1]]={title:m[2].trim(),body:m[3].trim()};
 if(Object.keys(EX).length!==8) throw new Error('examples '+Object.keys(EX).length);
-const GUIDE=fs.readFileSync(require('path').join(__dirname,'..','03_교안.html'),'utf8');
-const CAPS=JSON.parse(GUIDE.match(/<script id="data" type="application\/json">([\s\S]*?)<\/script>/)[1]).steps;
+const CAPS=JSON.parse(fs.readFileSync(require('path').join(__dirname,'steps.json'),'utf8')).steps;
 const TPL=fs.readFileSync(require('path').join(__dirname,'tpl.html'),'utf8');
 const WIRESRC=TPL.slice(TPL.indexOf('/* ---------- 와이어프레임'),TPL.indexOf('/* ---------- 렌더'));
 const WIRE=require('vm').runInNewContext(WIRESRC+';WIRE');
