@@ -123,9 +123,9 @@ STEPS=[
    ['Gamma를 고쳤다면 PPTX를 다시 내보낸다'],
    prompts=[16],check='한 문장만 고쳤다',slides='8장',cond=True),
  S('cap-26',8,'15:59–16:00 (1분)','최종 점검','내 문서·PPTX','final',
-   [(150,110,'최종 기획서와 발표자료 8장을 열 수 있나요?'),(150,200,'경쟁사 출처와 [가설] 표시가 남아 있나요?'),(150,290,'4주 동안 확인할 질문이 분명한가요?')],
+   [(150,110,'최종 보고서(docx 또는 PDF)와 발표자료 8장(PPTX)을 열 수 있나요?'),(150,200,'경쟁사 출처와 [가설] 표시가 남아 있나요?'),(150,290,'4주 동안 확인할 질문이 분명한가요?')],
    ['오늘은 사업 성공을 증명한 것이 아니라, 아이디어 → 경쟁사 확인 → 기획서 → 발표자료의 흐름을 해 본 것','도구에서 못 한 부분은 대체 실습으로 기록'],
-   check='최종 기획서 1개 + 발표자료 8장',slides='8장'),
+   check='최종 보고서 1개(docx 또는 PDF) + 발표자료 8장(PPTX)',slides='8장'),
 ]
 data=dict(stages=[dict(n=a,name=b,time=c,tool=d,goal=e) for a,b,c,d,e in STAGES],steps=STEPS,prompts=PROMPTS)
 open(os.path.join(HERE,'steps.json'),'w',encoding='utf8').write(json.dumps(data,ensure_ascii=False,indent=1))

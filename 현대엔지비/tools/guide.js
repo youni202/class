@@ -112,7 +112,7 @@ const html=`<title>엔지비기업 AI 실습 가이드</title>
  <h1>엔지비기업 AI 실습 가이드</h1>
  <p class="lead">가상의 무역·납품 업체 「엔지비기업」이 기존 강점을 살려 시작할 신사업을 AI와 함께 기획합니다. 아이디어를 찾고, 경쟁사를 조사해 벤치마킹하고, 신사업 기획서를 완성한 뒤 발표자료 8장을 만듭니다. 장마다 순서대로 따라 하고, 요청문은 「복사」 버튼으로 붙여넣으세요.</p>
  <div class="allfiles"><div class="aftext"><p class="aftitle">실습파일 4개</p><ul>${ALLFILES}</ul></div><button type="button" class="dlall" data-dlzip="1">한 번에 받기 <small>zip</small></button></div>
- <ul class="outcome"><li><span>결과물 1</span>신사업 기획서 1개</li><li><span>결과물 2</span>발표자료 8장 (PPTX)</li><li><span>도구</span>Gemini 또는 ChatGPT · Perplexity · Gamma 무료 계정</li></ul>
+ <ul class="outcome"><li><span>결과물 1</span>최종 보고서 1개 (docx 또는 PDF)</li><li><span>결과물 2</span>발표자료 8장 (PPTX)</li><li><span>도구</span>Gemini 또는 ChatGPT · Perplexity · Gamma 무료 계정</li></ul>
 </header>
 <section class="basics" id="basics" aria-labelledby="hb">
  <h2 id="hb">시작 전에</h2>
