@@ -581,8 +581,8 @@
    "id": "cap-15",
    "stage": 5,
    "time": "15:16–15:20 (4분)",
-   "title": "최종 기획서 Docs로 내보내기",
-   "tool": "Gemini Canvas",
+   "title": "최종 기획서 Docs로 보내 PDF로 받기",
+   "tool": "Gemini Canvas → Google Docs",
    "wire": "canvas_export",
    "pins": [
     {
@@ -593,22 +593,22 @@
     {
      "x": 690,
      "y": 98,
-     "t": "「Docs로 내보내기」 (또는 내용 복사)"
+     "t": "「Docs로 내보내기」 — 바로 다운로드하면 md 파일로만 받아지니 Docs로 보낸다"
     },
     {
      "x": 400,
      "y": 300,
-     "t": "저장한 문서를 다시 열어 확인"
+     "t": "열린 Google 문서(Drive)에서 「파일 → 다운로드 → PDF 문서(.pdf)」"
     }
    ],
    "actions": [
-    "수업 계정에서 보이는 경로 하나만 사용",
-    "공개 공유 링크는 만들지 않는다",
-    "Word로 정리하려면 5장_신사업기획서_양식.docx 사용"
+    "Canvas에서 바로 다운로드하면 md(텍스트) 파일로만 받아진다 → 반드시 Docs로 내보낸 뒤 PDF로 받기",
+    "Docs 문서는 내 Google Drive에 저장된다 — 공개 공유 링크는 만들지 않는다",
+    "받은 PDF를 열어 제목·표·[가설] 표시가 그대로인지 확인"
    ],
    "prompts": [],
-   "check": "최종 기획서를 다시 열 수 있다",
-   "fallback": "복사해 Word에 붙여 저장",
+   "check": "최종 기획서 PDF를 열 수 있다",
+   "fallback": "Docs 내보내기가 안 되면 내용을 복사해 5장_신사업기획서_양식.docx에 붙이고 PDF로 저장",
    "slides": "5장",
    "cond": false
   },
