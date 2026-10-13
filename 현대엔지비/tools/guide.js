@@ -20,7 +20,7 @@ const PH=/\[(?!가설\]|미확인\])[^\]\n]{2,}\]/g;
 function promptHTML(n,cond){
   const text=P[n-1]; const phs=[...new Set(text.match(PH)||[])];
   const body=esc(text).replace(PH,m=>`<mark>${m}</mark>`);
-  const fields=phs.map((ph,i)=>`<label class="fill" for="p${n}f${i}"><span>${esc(ph.slice(1,-1))}</span>${n===7?'<button type="button" class="ghost" data-loadmemo="p7f0">3장 근거 메모 불러오기</button>':''}<textarea id="p${n}f${i}" data-ph="${esc(ph)}" rows="3" placeholder="여기에 내 결과를 붙여넣으면 대괄호 자리에 들어갑니다"></textarea></label>`).join('');
+  const fields=phs.map((ph,i)=>`<label class="fill" for="p${n}f${i}"><span>${esc(ph.slice(1,-1))}</span>${n===7?'<button type="button" class="ghost" data-loadmemo="p7f0">3장 경쟁사 메모 불러오기</button>':''}<textarea id="p${n}f${i}" data-ph="${esc(ph)}" rows="3" placeholder="여기에 내 결과를 붙여넣으면 대괄호 자리에 들어갑니다"></textarea></label>`).join('');
   return `<div class="prompt${cond?' cond':''}" data-p="${n}">
   <div class="pbar"><span class="pno">${M[n-1]}</span><span class="ptitle">요청 ${M[n-1]}${cond?' <em>필요할 때만</em>':''}</span><button type="button" class="copy" data-copy="${n}">복사</button></div>
   <pre>${body}</pre>${fields?`<div class="fills">${fields}<p class="hint">칸을 채우면 「복사」에 내 내용이 들어간 요청문이 복사됩니다. 비워 두면 대괄호 그대로 복사됩니다.</p></div>`:''}</div>`;
@@ -36,7 +36,7 @@ function chapter(s){
   const all=[...new Set([...s.prompts,...s.cond])].sort((a,b)=>a-b);
   const pe=PE[s.n]?`<div class="four"><h4>이 요청에 들어 있는 네 가지</h4><dl>${PE[s.n].map(([k,v])=>`<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></div>`:'';
   let extra='';
-  if(s.n===3) extra=`<div class="tool-box"><h4>근거 메모 쓰기</h4><p class="hint">원문을 직접 열어 본 내용만 적습니다. 이 브라우저에 자동 저장되며, 4장 요청 ⑦에 불러올 수 있습니다.</p>${[1,2].map(k=>`<fieldset><legend>근거 메모 ${k}</legend>${[['fact','확인한 내용','원문에 실제로 적힌 내용 한두 문장'],['title','제목과 날짜','기관·문서 제목·날짜 (없으면 날짜 미표시)'],['url','원문 주소(URL)','내가 직접 열어 본 주소'],['limit','쓸 곳과 한계','기획서에 쓸 내용 / 아직 모르는 점']].map(([f,l,ph])=>`<label for="m${k}${f}">${l}</label><textarea id="m${k}${f}" data-memo rows="2" placeholder="${ph}"></textarea>`).join('')}<label class="inline"><input type="checkbox" id="m${k}open" data-memo> 원문을 직접 열어 봤어요 (안 열었으면 「원문 미확인」으로 들어갑니다)</label></fieldset>`).join('')}<button type="button" class="copy wide" id="copymemo">근거 메모 2건 복사</button></div>`;
+  if(s.n===3) extra=`<div class="tool-box"><h4>경쟁사 메모</h4><p class="hint">공식 사이트를 직접 열어 확인한 내용만 적습니다. 이 브라우저에 자동 저장되며, 4장 요청 ⑦에 불러올 수 있습니다. 세 번째 경쟁사는 선택입니다.</p>${[1,2,3].map(k=>`<fieldset><legend>경쟁사 ${k}${k===3?' (선택)':''}</legend>${[['name','회사·서비스 이름','예: ○○ 산업자재 온라인몰'],['target','대상 고객','누가 쓰는 서비스인가요?'],['feature','주요 기능과 제공 방식','무엇을 어떻게 제공하나요?'],['strength','강점','고객이 좋아할 점'],['weak','약점·한계','부족한 점, 확인 못 한 점'],['url','원문 주소(URL)','내가 직접 열어 본 주소']].map(([f,l,ph])=>`<label for="m${k}${f}">${l}</label><textarea id="m${k}${f}" data-memo rows="2" placeholder="${ph}"></textarea>`).join('')}<label class="inline"><input type="checkbox" id="m${k}open" data-memo> 공식 사이트를 직접 열어 봤어요 (안 열었으면 「원문 미확인」으로 들어갑니다)</label></fieldset>`).join('')}<label for="mlearn">우리가 배울 점</label><textarea id="mlearn" data-memo rows="2" placeholder="경쟁사에서 가져올 좋은 점 한 줄"></textarea><label for="mdiff">우리가 다르게 할 점</label><textarea id="mdiff" data-memo rows="2" placeholder="엔지비기업의 강점으로 다르게 할 점 한 줄"></textarea><button type="button" class="copy wide" id="copymemo">경쟁사 메모 복사</button></div>`;
   if(s.n===8) extra=`<div class="tool-box"><h4>실습기록표</h4><p class="hint">도구가 안 돼서 다른 방법으로 한 부분은 「대체 실습」에 체크합니다.</p><div class="scroll"><table class="log"><thead><tr><th>장</th><th>하는 일</th><th>완료</th><th>대체 실습</th></tr></thead><tbody>${STEPS.map(t=>`<tr><td>${t.n}</td><td>${t.title}</td><td><input type="checkbox" id="log${t.n}done" data-keep aria-label="${t.n}장 완료"></td><td><input type="checkbox" id="log${t.n}alt" data-keep aria-label="${t.n}장 대체 실습"></td></tr>`).join('')}</tbody></table></div><label for="takeaway">내 업무에 써 볼 한 가지</label><textarea id="takeaway" data-keep rows="2" placeholder="예: 반복 문의 답변 초안을 만들 때 [가설]과 출처를 구분해 쓰기"></textarea></div>`;
   const caps=CAPS.filter(c=>c.stage===s.n);
   const shots=`<div class="shots" hidden><h3>실제 화면</h3><div class="shotgrid">${caps.map(c=>`<figure class="shot" hidden><img data-src="captures/${c.id}.png" alt="${esc(c.title)} 화면"><figcaption><b>${c.id}</b> ${esc(c.title)}</figcaption></figure>`).join('')}</div></div>`;
@@ -72,8 +72,8 @@ const html=`<title>엔지비기업 AI 실습 가이드</title>
 <header class="top">
  <p class="eyebrow">현대엔지비 · 생성형 AI 기초 실습 · 2차시</p>
  <h1>엔지비기업 AI 실습 가이드</h1>
- <p class="lead">가상의 무역·납품 업체 「엔지비기업」을 돕는 서비스를 AI와 함께 기획합니다. 아이디어를 고르고, 근거를 찾아 사업기획서를 쓰고, 그 내용으로 발표자료 8장을 만듭니다. 장마다 순서대로 따라 하고, 요청문은 「복사」 버튼으로 붙여넣으세요.</p>
- <ul class="outcome"><li><span>결과물 1</span>사업기획서(최종 보고서) 1개</li><li><span>결과물 2</span>발표자료 8장 (PPTX)</li><li><span>도구</span>Gemini 또는 ChatGPT · Perplexity · Gamma 무료 계정</li></ul>
+ <p class="lead">가상의 무역·납품 업체 「엔지비기업」이 기존 강점을 살려 시작할 신사업을 AI와 함께 기획합니다. 아이디어를 찾고, 경쟁사를 조사해 벤치마킹하고, 신사업 기획서를 완성한 뒤 발표자료 8장을 만듭니다. 장마다 순서대로 따라 하고, 요청문은 「복사」 버튼으로 붙여넣으세요.</p>
+ <ul class="outcome"><li><span>결과물 1</span>신사업 기획서 1개</li><li><span>결과물 2</span>발표자료 8장 (PPTX)</li><li><span>도구</span>Gemini 또는 ChatGPT · Perplexity · Gamma 무료 계정</li></ul>
 </header>
 <nav class="chapnav" aria-label="실습 장 이동">${nav}</nav>
 <section class="basics" id="basics" aria-labelledby="hb">

@@ -16,17 +16,20 @@ function buildPrompt(n){
   return t;
 }
 function memoText(){
-  return [1,2].map(k=>{
-    const g=f=>($('#m'+k+f)?.value||'').trim();const opened=$('#m'+k+'open')?.checked;
-    return `근거 메모 ${k}\n- 확인한 내용: ${g('fact')||'(비어 있음)'}\n- 제목과 날짜: ${g('title')||'날짜 미표시'}\n- 원문 주소: ${g('url')||'(없음)'}\n- 쓸 곳과 한계: ${g('limit')||'(비어 있음)'}\n- 원문 확인: ${opened?'직접 열어 확인함':'원문 미확인'}`;
-  }).join('\n\n');
+  const g=id=>($('#'+id)?.value||'').trim();
+  const rows=[1,2,3].map(k=>{
+    if(!g('m'+k+'name')&&!g('m'+k+'feature'))return '';
+    const opened=$('#m'+k+'open')?.checked;
+    return `경쟁사 ${k}: ${g('m'+k+'name')||'(이름 없음)'}\n- 대상 고객: ${g('m'+k+'target')||'미확인'}\n- 주요 기능: ${g('m'+k+'feature')||'미확인'}\n- 강점: ${g('m'+k+'strength')||'미확인'}\n- 약점·한계: ${g('m'+k+'weak')||'미확인'}\n- 출처: ${g('m'+k+'url')||'(없음)'} (${opened?'공식 사이트 직접 확인':'원문 미확인'})`;
+  }).filter(Boolean);
+  return (rows.length?rows.join('\n\n'):'(경쟁사 메모 없음)')+`\n\n우리가 배울 점: ${g('mlearn')||'(비어 있음)'}\n우리가 다르게 할 점: ${g('mdiff')||'(비어 있음)'}`;
 }
 document.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.dataset.copy)copyText(buildPrompt(+b.dataset.copy),b);
   else if(b.dataset.copyex)copyText(EXAMPLES[b.dataset.copyex],b,'예시를 복사했습니다');
-  else if(b.id==='copymemo')copyText(memoText(),b,'근거 메모를 복사했습니다');
-  else if(b.dataset.loadmemo){const f=$('#'+b.dataset.loadmemo);if(f){f.value=memoText();f.dispatchEvent(new Event('input',{bubbles:true}));say('3장 근거 메모를 넣었습니다')}}
+  else if(b.id==='copymemo')copyText(memoText(),b,'경쟁사 메모를 복사했습니다');
+  else if(b.dataset.loadmemo){const f=$('#'+b.dataset.loadmemo);if(f){f.value=memoText();f.dispatchEvent(new Event('input',{bubbles:true}));say('3장 경쟁사 메모를 넣었습니다')}}
 });
 // 입력값·체크 상태를 이 브라우저에 보관
 $$('textarea,input[type=checkbox]').forEach(el=>{
