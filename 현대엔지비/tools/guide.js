@@ -133,4 +133,14 @@ const PROMPTS=${JSON.stringify(P)};const FOLLOWS=${JSON.stringify(Object.fromEnt
 ${js}</script>`;
 fs.writeFileSync(require('path').join(__dirname,'.artifact.html'),html);
 fs.writeFileSync(ROOT+'01_실습가이드.html','<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+html.replace('<div class="wrap">','</head>\n<body>\n<div class="wrap">')+'\n</body>\n</html>\n');
+// youni365.top 사이트용: 파일을 사이트 경로(assets/downloads/)의 일반 다운로드 링크로 바꾼다
+const enc=f=>'assets/downloads/'+encodeURIComponent(f);
+const site=html
+  .replace(/<button type="button" class="dl" data-dl="([^"]+)">받기<\/button>/g,(m,f)=>`<a class="dl" href="${enc(f)}" download="${f}">받기</a>`)
+  .replace('<button type="button" class="dlall" data-dlzip="1">','<a class="dlall" href="'+enc('엔지비기업_실습파일.zip')+'" download="엔지비기업_실습파일.zip">').replace(/한 번에 받기 <small>zip<\/small><\/button>/,'한 번에 받기 <small>zip</small></a>')
+  .replace(/<link rel="preconnect"[^\n]*\n<link rel="stylesheet" href="https:\/\/fonts[^\n]*\n/,'');
+const SITE=require('path').join(__dirname,'site');fs.mkdirSync(SITE+'/assets/downloads',{recursive:true});
+fs.writeFileSync(SITE+'/index.html','<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+site+'\n</html>\n');
+fs.writeFileSync(SITE+'/assets/downloads/엔지비기업_실습파일.zip',Buffer.from(ZIPB64,'base64'));
+for(const arr of Object.values(FILES))for(const [f] of arr)fs.copyFileSync(require('path').join(ROOT,'02_실습파일',f),SITE+'/assets/downloads/'+f);
 console.log('ok',html.length);

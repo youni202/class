@@ -220,3 +220,4 @@ code{font:12px var(--f-mono)}
 .dlall small{font:500 11px var(--f-mono);opacity:.8;margin-left:4px}
 .dlall:hover{filter:brightness(1.1)}
 @media (max-width:520px){.dlall{width:100%}}
+a.dl,a.dlall{display:inline-flex;align-items:center;justify-content:center;gap:4px;border-radius:8px;text-decoration:none;font-weight:600}
