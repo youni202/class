@@ -62,6 +62,7 @@ function chapter(s){
   </section>`;
 }
 const css=fs.readFileSync(__dirname+'/guide.css','utf8');
+const FLOW1=fs.readFileSync(__dirname+'/flow1.svg.html','utf8');
 const js=fs.readFileSync(__dirname+'/guide.client.js','utf8');
 const nav=[1,2].map(c=>`<div class="navgroup"><span class="navcs">${c}차시</span>${STEPS.filter(s=>s.cs===c).map(s=>`<a href="#${SLUG[s.n]}"><b>${s.n}</b>${esc(s.title)}</a>`).join('')}</div>`).join('');
 const html=`<title>엔지비기업 AI 실습 가이드</title>
@@ -82,6 +83,7 @@ const html=`<title>엔지비기업 AI 실습 가이드</title>
   <div><h3>좋은 요청의 네 가지</h3><dl class="fourtable"><div><dt>상황</dt><dd>누구의 어떤 상황인지</dd></div><div><dt>할 일</dt><dd>AI가 해야 할 일</dd></div><div><dt>형식</dt><dd>답을 받을 모양 (표, 카드)</dd></div><div><dt>조건</dt><dd>지킬 것과 하지 말 것</dd></div></dl><p class="hint">1장과 3장에서 실제 요청문에 이 네 가지가 어떻게 들어 있는지 확인합니다.</p></div>
   <div><h3>공통 약속</h3><ul class="rules"><li>요청문은 통째로 복사해서 <b>한 번만</b> 보냅니다.</li><li><mark>[대괄호]</mark>는 내 결과로 바꿀 자리입니다.</li><li>「필요할 때만」 요청은 문제가 있을 때만 씁니다.</li><li>모르는 것은 [가설], 확인 못 한 것은 「미확인」으로 남깁니다.</li><li>실제 고객 정보·회사 기밀은 넣지 않습니다. 유료 가입은 하지 않습니다.</li><li>시간은 참고용입니다. 결과 문장이 강사와 달라도 괜찮습니다.</li></ul></div>
  </div>
+<figure class="flowfig"><h3>1차시 흐름 — 아이디어는 이렇게 찾습니다</h3><div class="flowwrap">${FLOW1}</div><figcaption>1장에서 회사 강점을 바탕으로 아이디어를 5개로 넓혔다가 1개로 좁히고, 3장에서 경쟁사를 확인해 배울 점과 다르게 할 점을 찾은 뒤, 4장에서 같은 기획서에 합칩니다.</figcaption></figure>
 </section>
 ${STEPS.map(chapter).join('\n')}
 <footer class="foot">교육용 가상사례 · 강사 예시는 AI 실행 결과가 아닙니다 · 화면 메뉴 이름은 날짜와 계정에 따라 다를 수 있습니다</footer>

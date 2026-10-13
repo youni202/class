@@ -130,6 +130,23 @@ code{font:12px var(--f-mono)}
 .fname{font-weight:600;font-size:14px;overflow-wrap:anywhere;min-width:0}
 .dl{background:var(--accent);color:var(--surface);border:0;min-height:30px;font-size:13px;padding:0 12px}
 .dl:hover{filter:brightness(1.1)}
+.flowfig{margin:28px 0 0;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.flowfig h3{font-size:16px;margin:0 0 10px}
+.flowwrap{overflow-x:auto}
+.flow{display:block;width:100%;min-width:760px;height:auto;color:var(--ink);font-family:var(--f-body)}
+.flow .bx,.flow .hd{fill:var(--surface);stroke:currentColor;stroke-width:1.2}
+.flow .hd{fill:var(--bg);stroke:var(--line)}
+.flow .in{fill:var(--bg);stroke:currentColor;stroke-width:1.2;stroke-dasharray:5 4}
+.flow .out{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.flow .ln{stroke:currentColor;stroke-width:1.4}
+.flow .lnA{stroke:var(--accent);stroke-width:2}
+.flow .lnD{stroke:currentColor;stroke-width:1.4;stroke-dasharray:6 5}
+.flow .accf{fill:var(--accent)}
+.flow text{fill:currentColor}
+.flow .tb{font-size:14px;font-weight:600}.flow .ts{font-size:11.5px;fill:var(--muted)}
+.flow .th{font-size:15px;font-weight:700}.flow .tn{font:500 11px var(--f-mono);fill:var(--accent)}.flow .tt{font-size:12px;fill:var(--muted)}
+.flow .tl{font-size:12px;fill:var(--muted)}.flow .tlA{font-size:12px;font-weight:600;fill:var(--accent)}
+.flowfig figcaption{font-size:13px;color:var(--muted);margin-top:8px}
 </style>
 </head>
 <body>
@@ -147,6 +164,113 @@ code{font:12px var(--f-mono)}
   <div><h3>좋은 요청의 네 가지</h3><dl class="fourtable"><div><dt>상황</dt><dd>누구의 어떤 상황인지</dd></div><div><dt>할 일</dt><dd>AI가 해야 할 일</dd></div><div><dt>형식</dt><dd>답을 받을 모양 (표, 카드)</dd></div><div><dt>조건</dt><dd>지킬 것과 하지 말 것</dd></div></dl><p class="hint">1장과 3장에서 실제 요청문에 이 네 가지가 어떻게 들어 있는지 확인합니다.</p></div>
   <div><h3>공통 약속</h3><ul class="rules"><li>요청문은 통째로 복사해서 <b>한 번만</b> 보냅니다.</li><li><mark>[대괄호]</mark>는 내 결과로 바꿀 자리입니다.</li><li>「필요할 때만」 요청은 문제가 있을 때만 씁니다.</li><li>모르는 것은 [가설], 확인 못 한 것은 「미확인」으로 남깁니다.</li><li>실제 고객 정보·회사 기밀은 넣지 않습니다. 유료 가입은 하지 않습니다.</li><li>시간은 참고용입니다. 결과 문장이 강사와 달라도 괜찮습니다.</li></ul></div>
  </div>
+<figure class="flowfig"><h3>1차시 흐름 — 아이디어는 이렇게 찾습니다</h3><div class="flowwrap"><svg class="flow" viewBox="0 0 1160 600" role="img" aria-label="1차시 신사업 아이디어 발굴 흐름: 1장에서 회사 강점으로 아이디어 5개를 넓혔다가 1개로 좁혀 카드를 만들고, 2장에서 Canvas 기획서 골격을 만들고, 3장에서 경쟁사를 찾아 공식 사이트로 확인해 배울 점과 다르게 할 점을 정리한 뒤, 4장에서 같은 기획서에 경쟁사 비교와 4주 시범 계획을 넣어 초안을 완성한다" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+<marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="accf" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+<rect x="20" y="50" width="300" height="58" rx="8" class="hd"/>
+<text x="34" y="72" class="tn" text-anchor="start">1장 · 약 20분</text>
+<text x="34" y="97" class="th" text-anchor="start">신사업 아이디어 찾기</text>
+<text x="306" y="97" class="tt" text-anchor="end">Gemini / ChatGPT</text>
+<rect x="340" y="50" width="220" height="58" rx="8" class="hd"/>
+<text x="354" y="72" class="tn" text-anchor="start">2장 · 약 10분</text>
+<text x="354" y="97" class="th" text-anchor="start">기획서 골격</text>
+<text x="546" y="97" class="tt" text-anchor="end">Canvas</text>
+<rect x="580" y="50" width="300" height="58" rx="8" class="hd"/>
+<text x="594" y="72" class="tn" text-anchor="start">3장 · 약 20분</text>
+<text x="594" y="97" class="th" text-anchor="start">경쟁사 벤치마킹</text>
+<text x="866" y="97" class="tt" text-anchor="end">Perplexity</text>
+<rect x="900" y="50" width="240" height="58" rx="8" class="hd"/>
+<text x="914" y="72" class="tn" text-anchor="start">4장 · 약 10분</text>
+<text x="914" y="97" class="th" text-anchor="start">기획서 초안 완성</text>
+<text x="1126" y="97" class="tt" text-anchor="end">같은 Canvas</text>
+<path d="M450,50 C450,26 1020,26 1020,50" class="lnD" marker-end="url(#ah)" fill="none"/>
+<text x="735" y="13" class="tl" text-anchor="middle">같은 Canvas 기획서를 이어서 고친다 (2장 → 4장)</text>
+<rect x="40" y="130" width="260" height="54" rx="8" class="in"/>
+<text x="170.0" y="153.0" class="tb" text-anchor="middle">회사소개 첨부</text>
+<text x="170.0" y="172.0" class="ts" text-anchor="middle">강점 · 부족한 점 · 신사업 조건</text>
+<line x1="170" y1="184" x2="170" y2="220" class="ln" marker-end="url(#ah)"/>
+<text x="178" y="206.0" class="tl" text-anchor="start">요청 ①</text>
+<rect x="20" y="220" width="300" height="54" rx="8" class="bx"/>
+<text x="170.0" y="243.0" class="tb" text-anchor="middle">아이디어 5개로 넓히기</text>
+<text x="170.0" y="262.0" class="ts" text-anchor="middle">회사 강점을 살린 후보들</text>
+<line x1="170" y1="274" x2="170" y2="310" class="ln" marker-end="url(#ah)"/>
+<rect x="40" y="310" width="260" height="64" rx="8" class="bx"/>
+<text x="170.0" y="331" class="tb" text-anchor="middle">같은 기준으로 비교</text>
+<text x="170.0" y="349" class="ts" text-anchor="middle">고객 · 문제 · 가치 · 필요 역량</text>
+<text x="170.0" y="364" class="ts" text-anchor="middle">준비 부담 · 4주 확인 질문</text>
+<line x1="170" y1="374" x2="170" y2="410" class="ln" marker-end="url(#ah)"/>
+<rect x="80" y="410" width="180" height="54" rx="8" class="bx"/>
+<text x="170.0" y="433.0" class="tb" text-anchor="middle">1개로 좁히기</text>
+<text x="170.0" y="452.0" class="ts" text-anchor="middle">추천과 달라도 OK · 요청 ②</text>
+<line x1="170" y1="464" x2="170" y2="500" class="lnA" marker-end="url(#ahA)"/>
+<rect x="60" y="500" width="220" height="54" rx="8" class="out"/>
+<text x="170.0" y="523.0" class="tb" text-anchor="middle">아이디어 카드</text>
+<text x="170.0" y="542.0" class="ts" text-anchor="middle">고객·문제·해결·수익·강점·질문</text>
+<polyline points="280,527 326,527 326,247 340,247" class="lnA" fill="none" marker-end="url(#ahA)"/>
+<text x="303" y="519" class="tlA" text-anchor="middle">카드</text>
+<rect x="360" y="130" width="180" height="54" rx="8" class="bx"/>
+<text x="450.0" y="153.0" class="tb" text-anchor="middle">Canvas 선택</text>
+<text x="450.0" y="172.0" class="ts" text-anchor="middle">새 채팅 → 도구 메뉴</text>
+<line x1="450" y1="184" x2="450" y2="220" class="ln" marker-end="url(#ah)"/>
+<text x="458" y="206.0" class="tl" text-anchor="start">요청 ③</text>
+<rect x="350" y="220" width="200" height="64" rx="8" class="bx"/>
+<text x="450.0" y="241" class="tb" text-anchor="middle">기획서 골격</text>
+<text x="450.0" y="259" class="ts" text-anchor="middle">소제목 7개</text>
+<text x="450.0" y="274" class="ts" text-anchor="middle">경쟁사 칸 = 「조사 예정」</text>
+<line x1="450" y1="284" x2="450" y2="320" class="ln" marker-end="url(#ah)"/>
+<text x="458" y="306.0" class="tl" text-anchor="start">요청 ④</text>
+<rect x="350" y="320" width="200" height="54" rx="8" class="bx"/>
+<text x="450.0" y="343.0" class="tb" text-anchor="middle">한 문단 고치기</text>
+<text x="450.0" y="362.0" class="ts" text-anchor="middle">해결 방법과 제공 가치</text>
+<line x1="450" y1="374" x2="450" y2="500" class="lnA" marker-end="url(#ahA)"/>
+<rect x="360" y="500" width="180" height="54" rx="8" class="out"/>
+<text x="450.0" y="523.0" class="tb" text-anchor="middle">기획서 v1</text>
+<text x="450.0" y="542.0" class="ts" text-anchor="middle">다음: 경쟁사 채우기</text>
+<rect x="600" y="130" width="260" height="54" rx="8" class="bx"/>
+<text x="730.0" y="153.0" class="tb" text-anchor="middle">아이디어 한 줄 넣기</text>
+<text x="730.0" y="172.0" class="ts" text-anchor="middle">1장 카드에서 · 요청 ⑤</text>
+<line x1="730" y1="184" x2="730" y2="220" class="ln" marker-end="url(#ah)"/>
+<rect x="580" y="220" width="300" height="54" rx="8" class="bx"/>
+<text x="730.0" y="243.0" class="tb" text-anchor="middle">경쟁사·유사 서비스 3곳</text>
+<text x="730.0" y="262.0" class="ts" text-anchor="middle">대상 고객 · 기능 · 가격 · 강점 · 약점</text>
+<line x1="730" y1="274" x2="730" y2="310" class="ln" marker-end="url(#ah)"/>
+<rect x="600" y="310" width="260" height="54" rx="8" class="bx"/>
+<text x="730.0" y="333.0" class="tb" text-anchor="middle">공식 사이트 직접 확인</text>
+<text x="730.0" y="352.0" class="ts" text-anchor="middle">2곳 이상 · 다르면 요청 ⑥</text>
+<line x1="730" y1="364" x2="730" y2="400" class="ln" marker-end="url(#ah)"/>
+<rect x="590" y="400" width="135" height="64" rx="8" class="bx"/>
+<text x="657.5" y="428.0" class="tb" text-anchor="middle">배울 점</text>
+<text x="657.5" y="447.0" class="ts" text-anchor="middle">경쟁사의 좋은 점</text>
+<rect x="735" y="400" width="135" height="64" rx="8" class="bx"/>
+<text x="802.5" y="428.0" class="tb" text-anchor="middle">다르게 할 점</text>
+<text x="802.5" y="447.0" class="ts" text-anchor="middle">회사 강점에서</text>
+<line x1="730" y1="464" x2="730" y2="500" class="lnA" marker-end="url(#ahA)"/>
+<rect x="620" y="500" width="220" height="54" rx="8" class="out"/>
+<text x="730.0" y="523.0" class="tb" text-anchor="middle">경쟁사 메모</text>
+<text x="730.0" y="542.0" class="ts" text-anchor="middle">확인 못 한 것 = 미확인</text>
+<polyline points="840,527 886,527 886,247 900,247" class="lnA" fill="none" marker-end="url(#ahA)"/>
+<text x="863" y="519" class="tlA" text-anchor="middle">메모</text>
+<rect x="920" y="130" width="200" height="54" rx="8" class="bx"/>
+<text x="1020.0" y="153.0" class="tb" text-anchor="middle">같은 Canvas로 복귀</text>
+<text x="1020.0" y="172.0" class="ts" text-anchor="middle">새 채팅 만들지 않기</text>
+<line x1="1020" y1="184" x2="1020" y2="220" class="ln" marker-end="url(#ah)"/>
+<rect x="910" y="220" width="220" height="54" rx="8" class="bx"/>
+<text x="1020.0" y="243.0" class="tb" text-anchor="middle">요청 ⑦ + 경쟁사 메모</text>
+<text x="1020.0" y="262.0" class="ts" text-anchor="middle">「불러오기」로 붙이기</text>
+<line x1="1020" y1="274" x2="1020" y2="310" class="ln" marker-end="url(#ah)"/>
+<rect x="910" y="310" width="220" height="54" rx="8" class="bx"/>
+<text x="1020.0" y="333.0" class="tb" text-anchor="middle">경쟁사 비교표</text>
+<text x="1020.0" y="352.0" class="ts" text-anchor="middle">차별점은 [가설] · 출처 표시</text>
+<line x1="1020" y1="364" x2="1020" y2="400" class="ln" marker-end="url(#ah)"/>
+<rect x="910" y="400" width="220" height="64" rx="8" class="bx"/>
+<text x="1020.0" y="428.0" class="tb" text-anchor="middle">4주 시범 계획</text>
+<text x="1020.0" y="447.0" class="ts" text-anchor="middle">준비 → 시범 → 관찰 → 평가</text>
+<line x1="1020" y1="464" x2="1020" y2="500" class="lnA" marker-end="url(#ahA)"/>
+<rect x="920" y="500" width="200" height="54" rx="8" class="out"/>
+<text x="1020.0" y="523.0" class="tb" text-anchor="middle">기획서 초안</text>
+<text x="1020.0" y="542.0" class="ts" text-anchor="middle">→ 2차시 검토로</text>
+<text x="20" y="588" class="ts" text-anchor="start">실선 화살표: 순서 · 색 화살표: 다음 장으로 넘기는 결과물 · 점선: 같은 Canvas 기획서</text>
+</svg></div><figcaption>1장에서 회사 강점을 바탕으로 아이디어를 5개로 넓혔다가 1개로 좁히고, 3장에서 경쟁사를 확인해 배울 점과 다르게 할 점을 찾은 뒤, 4장에서 같은 기획서에 합칩니다.</figcaption></figure>
 </section>
 <section class="chap" id="idea" aria-labelledby="h1">
   <header class="chead"><div class="cno">1</div><div class="cmeta"><p class="eyebrow">1차시 · 1장 · 약 20분</p><h2 id="h1">AI와 신사업 아이디어 찾기</h2><p class="tools">Gemini (또는 ChatGPT)</p></div></header>
