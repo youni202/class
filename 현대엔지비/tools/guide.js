@@ -87,6 +87,14 @@ const FLOW1=fs.readFileSync(__dirname+'/flow1.svg.html','utf8');
 const FLOW2=fs.readFileSync(__dirname+'/flow2.svg.html','utf8');
 const FIG2=`<figure class="flowfig" id="flow2"><h3>2차시 흐름 — 기획서를 다듬어 발표자료로</h3><div class="flowwrap">${FLOW2}</div><figcaption>5장에서 검토 의견 중 사람이 고른 것만 반영해 최종 기획서를 만들고, 6장에서 8장 원고로 Gamma 발표자료를 만들고, 7장에서 그림·배치·글을 한 번씩 고쳐 PPTX로 받은 뒤, 8장에서 소개와 질문으로 마무리합니다.</figcaption></figure>`;
 const js=fs.readFileSync(__dirname+'/guide.client.js','utf8');
+// 실습파일 4개를 zip 하나로 (한글 파일명 UTF-8 표시)
+const ZIPB64=require('child_process').execFileSync('python3',['-c',`import sys,io,zipfile,base64,glob,os,unicodedata
+b=io.BytesIO()
+with zipfile.ZipFile(b,'w',zipfile.ZIP_DEFLATED) as z:
+    for f in sorted(glob.glob(os.path.join(sys.argv[1],'*.docx'))):
+        z.write(f,'엔지비기업_실습파일/'+unicodedata.normalize('NFC',os.path.basename(f)))
+print(base64.b64encode(b.getvalue()).decode())`,require('path').join(ROOT,'02_실습파일')]).toString().trim();
+const ALLFILES=Object.entries(FILES).map(([n,arr])=>arr.map(([f,k])=>`<li><b>${n}장</b>${esc(f.replace(/^\d장_/,'').replace('.docx',''))}<span>${k}</span></li>`).join('')).join('');
 const CSNAME={1:'아이디어와 리서치',2:'기획서와 발표자료'};
 const nav=`<nav class="toc" aria-label="목차">
 <a class="tbasic" href="#basics" data-sec="basics">시작 전에</a>
@@ -104,6 +112,7 @@ const html=`<title>엔지비기업 AI 실습 가이드</title>
  <p class="eyebrow">현대엔지비 · 생성형 AI 기초 실습 · 2차시</p>
  <h1>엔지비기업 AI 실습 가이드</h1>
  <p class="lead">가상의 무역·납품 업체 「엔지비기업」이 기존 강점을 살려 시작할 신사업을 AI와 함께 기획합니다. 아이디어를 찾고, 경쟁사를 조사해 벤치마킹하고, 신사업 기획서를 완성한 뒤 발표자료 8장을 만듭니다. 장마다 순서대로 따라 하고, 요청문은 「복사」 버튼으로 붙여넣으세요.</p>
+ <div class="allfiles"><div class="aftext"><p class="aftitle">실습파일 4개</p><ul>${ALLFILES}</ul></div><button type="button" class="dlall" data-dlzip="1">한 번에 받기 <small>zip</small></button></div>
  <ul class="outcome"><li><span>결과물 1</span>신사업 기획서 1개</li><li><span>결과물 2</span>발표자료 8장 (PPTX)</li><li><span>도구</span>Gemini 또는 ChatGPT · Perplexity · Gamma 무료 계정</li></ul>
 </header>
 <section class="basics" id="basics" aria-labelledby="hb">
@@ -119,7 +128,8 @@ ${STEPS.map(s=>(s.n===5?FIG2:'')+chapter(s)).join('\n')}
 </main>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script>const FILEDATA=${JSON.stringify(Object.fromEntries(Object.entries(FILES).flatMap(([n,arr])=>arr.map(([f])=>[f,fs.readFileSync(require('path').join(ROOT,'02_실습파일',f)).toString('base64')]))))};
+<script>const ZIPDATA="${ZIPB64}";
+const FILEDATA=${JSON.stringify(Object.fromEntries(Object.entries(FILES).flatMap(([n,arr])=>arr.map(([f])=>[f,fs.readFileSync(require('path').join(ROOT,'02_실습파일',f)).toString('base64')]))))};
 const PROMPTS=${JSON.stringify(P)};const FOLLOWS=${JSON.stringify(Object.fromEntries(Object.entries(FOLLOW).flatMap(([n,arr])=>arr.map(([nm,t],k)=>[n+'-'+k,t]))))};const EXAMPLES=${JSON.stringify(Object.fromEntries(Object.entries(EX).map(([k,v])=>[k,v.body])))};
 ${js}</script>`;
 fs.writeFileSync(require('path').join(__dirname,'.artifact.html'),html);

@@ -49,9 +49,11 @@ $$('.shot img[data-src]').forEach(img=>{
 function fileBlob(name){const b=atob(FILEDATA[name]);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);
   return new Blob([u],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'})}
 let dlNs; const dlReady=(window.claude&&window.claude.use)?window.claude.use('downloads').then(n=>dlNs=n).catch(()=>dlNs=null):Promise.resolve(null);
+function b64Blob(b64,type){const b=atob(b64);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new Blob([u],{type})}
 document.addEventListener('click',async e=>{
-  const b=e.target.closest('button[data-dl]');if(!b)return;
-  const name=b.dataset.dl;const blob=fileBlob(name);
+  const b=e.target.closest('button[data-dl],button[data-dlzip]');if(!b)return;
+  const zip=!!b.dataset.dlzip;
+  const name=zip?'엔지비기업_실습파일.zip':b.dataset.dl;const blob=zip?b64Blob(ZIPDATA,'application/zip'):fileBlob(name);
   if(window.claude&&window.claude.use){
     await dlReady;
     if(dlNs){try{await dlNs.save({filename:name,data:blob});say(name+' 받기를 시작했습니다')}catch(err){say(err&&err.code==='declined'?'받기를 취소했습니다':'이 화면에서는 파일을 받을 수 없습니다. 강사에게 파일을 요청하세요')}return}
