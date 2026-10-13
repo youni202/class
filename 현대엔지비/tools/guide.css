@@ -221,3 +221,5 @@ code{font:12px var(--f-mono)}
 .dlall:hover{filter:brightness(1.1)}
 @media (max-width:520px){.dlall{width:100%}}
 a.dl,a.dlall{display:inline-flex;align-items:center;justify-content:center;gap:4px;border-radius:8px;text-decoration:none;font-weight:600}
+
+.appx{border-top-color:var(--accent)}.appx .stepcard>p{max-width:68ch;margin:0 0 10px}.appx h5{margin:14px 0 8px;font-size:14px;color:var(--muted)}.todo2{margin:0 0 12px;padding-left:22px;display:grid;gap:6px;max-width:72ch}.extlink{font-weight:700;color:var(--accent)}.tooltable td:nth-child(n),.tooltable th:nth-child(n){text-align:left;width:auto}.tooltable td{vertical-align:top}

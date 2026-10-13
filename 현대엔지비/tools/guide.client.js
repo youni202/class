@@ -47,7 +47,7 @@ $$('.shot img[data-src]').forEach(img=>{
 
 // 장별 파일 받기: 온라인 가이드는 downloads 기능, 로컬 HTML은 브라우저 다운로드
 function fileBlob(name){const b=atob(FILEDATA[name]);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);
-  return new Blob([u],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'})}
+  return new Blob([u],{type:/\.txt$/.test(name)?'text/plain;charset=utf-8':'application/vnd.openxmlformats-officedocument.wordprocessingml.document'})}
 let dlNs; const dlReady=(window.claude&&window.claude.use)?window.claude.use('downloads').then(n=>dlNs=n).catch(()=>dlNs=null):Promise.resolve(null);
 function b64Blob(b64,type){const b=atob(b64);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new Blob([u],{type})}
 document.addEventListener('click',async e=>{
