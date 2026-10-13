@@ -41,8 +41,8 @@ Gamma가 안 될 때 (6·7장)
 마지막 PowerPoint·Google Slides 직접 작성: 항상 가능. 글 수정은 Gemini 요청 ⑮로 받아 붙임.
 
 수업 전 리허설 (실행 결과는 아직 확보하지 않음)
-- Gemini 파일 첨부(docx), Canvas 진입 메뉴, 문단 선택 후 요청, 「공유 및 내보내기 → Docs로 내보내기」
-- ChatGPT Canvas 사용 방법(도구 메뉴 또는 "캔버스로" 요청)
+- Gemini 파일 첨부(docx), Canvas 진입 메뉴(요청 ③ 전에 Canvas를 먼저 켜야 함), 문단 선택 후 요청, 「공유 및 내보내기 → Docs로 내보내기」
+- ChatGPT Canvas 사용 방법(입력창 「+」 → 「캔버스」를 먼저 선택. 요청문만으로는 Canvas가 열리지 않음)
 - Perplexity 무료 기본 검색에서 대표 아이디어로 경쟁사 3곳과 출처 링크가 나오는지
 - Gamma 무료 크레딧, 생성 전 구성 계획 화면, /ai·AI 편집·Smart Layouts, Export → PowerPoint
 - 미리캔버스·Kimi 대안 경로
