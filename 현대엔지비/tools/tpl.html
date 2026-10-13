@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>현대엔지비 AI 실습 교안</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<title>엔지비기업 강사 교안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <!--
   [편집 안내]
   1) 실제 화면 캡처 넣기: 캡처 이미지를 같은 폴더의 captures/ 에 cap-01.png ~ cap-26.png (jpg/webp도 가능)로 저장하면
@@ -18,7 +19,7 @@
 :root{--navy:#0C2E4E;--ink:#10212F;--teal:#138A7E;--tealb:#17A89A;--tealsoft:#E4F2F0;--amber:#E08A2B;--ambersoft:#FBEFDD;--paper:#F5F6F8;--card:#fff;--line:#E3E7EC;--muted:#586573;--pin:#D62828}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){--ink:#E8EEF3;--paper:#0B1621;--card:#13222F;--line:#25384A;--muted:#9FB0BF;--tealsoft:#12302F;--ambersoft:#33250F}}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 Pretendard,system-ui,sans-serif}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 "IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
 a{color:var(--teal)}
 header.hero{background:var(--navy);color:#fff;padding:48px 16px 36px}
 .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
@@ -52,7 +53,7 @@ figure.shot img.cap{display:none;width:100%;height:auto}
 figure.shot.has img.cap{display:block}
 figure.shot.has svg.wire{display:none}
 svg.wire{width:100%;height:auto;display:block}
-.pin{position:absolute;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;background:var(--pin);color:#fff;font:700 15px/28px Pretendard,sans-serif;text-align:center;box-shadow:0 0 0 3px #fff,0 2px 6px rgba(0,0,0,.35);pointer-events:none}
+.pin{position:absolute;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;background:var(--pin);color:#fff;font:700 15px/28px "IBM Plex Sans KR","Malgun Gothic",sans-serif;text-align:center;box-shadow:0 0 0 3px #fff,0 2px 6px rgba(0,0,0,.35);pointer-events:none}
 figcaption{padding:8px 12px;font-size:13px;color:var(--muted);background:var(--paper);border-top:1px solid var(--line);line-height:1.5}
 figcaption code{font-size:12px}
 ol.legend{list-style:none;margin:0 0 14px;padding:0}
@@ -62,10 +63,10 @@ ul.act{margin:0 0 12px;padding-left:20px;font-size:15px}
 .prompt{border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
 .prompt .bar{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:6px 8px 6px 12px;font-size:14px;font-weight:600}
 .prompt .bar .t{flex:1}
-.prompt button{font:600 13px Pretendard,sans-serif;border:0;border-radius:8px;padding:6px 14px;cursor:pointer;background:var(--tealb);color:#fff;min-height:32px}
+.prompt button{font:600 13px "IBM Plex Sans KR","Malgun Gothic",sans-serif;border:0;border-radius:8px;padding:6px 14px;cursor:pointer;background:var(--tealb);color:#fff;min-height:32px}
 .prompt button:hover{background:var(--teal)}.prompt button:focus-visible{outline:3px solid var(--amber)}
 .prompt button.done{background:var(--amber)}
-.prompt pre{margin:0;padding:12px 14px;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font:14px/1.7 Pretendard,sans-serif;background:var(--paper)}
+.prompt pre{margin:0;padding:12px 14px;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font:14px/1.7 "IBM Plex Sans KR","Malgun Gothic",sans-serif;background:var(--paper)}
 .prompt pre mark{background:var(--ambersoft);color:var(--amber);font-weight:700;border-radius:4px;padding:0 3px}
 .note{font-size:14px;border-radius:10px;padding:8px 12px;margin:8px 0}
 .note.ok{background:var(--tealsoft)}.note.warn{background:var(--ambersoft)}
@@ -110,7 +111,7 @@ footer{padding:28px 16px 48px;color:var(--muted);font-size:14px;text-align:cente
     <table class="tl"><thead><tr><th>파일명</th><th>캡처할 화면</th></tr></thead><tbody id="capl"></tbody></table>
   </section>
 </main>
-<footer>현대엔지비 AI 실습 교안 · 2026.10.13 · 원본 PPTX 44장 기준 · 와이어프레임은 설명용이며 실제 서비스 화면이 아닙니다</footer>
+<footer>엔지비기업 신사업 실습 · 강사 교안 · 2026.10.13 · 와이어프레임은 설명용이며 실제 서비스 화면이 아닙니다</footer>
 <div class="toast" id="toast" role="status" aria-live="polite">복사했습니다</div>
 <script id="data" type="application/json">__DATA__</script>
 <script>
@@ -120,7 +121,7 @@ const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 /* ---------- 와이어프레임 (viewBox 800x450) ---------- */
 const C={bg:'#fff',ln:'#C9D1D9',fill:'#EEF1F4',txt:'#9AA7B3',acc:'#138A7E',navy:'#0C2E4E',hi:'#FBEFDD',hib:'#E08A2B'};
 const R=(x,y,w,h,f=C.fill,s=C.ln,r=8)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${s}"/>`;
-const T=(x,y,t,sz=13,f=C.txt,w=400,a='start')=>`<text x="${x}" y="${y}" font-size="${sz}" fill="${f}" font-weight="${w}" text-anchor="${a}" font-family="Pretendard,sans-serif">${t}</text>`;
+const T=(x,y,t,sz=13,f=C.txt,w=400,a='start')=>`<text x="${x}" y="${y}" font-size="${sz}" fill="${f}" font-weight="${w}" text-anchor="${a}" font-family="IBM Plex Sans KR,Malgun Gothic,sans-serif">${t}</text>`;
 const L=(x,y,w,n=1,gap=14)=>Array.from({length:n},(_,i)=>`<rect x="${x}" y="${y+i*gap}" width="${i==n-1&&n>1?w*.6:w}" height="6" rx="3" fill="#DDE3E9"/>`).join('');
 const chatBase=(extra='')=>R(0,0,800,450,C.bg,C.ln,0)+R(0,0,150,450,'#F3F5F7',C.ln,0)+R(14,56,122,34,'#DCE6F2','#B8C8DC',17)+T(75,78,'＋ 새 채팅',13,C.navy,600,'middle')+L(18,120,110,6,22)+R(150,0,650,44,C.bg,C.ln,0)+R(170,10,130,24,C.fill,C.ln,12)+T(235,27,'기본 모드 ▾',12,C.navy,600,'middle')+T(660,27,'Gemini',13,C.txt,600)+extra;
 const inputBox=(x=190,w=570)=>R(x,350,w,70,C.bg,'#9AA7B3',22)+T(x+20,380,'여기에 입력하세요',13)+T(x+22,408,'＋',16,C.navy,700)+T(x+70,408,'도구',12,C.navy,600)+R(x+w-50,372,34,34,C.acc,C.acc,17)+T(x+w-33,395,'▶',13,'#fff',700,'middle');
