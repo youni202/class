@@ -27,6 +27,7 @@ function memoText(){
 document.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.dataset.copy)copyText(buildPrompt(+b.dataset.copy),b);
+  else if(b.dataset.follow)copyText(FOLLOWS[b.dataset.follow],b,'후속 요청을 복사했습니다');
   else if(b.dataset.copyex)copyText(EXAMPLES[b.dataset.copyex],b,'예시를 복사했습니다');
   else if(b.id==='copymemo')copyText(memoText(),b,'경쟁사 메모를 복사했습니다');
   else if(b.dataset.loadmemo){const f=$('#'+b.dataset.loadmemo);if(f){f.value=memoText();f.dispatchEvent(new Event('input',{bubbles:true}));say('3장 경쟁사 메모를 넣었습니다')}}
@@ -58,3 +59,25 @@ document.addEventListener('click',async e=>{
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);say(name+' 받기를 시작했습니다');
 });
+
+// 목차: 모바일 열고 닫기
+const side=$('#side'),tocbtn=$('#tocbtn');
+function setToc(open){side.classList.toggle('open',open);tocbtn.setAttribute('aria-expanded',open?'true':'false')}
+tocbtn.addEventListener('click',()=>setToc(!side.classList.contains('open')));
+side.addEventListener('click',e=>{if(e.target.closest('a')&&matchMedia('(max-width:960px)').matches)setToc(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&side.classList.contains('open')){setToc(false);tocbtn.focus()}});
+// 목차: 지금 보는 장·단계 표시
+const secLinks=$$('.toc a[data-sec]'),stepLinks=$$('.toc a[data-step]');
+function markSec(id){
+  secLinks.forEach(a=>a.classList.toggle('on',a.dataset.sec===id));
+  $$('.tch').forEach(t=>t.classList.toggle('active',t.dataset.chap===id));
+  const a=secLinks.find(a=>a.dataset.sec===id);if(a)$('#tocnow').textContent=a.textContent.replace(/^(\d)/,'$1장 ');
+}
+function markStep(id){stepLinks.forEach(a=>a.classList.toggle('now',a.dataset.step===id))}
+if('IntersectionObserver' in window){
+  const secIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)markSec(e.target.id)})},{rootMargin:'-20% 0px -70% 0px'});
+  ['basics','flow2',...$$('.chap').map(s=>s.id)].forEach(id=>{const el=document.getElementById(id);if(el)secIO.observe(el)});
+  const stepIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)markStep(e.target.id)})},{rootMargin:'-25% 0px -65% 0px'});
+  $$('.stepcard').forEach(s=>stepIO.observe(s));
+}
+markSec('basics');
