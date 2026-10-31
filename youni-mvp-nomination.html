@@ -295,11 +295,11 @@ html { scroll-behavior: smooth; }
         <h3>How did you meet and how have you engaged with your nominee?</h3>
         <span class="ko">후보자를 어떻게 만났고, 어떻게 교류해 왔나요?</span>
       </div>
-      <div class="note">이 질문은 <strong>추천인만 쓸 수 있는 내용</strong>입니다. 실제로 겪은 사실로 채워 주세요.</div>
+      <div class="note">AI놀이터에서 함께한 내용으로 미리 채워 두었습니다. <strong>만난 해</strong>만 넣으시고, 나머지는 실제 경험에 맞게 고쳐 주세요.</div>
       <div class="grid2">
         <div class="field">
           <label for="q1Where">처음 만난 곳 <span class="req">*</span></label>
-          <input type="text" id="q1Where" placeholder="예: GPTers AI study" autocomplete="off">
+          <input type="text" id="q1Where" value="the AI Playground community" placeholder="예: the AI Playground community" autocomplete="off">
           <small>영문으로 입력. 커뮤니티나 행사 이름.</small>
         </div>
         <div class="field">
@@ -309,13 +309,13 @@ html { scroll-behavior: smooth; }
       </div>
       <div class="field">
         <label for="q1Did">함께한 활동 <span class="req">*</span></label>
-        <input type="text" id="q1Did" placeholder="예: co-hosted Copilot study sessions and prepared DDD Seoul events together" autocomplete="off">
+        <input type="text" id="q1Did" value="worked together there, where Youni creates content and supports members and events" placeholder="예: worked together there, where Youni creates content and supports members and events" autocomplete="off">
         <small>"Since then we have ___." 문장에 들어갑니다. 동사 과거분사로 시작하세요.</small>
       </div>
       <div class="field">
-        <label for="q1Saw">직접 본 장면 (선택)</label>
-        <textarea id="q1Saw" rows="2" placeholder="예: At one study session, Youni introduced a beginner to a DDD Seoul organizer, and they later ran a joint workshop."></textarea>
-        <small>한 문장이면 충분합니다. 글자 수가 넘치면 줄여 주세요.</small>
+        <label for="q1Saw">추천인이 본 후보자의 모습</label>
+        <textarea id="q1Saw" rows="2" placeholder="예: Youni has a broad understanding of AI and is always ready to take an active part.">Youni has a broad understanding of AI and is always ready to take an active part whenever the community needs help.</textarea>
+        <small>AI에 대한 폭넓은 이해, 언제든 적극적인 참여. 직접 본 일화가 있으면 덧붙여도 됩니다. 글자 수가 넘치면 줄여 주세요.</small>
       </div>
       <div class="final"></div>
     </div>
@@ -433,8 +433,7 @@ html { scroll-behavior: smooth; }
       var s = "I met " + n + " through " + or(v("q1Where"), "community/event") + " in " + or(v("q1Year"), "year") + ". " +
         "Since then we have " + or(v("q1Did"), "specific activities together") + ". ";
       if (v("q1Saw")) s += v("q1Saw") + " ";
-      s += "I have also seen " + n + " across many communities: GPTers, AI Playground, DDD Seoul, Copilot Club and Macbi Planning. " +
-        n + " is rarely just a participant, but the person who connects people, shares what works, and turns learning into action, especially around Microsoft 365 Copilot.";
+      s += "I have also seen " + n + " in GPTers, DDD Seoul, Copilot Club and Macbi Planning, connecting people, sharing what works, and turning learning into action around Microsoft 365 Copilot.";
       return s;
     },
     q2: function () {
