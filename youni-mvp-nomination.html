@@ -1,0 +1,583 @@
+<title>Youni MVP 추천서</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: one reading column, a sticky step bar, and worksheet cards where the nominator types. */
+:root {
+  --bg: #F4F6FA;
+  --surface: #FFFFFF;
+  --ink: #17213A;
+  --muted: #5A6480;
+  --line: #DCE1EC;
+  --accent: #2F5BD3;
+  --accent-soft: #E6ECFB;
+  --mark: #FFE58A;
+  --ok: #1F8A5B;
+  --warn: #B76E00;
+  --bad: #C2372F;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1424; --surface: #171E33; --ink: #E7EBF5; --muted: #9AA4BF; --line: #2A3350;
+    --accent: #8EA8F5; --accent-soft: #1F2A4A; --mark: #5C4B12; --ok: #4FC18E; --warn: #E2A646; --bad: #EF7A72;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1424; --surface: #171E33; --ink: #E7EBF5; --muted: #9AA4BF; --line: #2A3350;
+  --accent: #8EA8F5; --accent-soft: #1F2A4A; --mark: #5C4B12; --ok: #4FC18E; --warn: #E2A646; --bad: #EF7A72;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body);
+  font-size: 15px; line-height: 1.65; margin: 0;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap {
+  max-width: 880px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+header.top { padding-block: 40px 24px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin: 6px 0 10px; text-wrap: balance; }
+h2 { font-size: 22px; margin: 0 0 6px; text-wrap: balance; }
+h3 { font-size: 16px; margin: 0; }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 62ch; }
+.hub { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.hub span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 12px; font-size: 13px; }
+.hub span.core { background: var(--accent); color: var(--surface); border-color: var(--accent); font-weight: 700; }
+
+nav.steps {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+}
+nav.steps .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; }
+nav.steps a {
+  white-space: nowrap; text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500;
+  padding: 6px 12px; border-radius: 6px;
+}
+nav.steps a:hover, nav.steps a:focus-visible { background: var(--accent-soft); color: var(--ink); outline: none; }
+
+main { display: grid; gap: 48px; padding-block: 32px 64px; }
+section { display: grid; gap: 16px; scroll-margin-top: 64px; }
+.sec-head { display: grid; gap: 4px; }
+.sec-head p { color: var(--muted); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.note { background: var(--accent-soft); border-radius: 8px; padding: 12px 14px; font-size: 14px; }
+.note.warn { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); }
+.note strong { font-weight: 700; }
+.letter p + p { margin-top: 10px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; font-size: 12px; letter-spacing: .04em; white-space: nowrap; }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-weight: 500; font-size: 14px; }
+.field label .en { color: var(--muted); font-weight: 400; font-size: 12px; margin-left: 4px; }
+.field small { color: var(--muted); font-size: 12px; line-height: 1.5; }
+.req { color: var(--bad); }
+input[type="text"], input[type="email"], input[type="url"], select, textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px;
+}
+textarea { resize: vertical; min-height: 64px; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.row-copy { display: flex; gap: 6px; }
+.row-copy input, .row-copy select { flex: 1; min-width: 0; }
+
+button {
+  font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+  border-radius: 6px; padding: 7px 12px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink);
+}
+button:hover { border-color: var(--accent); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+
+.q-title { display: grid; gap: 2px; }
+.q-title .ko { color: var(--muted); font-size: 14px; }
+.q-tag { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.final { display: grid; gap: 8px; border-top: 1px dashed var(--line); padding-top: 14px; }
+.final-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.final textarea { min-height: 150px; background: var(--surface); }
+.meter { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 12px; }
+.bar { flex: 1; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; min-width: 60px; }
+.bar i { display: block; height: 100%; background: var(--ok); width: 0; }
+.meter.over { color: var(--bad); }
+.meter.over .bar i { background: var(--bad); }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill { font-size: 12px; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+.pill.todo { background: var(--mark); }
+.pill.done { background: color-mix(in srgb, var(--ok) 18%, var(--surface)); }
+.pill.edited { background: var(--line); }
+.btns { display: flex; flex-wrap: wrap; gap: 6px; }
+details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+details p { margin-top: 6px; font-size: 14px; color: var(--muted); }
+
+.check { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; align-items: start; padding-block: 10px; border-bottom: 1px solid var(--line); }
+.check:last-child { border-bottom: 0; }
+.check input[type="checkbox"] { margin-top: 5px; width: 16px; height: 16px; accent-color: var(--accent); }
+.check .body { display: grid; gap: 6px; min-width: 0; }
+.check .body span { color: var(--muted); font-size: 13px; }
+.progress { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  background: var(--ink); color: var(--bg); padding: 8px 16px; border-radius: 8px; font-size: 13px;
+  opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 20;
+}
+.toast.show { opacity: 1; }
+footer { color: var(--muted); font-size: 13px; padding-block: 0 48px; }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Microsoft MVP Nomination · Nominee Information</div>
+    <h1>Youni MVP 추천서 작성 키트</h1>
+    <p class="lead">추천해 주셔서 감사합니다. 이 페이지에서 칸을 채우면 MVP 추천 양식의 <strong>후보자 정보(Nominee Information)</strong> 단계에 그대로 붙여 넣을 영문 답변이 완성됩니다. 입력한 내용은 이 브라우저에만 임시 저장됩니다.</p>
+    <div class="hub" aria-label="후보자가 연결하는 커뮤니티">
+      <span class="core">Youni · 연결하는 사람</span>
+      <span>GPTers</span><span>맥비기획</span><span>AI놀이터</span><span>DDD Seoul</span><span>Copilot Club</span><span>기업 AI 교육</span>
+    </div>
+  </div>
+</header>
+
+<nav class="steps" aria-label="단계">
+  <div class="wrap">
+    <a href="#letter">1 · 인사말</a>
+    <a href="#profile">2 · 후보자 소개</a>
+    <a href="#basic">3 · 기본 정보</a>
+    <a href="#answers">4 · 서술형 답변</a>
+    <a href="#evidence">5 · 증빙 체크</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="letter">
+    <div class="sec-head">
+      <h2>추천인께 드리는 글</h2>
+    </div>
+    <div class="card letter">
+      <p>안녕하세요!</p>
+      <p>Microsoft MVP 추천서 작성에 참고하실 수 있도록 제가 해 온 주요 활동을 정리했습니다.</p>
+      <p>저는 IT 서비스 기획과 기업 AI 교육을 바탕으로 Microsoft 365 Copilot, Copilot Studio, Power Automate 같은 Microsoft 기술을 실무에 적용하고 확산하는 일을 해 왔습니다. 기업 교육 외에도 8,000명 이상 규모의 맥비기획 커뮤니티에서 Microsoft 관련 지식과 경험을 나누고, GPTers에서 AI 스터디를 운영하고 있습니다. AI놀이터에서는 경험 공유, 운영 페이지 기획, 포스터 제작을 맡고 있고, DDD Seoul 행사 준비와 운영, Copilot Club의 기술 교류에도 함께하고 있습니다.</p>
+      <p>제가 가장 중요하게 생각하는 것은 이 여러 곳을 <strong>연결</strong>하는 일입니다. 사람들이 기술을 쉽게 이해하고 직접 써 보고, 서로 다른 커뮤니티가 경험을 나눌 수 있게 만드는 것입니다.</p>
+      <p>추천서는 직접 보신 활동과 경험을 중심으로 써 주시면 감사하겠습니다.</p>
+      <div class="note"><strong>작성 순서:</strong> 3번에서 기본 정보를 확인하고, 4번에서 각 질문의 빈칸을 채운 뒤 완성된 영문을 복사해 양식에 붙여 넣으시면 됩니다. 각 답변은 영문 500자 이하여야 합니다.</div>
+    </div>
+  </section>
+
+  <section id="profile">
+    <div class="sec-head">
+      <h2>후보자 한눈에 보기</h2>
+      <p>Microsoft AI 기술과 사람, 기업, 커뮤니티를 연결하는 기술 교육자이자 커뮤니티 리더입니다.</p>
+    </div>
+    <div class="card">
+      <h3>역할과 전문 분야</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>구분</th><th>활동 내용</th></tr></thead>
+          <tbody>
+            <tr><td>IT 서비스 기획</td><td>서비스 전략, UX/UI, 업무 프로세스, 디지털 서비스 기획</td></tr>
+            <tr><td>Microsoft 기술 교육</td><td>Microsoft 365 Copilot, Copilot Studio, Power Automate, Excel Copilot</td></tr>
+            <tr><td>기업 AI 도입 지원</td><td>직무별 AI 활용 시나리오 설계, 실습 교육, 업무 자동화</td></tr>
+            <tr><td>커뮤니티 리더십</td><td>AI 스터디 운영, 기술 경험 공유, 참여자 학습 지원</td></tr>
+            <tr><td>콘텐츠·행사 기획</td><td>커뮤니티 운영 페이지, 포스터, 행사 준비와 운영</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">기술 전문성과 서비스 기획 역량을 함께 써서, 비개발자도 기술을 이해하고 직접 적용하도록 돕는 점이 차별점입니다.</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>커뮤니티 기여</h3>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td><strong>맥비기획</strong></td><td>회원 8,000명 이상 커뮤니티에서 Microsoft 기술과 활용 경험 공유</td></tr>
+              <tr><td><strong>GPTers</strong></td><td>AI 스터디 리더. 스터디 운영, 실습 공유, 참여자 학습 지원</td></tr>
+              <tr><td><strong>AI놀이터</strong></td><td>AI 활용 경험 공유, 운영 페이지 기획, 포스터 제작</td></tr>
+              <tr><td><strong>DDD Seoul</strong></td><td>개발자 커뮤니티 행사 준비와 운영</td></tr>
+              <tr><td><strong>Copilot Club</strong></td><td>Copilot 활용 경험 공유와 기술 교류</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h3>기업·기관 교육</h3>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td><strong>KT</strong></td><td>Copilot 활용, 사업기획, AI 업무 혁신</td></tr>
+              <tr><td><strong>현대모비스</strong></td><td>Excel Copilot, 데이터 분석 실무</td></tr>
+              <tr><td><strong>한독제약</strong></td><td>마케팅 담당자·리더 AI 활용</td></tr>
+              <tr><td><strong>보령제약</strong></td><td>Copilot Studio 업무용 에이전트 제작</td></tr>
+              <tr><td><strong>농협</strong></td><td>문서 작성·데이터 분석·업무 자동화</td></tr>
+              <tr><td><strong>한국예탁결제원</strong></td><td>AI 활용 전략, 데이터 분석, 자동화</td></tr>
+              <tr><td><strong>중앙그룹</strong></td><td>생성형 AI·에이전틱 AI 활용</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="note warn"><strong>주의:</strong> 8,000명은 맥비기획 전체 회원 규모입니다. 교육 인원이나 직접 영향을 받은 인원으로 쓰지 말아 주세요. MVP 심사는 유료 강의보다 자발적이고 공개된 커뮤니티 기여를 중요하게 봅니다.</div>
+  </section>
+
+  <section id="basic">
+    <div class="sec-head">
+      <h2>기본 정보</h2>
+      <p>양식 상단 입력칸과 같은 순서입니다. 오른쪽 버튼으로 하나씩 복사할 수 있습니다.</p>
+    </div>
+    <div class="card">
+      <div class="grid2">
+        <div class="field">
+          <label for="firstName">이름 <span class="en">First Name</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="text" id="firstName" value="Youni" autocomplete="off"><button type="button" data-copy-field="firstName">복사</button></div>
+          <small>한국어 양식의 '이름'이 First Name입니다. 영문으로 입력하세요.</small>
+        </div>
+        <div class="field">
+          <label for="lastName">성 <span class="en">Last Name</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="text" id="lastName" placeholder="예: Kim" autocomplete="off"><button type="button" data-copy-field="lastName">복사</button></div>
+          <small>한국어 양식에는 '지명자 성'으로 나옵니다.</small>
+        </div>
+        <div class="field">
+          <label for="email">후보자 이메일 <span class="en">Email Address</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="email" id="email" placeholder="후보자에게 받은 주소" autocomplete="off"><button type="button" data-copy-field="email">복사</button></div>
+          <small>한국어 양식에 '추천인 이메일 주소'로 잘못 번역되어 있습니다. <strong>후보자 본인</strong>의 이메일을 넣어 주세요.</small>
+        </div>
+        <div class="field">
+          <label for="titleSel">호칭 <span class="en">Title</span></label>
+          <select id="titleSel">
+            <option value="">선택 안 함</option>
+            <option>Ms.</option><option>Mrs.</option><option>Mr.</option><option>Mx.</option><option>Dr.</option>
+          </select>
+          <small>선택 항목입니다. 후보자에게 확인한 경우에만 고르세요.</small>
+        </div>
+        <div class="field">
+          <label for="country">국가 <span class="en">Country or Region</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="text" id="country" value="Korea, Republic of" autocomplete="off"><button type="button" data-copy-field="country">복사</button></div>
+          <small>주/도(State or Province) 칸은 비활성이라 넘어가면 됩니다.</small>
+        </div>
+        <div class="field">
+          <label for="known">알고 지낸 기간 <span class="en">How long have you known the nominee?</span> <span class="req">*</span></label>
+          <input type="text" id="known" placeholder="예: 2년" autocomplete="off">
+          <small>양식 드롭다운에서 가장 가까운 값을 고르세요.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="answers">
+    <div class="sec-head">
+      <h2>서술형 답변</h2>
+      <p>빈칸을 채우면 아래 영문 답변이 바로 바뀝니다. 완성본은 직접 고쳐도 되고, 고친 뒤에는 '입력값으로 다시 만들기'를 눌러야 다시 연결됩니다.</p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="card" data-q="q1">
+      <div class="q-title">
+        <span class="q-tag">QUESTION 1 · 필수</span>
+        <h3>How did you meet and how have you engaged with your nominee?</h3>
+        <span class="ko">후보자를 어떻게 만났고, 어떻게 교류해 왔나요?</span>
+      </div>
+      <div class="note">이 질문은 <strong>추천인만 쓸 수 있는 내용</strong>입니다. 실제로 겪은 사실로 채워 주세요.</div>
+      <div class="grid2">
+        <div class="field">
+          <label for="q1Where">처음 만난 곳 <span class="req">*</span></label>
+          <input type="text" id="q1Where" placeholder="예: GPTers AI study" autocomplete="off">
+          <small>영문으로 입력. 커뮤니티나 행사 이름.</small>
+        </div>
+        <div class="field">
+          <label for="q1Year">만난 해 <span class="req">*</span></label>
+          <input type="text" id="q1Year" placeholder="예: 2024" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <label for="q1Did">함께한 활동 <span class="req">*</span></label>
+        <input type="text" id="q1Did" placeholder="예: co-hosted Copilot study sessions and prepared DDD Seoul events together" autocomplete="off">
+        <small>"Since then we have ___." 문장에 들어갑니다. 동사 과거분사로 시작하세요.</small>
+      </div>
+      <div class="field">
+        <label for="q1Saw">직접 본 장면 (선택)</label>
+        <textarea id="q1Saw" rows="2" placeholder="예: At one study session, Youni introduced a beginner to a DDD Seoul organizer, and they later ran a joint workshop."></textarea>
+        <small>한 문장이면 충분합니다. 글자 수가 넘치면 줄여 주세요.</small>
+      </div>
+      <div class="final"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="card" data-q="q2">
+      <div class="q-title">
+        <span class="q-tag">QUESTION 2 · 필수</span>
+        <h3>How has your nominee demonstrated impact with technology?</h3>
+        <span class="ko">후보자가 기술 분야에서 어떤 영향을 보여주었나요?</span>
+      </div>
+      <div class="field">
+        <span style="font-weight:500;font-size:14px">강조할 Microsoft 기술</span>
+        <div class="btns" id="q2Tech">
+          <label><input type="checkbox" id="t1" value="Microsoft 365 Copilot" checked> M365 Copilot</label>
+          <label><input type="checkbox" id="t2" value="Copilot Studio" checked> Copilot Studio</label>
+          <label><input type="checkbox" id="t3" value="Power Automate" checked> Power Automate</label>
+          <label><input type="checkbox" id="t4" value="Excel Copilot" checked> Excel Copilot</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="q2Ex">직접 본 기술 공유 사례 (선택)</label>
+        <textarea id="q2Ex" rows="2" placeholder="예: Youni's GPTers post on building a meeting-notes agent in Copilot Studio was reused by many members."></textarea>
+        <small>공개 게시물, 발표, 데모처럼 누구나 확인할 수 있는 사례가 가장 좋습니다.</small>
+      </div>
+      <div class="final"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="card" data-q="q3">
+      <div class="q-title">
+        <span class="q-tag">QUESTION 3 · 필수</span>
+        <h3>How has your nominee demonstrated impact and influence as a community leader?</h3>
+        <span class="ko">후보자가 커뮤니티 리더로서 어떤 영향력을 보여주었나요?</span>
+      </div>
+      <div class="field">
+        <label for="q3Stats">GPTers 스터디 규모 (선택)</label>
+        <input type="text" id="q3Stats" placeholder="예: 3 cohorts, 60+ participants" autocomplete="off">
+        <small>확인된 숫자만 넣어 주세요. 문장 안 괄호로 들어갑니다.</small>
+      </div>
+      <div class="field">
+        <label for="q3Story">커뮤니티 사이를 연결한 사례 (선택)</label>
+        <textarea id="q3Story" rows="2" placeholder="예: For example, an AI Playground participant later spoke at DDD Seoul with Youni's support."></textarea>
+        <small>실제 연결 사례가 하나 있으면 설득력이 크게 올라갑니다.</small>
+      </div>
+      <div class="final"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="card" data-q="q4">
+      <div class="q-title">
+        <span class="q-tag">QUESTION 4 · 선택</span>
+        <h3>Is there additional information that you would like us to know about your nominee for consideration?</h3>
+        <span class="ko">후보자에 대해 추가로 알리고 싶은 정보가 있나요?</span>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="l1">GPTers 스터디 링크</label><input type="url" id="l1" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l2">맥비기획 게시글 링크</label><input type="url" id="l2" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l3">AI놀이터 링크</label><input type="url" id="l3" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l4">DDD Seoul 링크</label><input type="url" id="l4" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l5">Copilot Club 링크</label><input type="url" id="l5" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l6">블로그·LinkedIn 링크</label><input type="url" id="l6" placeholder="https://" autocomplete="off"></div>
+      </div>
+      <small style="color:var(--muted);font-size:12px">비워 둔 링크는 답변에서 빠집니다. 링크가 길면 500자를 넘을 수 있으니 2~3개만 골라도 됩니다.</small>
+      <div class="final"></div>
+    </div>
+
+    <div class="card">
+      <div class="final-head">
+        <h3>네 답변 한 번에 복사</h3>
+        <button type="button" class="primary" id="copyAll">전체 복사</button>
+      </div>
+      <p style="color:var(--muted);font-size:14px">후보자에게 최종본을 보내 확인받고 싶을 때 쓰세요.</p>
+    </div>
+  </section>
+
+  <section id="evidence">
+    <div class="sec-head">
+      <h2>증빙 체크리스트</h2>
+      <p class="progress" id="evProg">0/6 확인</p>
+    </div>
+    <div class="card" id="evList">
+      <div class="check"><input type="checkbox" id="e1"><div class="body"><label for="e1"><strong>맥비기획</strong></label><span>Microsoft 관련 공유 게시글 또는 발표 링크</span></div></div>
+      <div class="check"><input type="checkbox" id="e2"><div class="body"><label for="e2"><strong>GPTers</strong></label><span>스터디 운영 기간, 기수, 참여 인원, 활동 자료</span></div></div>
+      <div class="check"><input type="checkbox" id="e3"><div class="body"><label for="e3"><strong>AI놀이터</strong></label><span>운영 페이지, 제작 포스터, 경험 공유 사례</span></div></div>
+      <div class="check"><input type="checkbox" id="e4"><div class="body"><label for="e4"><strong>DDD Seoul</strong></label><span>참여 행사 이름, 맡은 역할, 행사 기록</span></div></div>
+      <div class="check"><input type="checkbox" id="e5"><div class="body"><label for="e5"><strong>Copilot Club</strong></label><span>발표, 기술 공유, 협업 활동 근거</span></div></div>
+      <div class="check"><input type="checkbox" id="e6"><div class="body"><label for="e6"><strong>추천인과의 관계</strong></label><span>알게 된 시점과 직접 함께한 활동 (Question 1)</span></div></div>
+    </div>
+    <div class="btns"><button type="button" id="resetAll">입력 내용 모두 지우기</button><span id="resetConfirm" hidden><button type="button" id="resetYes" class="primary">정말 지우기</button> <button type="button" id="resetNo">취소</button></span></div>
+  </section>
+
+</main>
+
+<footer><div class="wrap">입력값은 이 기기의 브라우저에만 저장되며 다른 사람이나 후보자에게 전달되지 않습니다. 완성한 답변은 MVP 추천 양식에 직접 붙여 넣어 주세요.</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var KEY = "youni-mvp-nomination-v1";
+  var LIMIT = 500;
+  var $ = function (id) { return document.getElementById(id); };
+  var v = function (id) { var el = $(id); return el ? el.value.trim() : ""; };
+  var or = function (val, ph) { return val || "[" + ph + "]"; };
+  var name = function () { return v("firstName") || "Youni"; };
+
+  function list(items) {
+    if (items.length <= 1) return items.join("");
+    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+
+  var build = {
+    q1: function () {
+      var n = name();
+      var s = "I met " + n + " through " + or(v("q1Where"), "community/event") + " in " + or(v("q1Year"), "year") + ". " +
+        "Since then we have " + or(v("q1Did"), "specific activities together") + ". ";
+      if (v("q1Saw")) s += v("q1Saw") + " ";
+      s += "I have also seen " + n + " across many communities: GPTers, AI Playground, DDD Seoul, Copilot Club and Macbi Planning. " +
+        n + " is rarely just a participant, but the person who connects people, shares what works, and turns learning into action, especially around Microsoft 365 Copilot.";
+      return s;
+    },
+    q2: function () {
+      var n = name();
+      var tech = Array.prototype.filter.call(document.querySelectorAll("#q2Tech input"), function (c) { return c.checked; })
+        .map(function (c) { return c.value; });
+      var s = n + " bridges Microsoft AI and real work. Drawing on an IT service planning background, " + n +
+        " designs practical scenarios for " + (tech.length ? list(tech) : "Microsoft 365 Copilot") +
+        ", then shares them as hands-on guides and study content. " +
+        n + "'s field experience with enterprises such as KT and Hyundai Mobis is turned into public know-how, helping non-developers build agents and automate work themselves.";
+      if (v("q2Ex")) s += " " + v("q2Ex");
+      return s;
+    },
+    q3: function () {
+      var n = name();
+      var stats = v("q3Stats") ? " (" + v("q3Stats") + ")" : "";
+      var s = n + " is a hub between communities. " + n + " leads AI study groups at GPTers" + stats +
+        ", shares Microsoft knowledge with Macbi Planning (8,000+ members), plans pages and posters for AI Playground, helps run DDD Seoul events, and exchanges Copilot use cases at Copilot Club. " +
+        "Through " + n + ", beginners, planners, developers and Microsoft users meet, and ideas from one community become activities in another.";
+      if (v("q3Story")) s += " " + v("q3Story");
+      return s;
+    },
+    q4: function () {
+      var n = name();
+      var s = n + "'s strength is not a single activity but the connections between many: planning, Microsoft AI, and community. " +
+        "As an MVP, " + n + " would link Microsoft with Korean business users that developer-focused programs rarely reach.";
+      var links = [["GPTers study", "l1"], ["Macbi Planning", "l2"], ["AI Playground", "l3"], ["DDD Seoul", "l4"], ["Copilot Club", "l5"], ["Blog / LinkedIn", "l6"]]
+        .filter(function (p) { return v(p[1]); })
+        .map(function (p) { return "- " + p[0] + ": " + v(p[1]); });
+      if (links.length) s += "\n" + links.join("\n");
+      return s;
+    }
+  };
+
+  var finals = {};
+  var edited = {};
+
+  function setupFinal(card) {
+    var q = card.getAttribute("data-q");
+    var box = card.querySelector(".final");
+    box.innerHTML =
+      '<div class="final-head"><strong>양식에 붙여 넣을 영문</strong><div class="btns">' +
+      '<button type="button" data-regen="' + q + '">입력값으로 다시 만들기</button>' +
+      '<button type="button" class="primary" data-copy="' + q + '">복사</button></div></div>' +
+      '<textarea id="' + q + 'Final" aria-label="' + q.toUpperCase() + ' 최종 영문 답변"></textarea>' +
+      '<div class="meter" id="' + q + 'Meter"><span id="' + q + 'Count">0 / 500</span><div class="bar"><i></i></div></div>' +
+      '<div class="pills" id="' + q + 'Pills"></div>';
+    var ta = box.querySelector("textarea");
+    finals[q] = ta;
+    ta.addEventListener("input", function () { edited[q] = true; update(q); save(); });
+  }
+
+  function update(q) {
+    var ta = finals[q];
+    if (!edited[q]) ta.value = build[q]();
+    var len = ta.value.length;
+    var meter = $(q + "Meter");
+    $(q + "Count").textContent = len + " / " + LIMIT + (len > LIMIT ? " · " + (len - LIMIT) + "자 초과" : "");
+    meter.querySelector("i").style.width = Math.min(100, len / LIMIT * 100) + "%";
+    meter.classList.toggle("over", len > LIMIT);
+    var holes = ta.value.match(/\[[^\]]+\]/g) || [];
+    var pills = [];
+    if (holes.length) pills.push('<span class="pill todo">빈칸 ' + holes.length + '개: ' + holes.join(" ") + '</span>');
+    else pills.push('<span class="pill done">빈칸 없음</span>');
+    if (edited[q]) pills.push('<span class="pill edited">직접 수정됨</span>');
+    $(q + "Pills").innerHTML = pills.join("");
+  }
+  function updateAll() { Object.keys(build).forEach(update); }
+
+  function evProgress() {
+    var boxes = document.querySelectorAll("#evList input[type=checkbox]");
+    var n = Array.prototype.filter.call(boxes, function (b) { return b.checked; }).length;
+    $("evProg").textContent = n + "/" + boxes.length + " 확인";
+  }
+
+  var toastTimer;
+  function toast(msg) {
+    var t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove("show"); }, 1600);
+  }
+  function copyText(text, el, label) {
+    function fallback() {
+      if (el && el.select) { el.focus(); el.select(); toast("선택했습니다. Ctrl+C로 복사하세요"); }
+      else toast("복사하지 못했습니다. 직접 선택해 복사하세요");
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { toast(label + " 복사됨"); }, fallback);
+      } else fallback();
+    } catch (e) { fallback(); }
+  }
+
+  // Storage: per-viewer draft only.
+  var inputs = function () { return document.querySelectorAll("main input, main select, main textarea"); };
+  function save() {
+    var data = { edited: edited, values: {} };
+    Array.prototype.forEach.call(inputs(), function (el) {
+      if (!el.id) return;
+      data.values[el.id] = el.type === "checkbox" ? el.checked : el.value;
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+  }
+  function load() {
+    var data = null;
+    try { data = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
+    if (!data) return;
+    edited = data.edited || {};
+    Object.keys(data.values || {}).forEach(function (id) {
+      var el = $(id); if (!el) return;
+      if (el.type === "checkbox") el.checked = !!data.values[id]; else el.value = data.values[id];
+    });
+  }
+
+  document.querySelectorAll("[data-q]").forEach(setupFinal);
+  load();
+  updateAll();
+  evProgress();
+
+  document.querySelector("main").addEventListener("input", function (e) {
+    if (e.target.closest(".final")) return;
+    updateAll(); evProgress(); save();
+  });
+  document.querySelector("main").addEventListener("change", function () { updateAll(); evProgress(); save(); });
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.copy) { var q = b.dataset.copy; copyText(finals[q].value, finals[q], q.toUpperCase()); }
+    else if (b.dataset.copyField) { var el = $(b.dataset.copyField); copyText(el.value, el, "값"); }
+    else if (b.dataset.regen) { edited[b.dataset.regen] = false; update(b.dataset.regen); save(); toast("입력값으로 다시 만들었습니다"); }
+    else if (b.id === "copyAll") {
+      var all = ["q1", "q2", "q3", "q4"].map(function (q, i) { return "Q" + (i + 1) + "\n" + finals[q].value; }).join("\n\n");
+      copyText(all, null, "전체 답변");
+    }
+    else if (b.id === "resetAll") { $("resetConfirm").hidden = false; }
+    else if (b.id === "resetNo") { $("resetConfirm").hidden = true; }
+    else if (b.id === "resetYes") {
+      try { localStorage.removeItem(KEY); } catch (err) {}
+      Array.prototype.forEach.call(inputs(), function (el) {
+        if (el.type === "checkbox") el.checked = el.defaultChecked; else el.value = el.defaultValue;
+        if (el.tagName === "SELECT") el.selectedIndex = 0;
+      });
+      edited = {}; updateAll(); evProgress(); $("resetConfirm").hidden = true; toast("모두 지웠습니다");
+    }
+  });
+})();
+</script>
