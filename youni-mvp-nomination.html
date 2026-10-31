@@ -210,10 +210,10 @@ html { scroll-behavior: smooth; }
           <table>
             <tbody>
               <tr><td><strong>맥비기획</strong></td><td>회원 8,000명 이상 커뮤니티에서 Microsoft 기술과 활용 경험 공유</td></tr>
-              <tr><td><strong>GPTers</strong></td><td>AI 스터디 리더. 스터디 운영, 실습 공유, 참여자 학습 지원</td></tr>
+              <tr><td><strong>GPTers</strong></td><td>회원 100만 명 규모 AI 커뮤니티. 2023년 2월부터 다양한 AI 활용 경험 공유와 스터디 운영, Copilot Pro 스터디와 서비스 가이드 제작</td></tr>
               <tr><td><strong>AI놀이터</strong></td><td>AI 활용 경험 공유, 운영 페이지 기획, 포스터 제작</td></tr>
               <tr><td><strong>DDD Seoul</strong></td><td>개발자 커뮤니티 행사 준비와 운영</td></tr>
-              <tr><td><strong>Copilot Club</strong></td><td>Copilot 활용 경험 공유와 기술 교류</td></tr>
+              <tr><td><strong>Copilot Club</strong></td><td>웨비나 참여, Loop 등 업무 협업 도구 활용 교류</td></tr>
             </tbody>
           </table>
         </div>
@@ -235,7 +235,7 @@ html { scroll-behavior: smooth; }
         </div>
       </div>
     </div>
-    <div class="note warn"><strong>주의:</strong> 8,000명은 맥비기획 전체 회원 규모입니다. 교육 인원이나 직접 영향을 받은 인원으로 쓰지 말아 주세요. MVP 심사는 유료 강의보다 자발적이고 공개된 커뮤니티 기여를 중요하게 봅니다.</div>
+    <div class="note warn"><strong>주의:</strong> 100만 명(GPTers)과 8,000명(맥비기획)은 커뮤니티 전체 회원 규모입니다. 교육 인원이나 직접 영향을 받은 인원으로 쓰지 말아 주세요. MVP 심사는 유료 강의보다 자발적이고 공개된 커뮤니티 기여를 중요하게 봅니다.</div>
   </section>
 
   <section id="basic">
@@ -353,8 +353,8 @@ html { scroll-behavior: smooth; }
       </div>
       <div class="field">
         <label for="q3Stats">GPTers 스터디 규모 (선택)</label>
-        <input type="text" id="q3Stats" placeholder="예: 3 cohorts, 60+ participants" autocomplete="off">
-        <small>확인된 숫자만 넣어 주세요. 문장 안 괄호로 들어갑니다.</small>
+        <input type="text" id="q3Stats" placeholder="예: 5 cohorts, 100+ participants" autocomplete="off">
+        <small>확인된 숫자만 넣어 주세요. 문장 안 괄호로 들어갑니다. 넣으면 500자를 넘을 수 있어 게이지를 확인해 주세요.</small>
       </div>
       <div class="field">
         <label for="q3Story">커뮤니티 사이를 연결한 사례 (선택)</label>
@@ -442,17 +442,17 @@ html { scroll-behavior: smooth; }
         .map(function (c) { return c.value; });
       var s = n + " bridges Microsoft AI and real work. Drawing on an IT service planning background, " + n +
         " designs practical scenarios for " + (tech.length ? list(tech) : "Microsoft 365 Copilot") +
-        ", then shares them as hands-on guides and study content. " +
-        n + "'s field experience with enterprises such as KT and Hyundai Mobis is turned into public know-how, helping non-developers build agents and automate work themselves.";
+        ", then shares them as hands-on guides. At GPTers, " + n + " has run Copilot Pro study groups and written service guides, and through Copilot Club " +
+        n + " joins webinars on collaboration tools such as Loop. Enterprise training at KT and Hyundai Mobis also becomes public know-how for non-developers.";
       if (v("q2Ex")) s += " " + v("q2Ex");
       return s;
     },
     q3: function () {
       var n = name();
       var stats = v("q3Stats") ? " (" + v("q3Stats") + ")" : "";
-      var s = n + " is a hub between communities. " + n + " leads AI study groups at GPTers" + stats +
-        ", shares Microsoft knowledge with Macbi Planning (8,000+ members), plans pages and posters for AI Playground, helps run DDD Seoul events, and exchanges Copilot use cases at Copilot Club. " +
-        "Through " + n + ", beginners, planners, developers and Microsoft users meet, and ideas from one community become activities in another.";
+      var s = n + " is a hub between communities. Since February 2023, " + n + " has shared hands-on experience with many AI tools and run study groups" + stats +
+        " at GPTers, a community of over one million members. " + n + " also shares Microsoft knowledge with Macbi Planning (8,000+ members), creates content for AI Playground, helps run DDD Seoul events, and joins Copilot Club webinars. " +
+        "Through " + n + ", beginners, planners, developers and Microsoft users meet, and ideas move between communities.";
       if (v("q3Story")) s += " " + v("q3Story");
       return s;
     },
