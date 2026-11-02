@@ -391,8 +391,8 @@ details[data-l] { font-size: 14px; }
         <h3>How did you meet and how have you engaged with your nominee?</h3>
         <span class="ko" data-l="ko">후보자를 어떻게 만났고, 어떻게 교류해 왔나요?</span>
       </div>
-      <div class="note" data-l="ko">AI놀이터에서 함께한 내용으로 미리 채워 두었습니다. <strong>만난 해</strong>만 넣으시고, 나머지는 실제 경험에 맞게 고쳐 주세요.</div>
-      <div class="note" data-l="en">Pre-filled from our time together at AI Playground. Add <strong>the year we met</strong>, and adjust the rest to match your own experience.</div>
+      <div class="note" data-l="ko">우리가 만난 <strong>AI놀이터</strong>에서 함께한 내용으로 채워 두었습니다. 그대로 써도 되고, 실제 경험에 맞게 고쳐도 됩니다.</div>
+      <div class="note" data-l="en">Pre-filled from our time together at <strong>AI Playground</strong>, where we met. Use it as is or adjust it to match your own experience.</div>
       <div class="grid2">
         <div class="field">
           <label for="q1Where"><span data-l="ko">처음 만난 곳</span><span data-l="en">Where we met</span> <span class="req">*</span></label>
@@ -401,7 +401,7 @@ details[data-l] { font-size: 14px; }
           <small data-l="en">A community or event name.</small>
         </div>
         <div class="field">
-          <label for="q1Year"><span data-l="ko">만난 해</span><span data-l="en">Year we met</span> <span class="req">*</span></label>
+          <label for="q1Year"><span data-l="ko">만난 해 (선택)</span><span data-l="en">Year we met (optional)</span></label>
           <input type="text" id="q1Year" placeholder="예: 2024" data-ph-en="e.g. 2024" autocomplete="off">
         </div>
       </div>
@@ -418,7 +418,7 @@ details[data-l] { font-size: 14px; }
         <small data-l="en">A broad understanding of AI and active participation. Add a story you witnessed if you like, and shorten if over the limit.</small>
       </div>
       <div class="final"></div>
-      <details data-l="ko"><summary>한국어 뜻 보기</summary><p>AI놀이터 커뮤니티에서 [연도]에 만났습니다. 그곳에서 함께 활동하며, 미영 님은 콘텐츠를 만들고 멤버와 행사를 지원합니다. AI를 폭넓게 이해하고 커뮤니티에 도움이 필요할 때 언제든 적극적으로 나섭니다. GPTers, DDD Seoul, Copilot Club, 맥비기획에서도 사람을 연결하고, 효과 있는 방법을 나누고, Microsoft 365 Copilot을 중심으로 배움을 실천으로 이어 가는 모습을 봤습니다.</p></details>
+      <details data-l="ko"><summary>한국어 뜻 보기</summary><p>AI놀이터 커뮤니티에서 만났습니다. 그곳에서 함께 활동하며, 미영 님은 콘텐츠를 만들고 멤버와 행사를 지원합니다. AI를 폭넓게 이해하고 커뮤니티에 도움이 필요할 때 언제든 적극적으로 나섭니다. AI놀이터에서 미영 님이 한국마이크로소프트에서 열린 BUILD 밋업에서 발표하고, Snowflake World Tour 부스에서 Copilot Studio 데모를 돕고, 멤버들에게 실용적인 Copilot 노하우를 이어 주는 모습을 봤습니다.</p></details>
     </div>
 
     <!-- Q2 -->
@@ -543,10 +543,10 @@ details[data-l] { font-size: 14px; }
   var build = {
     q1: function () {
       var n = name();
-      var s = "I met " + n + " through " + or(v("q1Where"), "community/event") + " in " + or(v("q1Year"), "year") + ". " +
+      var s = "I met " + n + " through " + or(v("q1Where"), "community/event") + (v("q1Year") ? " in " + v("q1Year") : "") + ". " +
         "Since then we have " + or(v("q1Did"), "specific activities together") + ". ";
       if (v("q1Saw")) s += v("q1Saw") + " ";
-      s += "I have also seen " + n + " in GPTers, DDD Seoul, Copilot Club and Macbi Planning, connecting people, sharing what works, and turning learning into action around Microsoft 365 Copilot.";
+      s += "At AI Playground, I have seen " + n + " speak at our BUILD meetup at Microsoft Korea, support the Copilot Studio demo at our Snowflake World Tour booth, and connect members with practical Copilot know-how.";
       return s;
     },
     q2: function () {
