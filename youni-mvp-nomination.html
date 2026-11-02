@@ -145,9 +145,13 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 48px; }
 html { scroll-behavior: smooth; }
 html[data-lang="en"] [data-l="ko"], html:not([data-lang="en"]) [data-l="en"] { display: none !important; }
 nav.steps .wrap { align-items: center; }
-.lang { margin-left: auto; display: flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: 8px; flex: none; }
-.lang button { border: 0; padding: 4px 10px; font-size: 12px; background: transparent; }
-.lang button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.lang-switch { margin-left: auto; flex: none; display: flex; align-items: center; gap: 8px; border: 0; background: transparent; padding: 4px 2px; font-size: 12px; font-weight: 700; color: var(--muted); cursor: pointer; }
+.lang-switch .lbl { transition: color .2s; }
+.lang-switch .track { position: relative; width: 40px; height: 22px; border-radius: 999px; background: var(--accent); flex: none; }
+.lang-switch .knob { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
+.lang-switch[aria-checked="true"] .knob { transform: translateX(18px); }
+.lang-switch[aria-checked="false"] .lbl-ko, .lang-switch[aria-checked="true"] .lbl-en { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .lang-switch .knob, .lang-switch .lbl { transition: none; } }
 details[data-l] { font-size: 14px; }
 </style>
 
@@ -172,10 +176,11 @@ details[data-l] { font-size: 14px; }
     <a href="#basic">4 · <span data-l="ko">기본 정보</span><span data-l="en">Basic info</span></a>
     <a href="#answers">5 · <span data-l="ko">서술형 답변</span><span data-l="en">Answers</span></a>
     <a href="#evidence">6 · <span data-l="ko">증빙 체크</span><span data-l="en">Evidence</span></a>
-    <div class="lang" role="group" aria-label="Language">
-      <button type="button" data-lang-set="ko" aria-pressed="true">한국어</button>
-      <button type="button" data-lang-set="en" aria-pressed="false">English</button>
-    </div>
+    <button type="button" class="lang-switch" id="langSwitch" role="switch" aria-checked="false" aria-label="English">
+      <span class="lbl lbl-ko">한국어</span>
+      <span class="track"><span class="knob"></span></span>
+      <span class="lbl lbl-en">English</span>
+    </button>
   </div>
 </nav>
 
@@ -508,8 +513,8 @@ details[data-l] { font-size: 14px; }
     document.querySelectorAll("[data-t-en]").forEach(function (el) {
       el.textContent = lang === "en" ? el.dataset.tEn : el.dataset.tKo;
     });
-    document.querySelectorAll("[data-lang-set]").forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b.dataset.langSet === lang));
+    document.querySelectorAll("#langSwitch").forEach(function (b) {
+      b.setAttribute("aria-checked", String(lang === "en"));
     });
   }
 
@@ -646,8 +651,8 @@ details[data-l] { font-size: 14px; }
 
   document.addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return;
-    if (b.dataset.langSet) {
-      lang = b.dataset.langSet;
+    if (b.id === "langSwitch") {
+      lang = lang === "en" ? "ko" : "en";
       try { localStorage.setItem(LANG_KEY, lang); } catch (err) {}
       applyLang(); updateAll(); evProgress();
     }
