@@ -143,28 +143,39 @@ details p { margin-top: 6px; font-size: 14px; color: var(--muted); }
 footer { color: var(--muted); font-size: 13px; padding-block: 0 48px; }
 @media (prefers-reduced-motion: reduce) { .toast { transition: none; } html { scroll-behavior: auto; } }
 html { scroll-behavior: smooth; }
+html[data-lang="en"] [data-l="ko"], html:not([data-lang="en"]) [data-l="en"] { display: none !important; }
+nav.steps .wrap { align-items: center; }
+.lang { margin-left: auto; display: flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: 8px; flex: none; }
+.lang button { border: 0; padding: 4px 10px; font-size: 12px; background: transparent; }
+.lang button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+details[data-l] { font-size: 14px; }
 </style>
 
 <header class="top">
   <div class="wrap">
     <div class="eyebrow">Microsoft MVP Nomination · Nominee Information</div>
-    <h1>Youni MVP 추천서 작성 키트</h1>
-    <p class="lead">추천해 주셔서 감사합니다. 이 페이지에서 칸을 채우면 MVP 추천 양식의 <strong>후보자 정보(Nominee Information)</strong> 단계에 그대로 붙여 넣을 영문 답변이 완성됩니다. 입력한 내용은 이 브라우저에만 임시 저장됩니다.</p>
-    <div class="hub" aria-label="후보자가 연결하는 커뮤니티">
-      <span class="core">Youni · 연결하는 사람</span>
-      <span>GPTers</span><span>맥비기획</span><span>AI놀이터</span><span>DDD Seoul</span><span>Copilot Club</span><span>Modern Work</span><span>Snowflake World Tour</span>
+    <h1><span data-l="ko">Youni MVP 추천서 작성 키트</span><span data-l="en">Youni MVP Nomination Kit</span></h1>
+    <p class="lead" data-l="ko">추천해 주셔서 감사합니다. 이 페이지에서 칸을 채우면 MVP 추천 양식의 <strong>후보자 정보(Nominee Information)</strong> 단계에 그대로 붙여 넣을 영문 답변이 완성됩니다. 입력한 내용은 이 브라우저에만 임시 저장됩니다.</p>
+    <p class="lead" data-l="en">Thank you for nominating Miyoung. Fill in the fields on this page and you get English answers ready to paste into the <strong>Nominee Information</strong> step of the MVP nomination form. What you type is saved only in this browser.</p>
+    <div class="hub">
+      <span class="core"><span data-l="ko">Youni · 연결하는 사람</span><span data-l="en">Youni · The Connector</span></span>
+      <span>GPTers</span><span><span data-l="ko">맥비기획</span><span data-l="en">Macbi Planning</span></span><span><span data-l="ko">AI놀이터</span><span data-l="en">AI Playground</span></span><span>DDD Seoul</span><span>Copilot Club</span><span>Modern Work</span><span>Snowflake World Tour</span>
     </div>
   </div>
 </header>
 
-<nav class="steps" aria-label="단계">
+<nav class="steps" aria-label="Steps">
   <div class="wrap">
-    <a href="#letter">1 · 인사말</a>
-    <a href="#profile">2 · 후보자 소개</a>
-    <a href="#activities">3 · MVP 활동</a>
-    <a href="#basic">4 · 기본 정보</a>
-    <a href="#answers">5 · 서술형 답변</a>
-    <a href="#evidence">6 · 증빙 체크</a>
+    <a href="#letter">1 · <span data-l="ko">인사말</span><span data-l="en">Letter</span></a>
+    <a href="#profile">2 · <span data-l="ko">후보자 소개</span><span data-l="en">Profile</span></a>
+    <a href="#activities">3 · <span data-l="ko">MVP 활동</span><span data-l="en">Activities</span></a>
+    <a href="#basic">4 · <span data-l="ko">기본 정보</span><span data-l="en">Basic info</span></a>
+    <a href="#answers">5 · <span data-l="ko">서술형 답변</span><span data-l="en">Answers</span></a>
+    <a href="#evidence">6 · <span data-l="ko">증빙 체크</span><span data-l="en">Evidence</span></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang-set="ko" aria-pressed="true">한국어</button>
+      <button type="button" data-lang-set="en" aria-pressed="false">English</button>
+    </div>
   </div>
 </nav>
 
@@ -172,147 +183,168 @@ html { scroll-behavior: smooth; }
 
   <section id="letter">
     <div class="sec-head">
-      <h2>추천인께 드리는 글</h2>
+      <h2><span data-l="ko">추천인께 드리는 글</span><span data-l="en">A note to my nominator</span></h2>
     </div>
-    <div class="card letter">
+    <div class="card letter" data-l="ko">
       <p>안녕하세요!</p>
       <p>Microsoft MVP 추천서 작성에 참고하실 수 있도록 제가 해 온 주요 활동을 정리했습니다.</p>
       <p>저는 서비스 기획자이자 Microsoft Certified Trainer로, Microsoft 365 Copilot을 누구나 실무에 쓸 수 있게 알리는 활동을 해 왔습니다. Modern Work Conference Seoul 2026에서 'Copilot Chat(무료)으로 가능한 모든 것'을 발표했고, Copilot Club 컨퍼런스에서 Planner와 Loop 세션을 맡았습니다. Snowflake World Tour Seoul에서는 Microsoft AI놀이터 부스 crew로 Copilot Studio 데모를 돕고, Copilot을 알리는 퀴즈 이벤트를 기획했습니다.</p>
       <p>AI놀이터 BUILD / localhost:SEOUL 밋업(한국마이크로소프트)에서는 Copilot Agent로 학습 가이드를 만드는 세션을 발표했습니다. 회원 100만 명 규모의 GPTers에서는 12기수 동안 스터디 리더로 Copilot 스터디를 이끌었고, 맥비기획·퓨쳐워커스클럽·AI놀이터에서 연사이자 퍼실리테이터로 활동합니다. 커뮤니티에서 들어오는 Microsoft 365·Copilot 관련 문의에 답하고 멘토링하는 일도 꾸준히 하고 있습니다.</p>
       <p>제가 가장 중요하게 생각하는 것은 이 여러 곳을 <strong>연결</strong>하는 일입니다. 사람들이 기술을 쉽게 이해하고 직접 써 보고, 서로 다른 커뮤니티가 경험을 나눌 수 있게 만드는 것입니다.</p>
       <p>추천서는 직접 보신 활동과 경험을 중심으로 써 주시면 감사하겠습니다.</p>
-      <div class="note"><strong>작성 순서:</strong> 3번에서 기본 정보를 확인하고, 4번에서 각 질문의 빈칸을 채운 뒤 완성된 영문을 복사해 양식에 붙여 넣으시면 됩니다. 각 답변은 영문 500자 이하여야 합니다.</div>
+      <div class="note"><strong>작성 순서:</strong> 4번에서 기본 정보를 확인하고, 5번에서 각 질문의 빈칸을 채운 뒤 완성된 영문을 복사해 양식에 붙여 넣으시면 됩니다. 각 답변은 영문 500자 이하여야 합니다.</div>
+    </div>
+    <div class="card letter" data-l="en">
+      <p>Hello!</p>
+      <p>To help you write the Microsoft MVP nomination, I have summarized my main activities.</p>
+      <p>I am a service planner and a Microsoft Certified Trainer, and I help everyday users put Microsoft 365 Copilot to work. I spoke on "Everything you can do with Copilot Chat (free)" at Modern Work Conference Seoul 2026 and led Planner and Loop sessions at Copilot Club conferences. At Snowflake World Tour Seoul, I was crew at the Microsoft AI Playground booth, supporting the Copilot Studio demo and planning a quiz event that introduced Copilot.</p>
+      <p>At AI Playground's BUILD / localhost:SEOUL meetup at Microsoft Korea, I presented how to build learning guides with Copilot agents. At GPTers, a community of over one million members, I have led Copilot studies as a study leader for 12 cohorts, and I speak and facilitate at Macbi Planning, Future Workers Club and AI Playground. I also answer Microsoft 365 and Copilot questions from community members and mentor them.</p>
+      <p>What matters most to me is <strong>connecting</strong> these communities, so that people understand technology easily, try it themselves, and share what they learn across groups.</p>
+      <p>Please base the nomination on the activities and experiences you have seen yourself.</p>
+      <div class="note"><strong>How to use:</strong> check the basic info in step 4, fill in the blanks for each question in step 5, then copy the finished English answers into the form. Each answer must be 500 characters or fewer.</div>
     </div>
   </section>
 
   <section id="profile">
     <div class="sec-head">
-      <h2>후보자 한눈에 보기</h2>
-      <p>Microsoft AI 기술과 사람, 커뮤니티를 연결하는 연사이자 퍼실리테이터, 커뮤니티 리더입니다.</p>
+      <h2><span data-l="ko">후보자 한눈에 보기</span><span data-l="en">Nominee at a glance</span></h2>
+      <p data-l="ko">Microsoft AI 기술과 사람, 커뮤니티를 연결하는 연사이자 퍼실리테이터, 커뮤니티 리더입니다.</p>
+      <p data-l="en">A speaker, facilitator and community leader who connects Microsoft AI with people and communities.</p>
     </div>
     <div class="card">
-      <h3>역할과 전문 분야</h3>
+      <h3><span data-l="ko">역할과 전문 분야</span><span data-l="en">Roles and expertise</span></h3>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>구분</th><th>활동 내용</th></tr></thead>
+          <thead><tr><th><span data-l="ko">구분</span><span data-l="en">Area</span></th><th><span data-l="ko">활동 내용</span><span data-l="en">What Miyoung does</span></th></tr></thead>
           <tbody>
-            <tr><td>IT 서비스 기획</td><td>서비스 전략, UX/UI, 업무 프로세스, 디지털 서비스 기획</td></tr>
-            <tr><td>Microsoft 기술 전파</td><td>Microsoft 365 Copilot, Copilot Chat, Copilot Studio, Planner, Loop</td></tr>
-            <tr><td>연사·퍼실리테이터</td><td>커뮤니티 컨퍼런스 발표, 실습 세션 진행, 스터디 퍼실리테이션</td></tr>
-            <tr><td>커뮤니티 리더십</td><td>AI 스터디 운영, 기술 경험 공유, 참여자 학습 지원</td></tr>
-            <tr><td>멘토링</td><td>커뮤니티의 Microsoft 365·Copilot 문의 답변, 스터디 멘토(오피스튜터)</td></tr>
-            <tr><td>자격</td><td>Microsoft Certified Trainer, AB-730 AI Business Professional</td></tr>
-            <tr><td>콘텐츠·행사 기획</td><td>커뮤니티 운영 페이지, 포스터, 행사 준비와 운영</td></tr>
+            <tr><td><span data-l="ko">IT 서비스 기획</span><span data-l="en">IT service planning</span></td><td><span data-l="ko">서비스 전략, UX/UI, 업무 프로세스, 디지털 서비스 기획</span><span data-l="en">Service strategy, UX/UI, business processes, digital service planning</span></td></tr>
+            <tr><td><span data-l="ko">Microsoft 기술 전파</span><span data-l="en">Microsoft technology</span></td><td>Microsoft 365 Copilot, Copilot Chat, Copilot Studio, Planner, Loop</td></tr>
+            <tr><td><span data-l="ko">연사·퍼실리테이터</span><span data-l="en">Speaker · facilitator</span></td><td><span data-l="ko">커뮤니티 컨퍼런스 발표, 실습 세션 진행, 스터디 퍼실리테이션</span><span data-l="en">Community conference talks, hands-on sessions, study facilitation</span></td></tr>
+            <tr><td><span data-l="ko">커뮤니티 리더십</span><span data-l="en">Community leadership</span></td><td><span data-l="ko">AI 스터디 운영, 기술 경험 공유, 참여자 학습 지원</span><span data-l="en">Running AI studies, sharing experience, supporting learners</span></td></tr>
+            <tr><td><span data-l="ko">멘토링</span><span data-l="en">Mentoring</span></td><td><span data-l="ko">커뮤니티의 Microsoft 365·Copilot 문의 답변, 스터디 멘토(오피스튜터)</span><span data-l="en">Answering Microsoft 365 and Copilot questions, study mentor at Office Tutor</span></td></tr>
+            <tr><td><span data-l="ko">자격</span><span data-l="en">Certifications</span></td><td>Microsoft Certified Trainer, AB-730 AI Business Professional</td></tr>
+            <tr><td><span data-l="ko">콘텐츠·행사 기획</span><span data-l="en">Content · events</span></td><td><span data-l="ko">커뮤니티 운영 페이지, 포스터, 행사 준비와 운영</span><span data-l="en">Community pages, posters, event preparation and operation</span></td></tr>
           </tbody>
         </table>
       </div>
-      <div class="note">기술 전문성과 서비스 기획 역량을 함께 써서, 비개발자도 기술을 이해하고 직접 적용하도록 돕는 점이 차별점입니다.</div>
+      <div class="note" data-l="ko">기술 전문성과 서비스 기획 역량을 함께 써서, 비개발자도 기술을 이해하고 직접 적용하도록 돕는 점이 차별점입니다.</div>
+      <div class="note" data-l="en">What sets Miyoung apart is combining technical knowledge with service planning, so that non-developers can understand and apply the technology themselves.</div>
     </div>
     <div class="grid2">
       <div class="card">
-        <h3>커뮤니티 기여</h3>
+        <h3><span data-l="ko">커뮤니티 기여</span><span data-l="en">Community contributions</span></h3>
         <div class="table-wrap">
           <table>
             <tbody>
-              <tr><td><strong>맥비기획</strong></td><td>회원 8,000명 이상 커뮤니티에서 Microsoft 기술과 활용 경험 공유</td></tr>
-              <tr><td><strong>GPTers</strong></td><td>회원 100만 명 규모 AI 커뮤니티. AI 활용 경험 공유, 7~18기 스터디 리더(11·12기 Copilot 스터디), Copilot Pro 스터디와 서비스 가이드 제작</td></tr>
-              <tr><td><strong>AI놀이터</strong></td><td>Crew. 콘텐츠 제작과 서포트, 커뮤니티 사이트·행사 페이지 기획, 포스터, BUILD 밋업 연사</td></tr>
-              <tr><td><strong>DDD Seoul</strong></td><td>개발자 커뮤니티 행사 준비와 운영</td></tr>
-              <tr><td><strong>Copilot Club</strong></td><td>컨퍼런스 연사(Planner, Loop), 웨비나와 협업 도구 교류</td></tr>
-              <tr><td><strong>퓨쳐워커스클럽</strong></td><td>Microsoft 365 협업 도구, 새 Planner 세션</td></tr>
-              <tr><td><strong>오피스튜터</strong></td><td>AI 트렌드 스터디 멘토</td></tr>
+              <tr><td><strong><span data-l="ko">맥비기획</span><span data-l="en">Macbi Planning</span></strong></td><td><span data-l="ko">회원 8,000명 이상 커뮤니티에서 Microsoft 기술과 활용 경험 공유</span><span data-l="en">Shares Microsoft technology and use cases in a community of 8,000+ members</span></td></tr>
+              <tr><td><strong>GPTers</strong></td><td><span data-l="ko">회원 100만 명 규모 AI 커뮤니티. AI 활용 경험 공유, 7~18기 스터디 리더(11·12기 Copilot 스터디), Copilot Pro 스터디와 서비스 가이드 제작</span><span data-l="en">AI community of over one million members. Study leader for cohorts 7–18 (Copilot studies in cohorts 11 and 12), Copilot Pro study and service guides</span></td></tr>
+              <tr><td><strong><span data-l="ko">AI놀이터</span><span data-l="en">AI Playground</span></strong></td><td><span data-l="ko">Crew. 콘텐츠 제작과 서포트, 커뮤니티 사이트·행사 페이지 기획, 포스터, BUILD 밋업 연사</span><span data-l="en">Crew: content and member support, community website and event pages, posters, BUILD meetup speaker</span></td></tr>
+              <tr><td><strong>DDD Seoul</strong></td><td><span data-l="ko">개발자 커뮤니티 행사 준비와 운영</span><span data-l="en">Helps prepare and run developer community events</span></td></tr>
+              <tr><td><strong>Copilot Club</strong></td><td><span data-l="ko">컨퍼런스 연사(Planner, Loop), 웨비나와 협업 도구 교류</span><span data-l="en">Conference speaker (Planner, Loop), webinars and collaboration tools</span></td></tr>
+              <tr><td><strong><span data-l="ko">퓨쳐워커스클럽</span><span data-l="en">Future Workers Club</span></strong></td><td><span data-l="ko">Microsoft 365 협업 도구, 새 Planner 세션</span><span data-l="en">Sessions on Microsoft 365 collaboration tools and the new Planner</span></td></tr>
+              <tr><td><strong><span data-l="ko">오피스튜터</span><span data-l="en">Office Tutor</span></strong></td><td><span data-l="ko">AI 트렌드 스터디 멘토</span><span data-l="en">AI trend study mentor</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="card">
-        <h3>발표·행사 기록</h3>
+        <h3><span data-l="ko">발표·행사 기록</span><span data-l="en">Talks and events</span></h3>
         <div class="table-wrap">
           <table>
             <tbody>
-              <tr><td>컨퍼런스</td><td><strong>Modern Work Conference Seoul 2026</strong><br>Copilot Chat(무료)으로 가능한 모든 것</td></tr>
-              <tr><td>밋업</td><td><strong>AI놀이터 BUILD / localhost:SEOUL</strong> · 한국마이크로소프트<br>App Builder Agent로 학습 가이드 제작기</td></tr>
-              <tr><td>부스</td><td><strong>Snowflake World Tour Seoul</strong> · Microsoft AI놀이터 부스<br>Copilot Studio 데모 crew, Copilot 퀴즈 이벤트 기획</td></tr>
-              <tr><td>컨퍼런스</td><td><strong>Copilot Club 1·2회 컨퍼런스</strong><br>Microsoft 365 Planner로 뚝딱! / Microsoft 365 Loop AI</td></tr>
-              <tr><td>컨퍼런스</td><td><strong>맥비기획 컨퍼런스</strong><br>노코드와 MS 코파일럿 / Microsoft Planner로 기획하기</td></tr>
-              <tr><td>밋업</td><td><strong>퓨쳐워커스클럽</strong><br>Microsoft 365 협업 도구 실전 / 변화된 Planner</td></tr>
+              <tr><td><span data-l="ko">컨퍼런스</span><span data-l="en">Conference</span></td><td><strong>Modern Work Conference Seoul 2026</strong><br><span data-l="ko">Copilot Chat(무료)으로 가능한 모든 것</span><span data-l="en">Everything you can do with Copilot Chat (free)</span></td></tr>
+              <tr><td><span data-l="ko">밋업</span><span data-l="en">Meetup</span></td><td><strong><span data-l="ko">AI놀이터</span><span data-l="en">AI Playground</span> BUILD / localhost:SEOUL</strong> · <span data-l="ko">한국마이크로소프트</span><span data-l="en">Microsoft Korea</span><br><span data-l="ko">App Builder Agent로 학습 가이드 제작기</span><span data-l="en">Building learning guides with App Builder Agent</span></td></tr>
+              <tr><td><span data-l="ko">부스</span><span data-l="en">Booth</span></td><td><strong>Snowflake World Tour Seoul</strong> · <span data-l="ko">Microsoft AI놀이터 부스</span><span data-l="en">Microsoft AI Playground booth</span><br><span data-l="ko">Copilot Studio 데모 crew, Copilot 퀴즈 이벤트 기획</span><span data-l="en">Copilot Studio demo crew, Copilot quiz event planning</span></td></tr>
+              <tr><td><span data-l="ko">컨퍼런스</span><span data-l="en">Conference</span></td><td><strong><span data-l="ko">Copilot Club 1·2회 컨퍼런스</span><span data-l="en">Copilot Club 1st and 2nd Conference</span></strong><br><span data-l="ko">Microsoft 365 Planner로 뚝딱! / Microsoft 365 Loop AI</span><span data-l="en">Done in a snap with Microsoft 365 Planner / Microsoft 365 Loop AI</span></td></tr>
+              <tr><td><span data-l="ko">컨퍼런스</span><span data-l="en">Conference</span></td><td><strong><span data-l="ko">맥비기획 컨퍼런스</span><span data-l="en">Macbi Planning Conference</span></strong><br><span data-l="ko">노코드와 MS 코파일럿 / Microsoft Planner로 기획하기</span><span data-l="en">No-code and Microsoft Copilot / Planning with Microsoft Planner</span></td></tr>
+              <tr><td><span data-l="ko">밋업</span><span data-l="en">Meetup</span></td><td><strong><span data-l="ko">퓨쳐워커스클럽</span><span data-l="en">Future Workers Club</span></strong><br><span data-l="ko">Microsoft 365 협업 도구 실전 / 변화된 Planner</span><span data-l="en">Microsoft 365 collaboration tools in practice / The new Planner</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-    <div class="note warn"><strong>주의:</strong> 100만 명(GPTers)과 8,000명(맥비기획)은 커뮤니티 전체 회원 규모입니다. 교육 인원이나 직접 영향을 받은 인원으로 쓰지 말아 주세요. MVP 심사는 자발적이고 공개된 커뮤니티 기여를 중요하게 보므로, 이 페이지는 기업 강의를 빼고 커뮤니티 활동만 담았습니다.</div>
+    <div class="note warn" data-l="ko"><strong>주의:</strong> 100만 명(GPTers)과 8,000명(맥비기획)은 커뮤니티 전체 회원 규모입니다. 교육 인원이나 직접 영향을 받은 인원으로 쓰지 말아 주세요. MVP 심사는 자발적이고 공개된 커뮤니티 기여를 중요하게 보므로, 이 페이지는 기업 강의를 빼고 커뮤니티 활동만 담았습니다.</div>
+    <div class="note warn" data-l="en"><strong>Note:</strong> one million (GPTers) and 8,000 (Macbi Planning) are total community sizes. Please do not describe them as people trained or directly reached. MVP reviews value voluntary, public community work, so this page covers community activities only and leaves out paid corporate training.</div>
   </section>
 
   <section id="activities">
     <div class="sec-head">
-      <h2>MVP 활동 내역</h2>
-      <p>MVP 지원 워크시트(Activities)에 넣은 13건입니다. 모두 Award Category <strong>M365 Apps &amp; Services</strong>로 맞췄고, 유료 기업 교육은 넣지 않았습니다.</p>
+      <h2><span data-l="ko">MVP 활동 내역</span><span data-l="en">MVP activities</span></h2>
+      <p data-l="ko">MVP 지원 워크시트(Activities)에 넣은 13건입니다. 모두 Award Category <strong>M365 Apps &amp; Services</strong>로 맞췄고, 유료 기업 교육은 넣지 않았습니다.</p>
+      <p data-l="en">The 13 activities listed in the MVP worksheet. All use the award category <strong>M365 Apps &amp; Services</strong>; paid corporate training is not included.</p>
     </div>
     <div class="card">
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Activity Type</th><th>Area</th><th>활동</th></tr></thead>
+          <thead><tr><th>Activity Type</th><th>Area</th><th><span data-l="ko">활동</span><span data-l="en">Activity</span></th></tr></thead>
           <tbody>
-              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong>Modern Work Conference Seoul 2026</strong><br>Everything you can do with Copilot Chat (free)</td></tr>
-              <tr><td><span class="pill">Speaking (Meetup)</span></td><td>Copilot Studio</td><td><strong>AI놀이터 BUILD / localhost:SEOUL</strong><br>Building learning guides with Microsoft Copilot Agent (App Builder Agent)</td></tr>
-              <tr><td><span class="pill">Conference (Staffing)</span></td><td>Copilot Studio</td><td><strong>Snowflake World Tour Seoul</strong><br>Microsoft AI Playground booth crew: Copilot Studio demo support, Copilot quiz and lucky-draw event planning</td></tr>
-              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong>Copilot Club 1st Conference</strong><br>Done in a snap with Microsoft 365 Planner</td></tr>
-              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong>Copilot Club 2nd Conference</strong><br>Microsoft 365 Loop AI</td></tr>
-              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong>Macbi Planning Conference</strong><br>No-code and Microsoft Copilot</td></tr>
-              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong>Macbi Planning Conference</strong><br>Planning with Microsoft Planner</td></tr>
-              <tr><td><span class="pill">Speaking (Meetup)</span></td><td>M365 Copilot</td><td><strong>Future Workers Club</strong><br>Microsoft 365 collaboration tools in practice</td></tr>
-              <tr><td><span class="pill">Speaking (Meetup)</span></td><td>M365 Copilot</td><td><strong>Future Workers Club</strong><br>The new Microsoft Planner</td></tr>
-              <tr><td><span class="pill">Organizer (User Group)</span></td><td>M365 Copilot</td><td><strong>GPTers</strong><br>Study leader for 12 cohorts (7th-18th), including Copilot studies and a Copilot Pro study</td></tr>
-              <tr><td><span class="pill">Blog/Website Post</span></td><td>M365 Copilot</td><td><strong>GPTers</strong><br>Copilot Pro and Microsoft 365 Copilot study materials and service guides</td></tr>
-              <tr><td><span class="pill">Organizer (User Group)</span></td><td>M365 Copilot</td><td><strong>AI Playground</strong><br>Crew: content and member support, community website and event pages, posters</td></tr>
-              <tr><td><span class="pill">Mentorship</span></td><td>M365 Copilot</td><td><strong>Community-wide</strong><br>Q&amp;A and mentoring on Microsoft 365, Copilot Chat, Copilot Studio, Planner and Loop; AI trend study mentor at Office Tutor</td></tr>
+              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong>Modern Work Conference Seoul 2026</strong><br><span data-l="en">Everything you can do with Copilot Chat (free)</span><span data-l="ko">Copilot Chat(무료)으로 가능한 모든 것</span></td></tr>
+              <tr><td><span class="pill">Speaking (Meetup)</span></td><td>Copilot Studio</td><td><strong><span data-l="ko">AI놀이터</span><span data-l="en">AI Playground</span> BUILD / localhost:SEOUL</strong><br><span data-l="en">Building learning guides with Microsoft Copilot Agent (App Builder Agent)</span><span data-l="ko">Microsoft Copilot Agent(App Builder Agent)로 학습 가이드 만들기</span></td></tr>
+              <tr><td><span class="pill">Conference (Staffing)</span></td><td>Copilot Studio</td><td><strong>Snowflake World Tour Seoul</strong><br><span data-l="en">Microsoft AI Playground booth crew: Copilot Studio demo support, Copilot quiz and lucky-draw event planning</span><span data-l="ko">Microsoft AI놀이터 부스 crew: Copilot Studio 데모 지원, Copilot 퀴즈·경품 이벤트 기획</span></td></tr>
+              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong><span data-l="en">Copilot Club 1st Conference</span><span data-l="ko">Copilot Club 1회 컨퍼런스</span></strong><br><span data-l="en">Done in a snap with Microsoft 365 Planner</span><span data-l="ko">Microsoft 365 Planner로 뚝딱!</span></td></tr>
+              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong><span data-l="en">Copilot Club 2nd Conference</span><span data-l="ko">Copilot Club 2회 컨퍼런스</span></strong><br>Microsoft 365 Loop AI</td></tr>
+              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong><span data-l="en">Macbi Planning Conference</span><span data-l="ko">맥비기획 컨퍼런스</span></strong><br><span data-l="en">No-code and Microsoft Copilot</span><span data-l="ko">노코드와 MS 코파일럿</span></td></tr>
+              <tr><td><span class="pill">Speaking (Conference)</span></td><td>M365 Copilot</td><td><strong><span data-l="en">Macbi Planning Conference</span><span data-l="ko">맥비기획 컨퍼런스</span></strong><br><span data-l="en">Planning with Microsoft Planner</span><span data-l="ko">Microsoft Planner로 기획하기</span></td></tr>
+              <tr><td><span class="pill">Speaking (Meetup)</span></td><td>M365 Copilot</td><td><strong><span data-l="en">Future Workers Club</span><span data-l="ko">퓨쳐워커스클럽</span></strong><br><span data-l="en">Microsoft 365 collaboration tools in practice</span><span data-l="ko">Microsoft 365 협업 도구 실전</span></td></tr>
+              <tr><td><span class="pill">Speaking (Meetup)</span></td><td>M365 Copilot</td><td><strong><span data-l="en">Future Workers Club</span><span data-l="ko">퓨쳐워커스클럽</span></strong><br><span data-l="en">The new Microsoft Planner</span><span data-l="ko">변화된 Microsoft Planner</span></td></tr>
+              <tr><td><span class="pill">Organizer (User Group)</span></td><td>M365 Copilot</td><td><strong>GPTers</strong><br><span data-l="en">Study leader for 12 cohorts (7th–18th), including Copilot studies and a Copilot Pro study</span><span data-l="ko">7~18기 12기수 스터디 리더, Copilot 스터디와 Copilot Pro 스터디 포함</span></td></tr>
+              <tr><td><span class="pill">Blog/Website Post</span></td><td>M365 Copilot</td><td><strong>GPTers</strong><br><span data-l="en">Copilot Pro and Microsoft 365 Copilot study materials and service guides</span><span data-l="ko">Copilot Pro·Microsoft 365 Copilot 스터디 자료와 서비스 가이드</span></td></tr>
+              <tr><td><span class="pill">Organizer (User Group)</span></td><td>M365 Copilot</td><td><strong><span data-l="en">AI Playground</span><span data-l="ko">AI놀이터</span></strong><br><span data-l="en">Crew: content and member support, community website and event pages, posters</span><span data-l="ko">Crew: 콘텐츠 제작과 멤버 지원, 커뮤니티 사이트·행사 페이지, 포스터</span></td></tr>
+              <tr><td><span class="pill">Mentorship</span></td><td>M365 Copilot</td><td><strong><span data-l="en">Community-wide</span><span data-l="ko">커뮤니티 전반</span></strong><br><span data-l="en">Q&amp;A and mentoring on Microsoft 365, Copilot Chat, Copilot Studio, Planner and Loop; AI trend study mentor at Office Tutor</span><span data-l="ko">Microsoft 365, Copilot Chat, Copilot Studio, Planner, Loop 관련 문의 답변과 멘토링, 오피스튜터 AI 트렌드 스터디 멘토</span></td></tr>
           </tbody>
         </table>
       </div>
-      <div class="note">기업·기관 대상 Copilot 교육도 꾸준히 하고 있지만, MVP는 유료 활동을 기여로 보지 않아 이 목록에는 넣지 않았습니다.</div>
+      <div class="note" data-l="ko">기업·기관 대상 Copilot 교육도 꾸준히 하고 있지만, MVP는 유료 활동을 기여로 보지 않아 이 목록에는 넣지 않았습니다.</div>
+      <div class="note" data-l="en">Miyoung also delivers Copilot training for companies and public institutions, but paid activities do not count as MVP contributions, so they are not listed here.</div>
     </div>
   </section>
 
   <section id="basic">
     <div class="sec-head">
-      <h2>기본 정보</h2>
-      <p>양식 상단 입력칸과 같은 순서입니다. 오른쪽 버튼으로 하나씩 복사할 수 있습니다.</p>
+      <h2><span data-l="ko">기본 정보</span><span data-l="en">Basic information</span></h2>
+      <p data-l="ko">양식 상단 입력칸과 같은 순서입니다. 오른쪽 버튼으로 하나씩 복사할 수 있습니다.</p>
+      <p data-l="en">In the same order as the top of the form. Use the buttons to copy each value.</p>
     </div>
     <div class="card">
       <div class="grid2">
         <div class="field">
-          <label for="firstName">이름 <span class="en">First Name</span> <span class="req">*</span></label>
-          <div class="row-copy"><input type="text" id="firstName" value="Miyoung" readonly><button type="button" data-copy-field="firstName">복사</button></div>
-          <small>후보자가 확정한 값입니다. 한국어 양식의 '이름' 칸에 넣으세요.</small>
+          <label for="firstName"><span data-l="ko">이름 <span class="en">First Name</span></span><span data-l="en">First Name</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="text" id="firstName" value="Miyoung" readonly><button type="button" data-copy-field="firstName"><span data-l="ko">복사</span><span data-l="en">Copy</span></button></div>
+          <small data-l="ko">후보자가 확정한 값입니다. 한국어 양식의 '이름' 칸에 넣으세요.</small>
+          <small data-l="en">Confirmed by the nominee.</small>
         </div>
         <div class="field">
-          <label for="lastName">성 <span class="en">Last Name</span> <span class="req">*</span></label>
-          <div class="row-copy"><input type="text" id="lastName" value="Youn" readonly><button type="button" data-copy-field="lastName">복사</button></div>
-          <small>후보자가 확정한 값입니다. 한국어 양식에는 '지명자 성'으로 나옵니다.</small>
+          <label for="lastName"><span data-l="ko">성 <span class="en">Last Name</span></span><span data-l="en">Last Name</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="text" id="lastName" value="Youn" readonly><button type="button" data-copy-field="lastName"><span data-l="ko">복사</span><span data-l="en">Copy</span></button></div>
+          <small data-l="ko">후보자가 확정한 값입니다. 한국어 양식에는 '지명자 성'으로 나옵니다.</small>
+          <small data-l="en">Confirmed by the nominee.</small>
         </div>
         <div class="field">
-          <label for="email">후보자 이메일 <span class="en">Email Address</span> <span class="req">*</span></label>
-          <div class="row-copy"><input type="email" id="email" value="yuhki20@outlook.kr" readonly><button type="button" data-copy-field="email">복사</button></div>
-          <small>후보자 본인 이메일로 확정한 값입니다. 한국어 양식에 '추천인 이메일 주소'로 잘못 번역되어 있지만 이 주소를 넣어 주세요.</small>
+          <label for="email"><span data-l="ko">후보자 이메일 <span class="en">Email Address</span></span><span data-l="en">Nominee Email Address</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="email" id="email" value="yuhki20@outlook.kr" readonly><button type="button" data-copy-field="email"><span data-l="ko">복사</span><span data-l="en">Copy</span></button></div>
+          <small data-l="ko">후보자 본인 이메일로 확정한 값입니다. 한국어 양식에 '추천인 이메일 주소'로 잘못 번역되어 있지만 이 주소를 넣어 주세요.</small>
+          <small data-l="en">The nominee's own email, not yours.</small>
         </div>
         <div class="field">
-          <label for="titleSel">호칭 <span class="en">Title</span></label>
+          <label for="titleSel"><span data-l="ko">호칭 <span class="en">Title</span></span><span data-l="en">Title</span></label>
           <select id="titleSel">
-            <option value="">선택 안 함</option>
+            <option value="" data-t-ko="선택 안 함" data-t-en="Not selected">선택 안 함</option>
             <option>Ms.</option><option>Mrs.</option><option>Mr.</option><option>Mx.</option><option>Dr.</option>
           </select>
-          <small>선택 항목입니다. 후보자에게 확인한 경우에만 고르세요.</small>
+          <small data-l="ko">선택 항목입니다. 후보자에게 확인한 경우에만 고르세요.</small>
+          <small data-l="en">Optional. Choose only if the nominee confirmed it.</small>
         </div>
         <div class="field">
-          <label for="country">국가 <span class="en">Country or Region</span> <span class="req">*</span></label>
-          <div class="row-copy"><input type="text" id="country" value="Korea, Republic of" autocomplete="off"><button type="button" data-copy-field="country">복사</button></div>
-          <small>주/도(State or Province) 칸은 비활성이라 넘어가면 됩니다.</small>
+          <label for="country"><span data-l="ko">국가 <span class="en">Country or Region</span></span><span data-l="en">Country or Region</span> <span class="req">*</span></label>
+          <div class="row-copy"><input type="text" id="country" value="Korea, Republic of" autocomplete="off"><button type="button" data-copy-field="country"><span data-l="ko">복사</span><span data-l="en">Copy</span></button></div>
+          <small data-l="ko">주/도(State or Province) 칸은 비활성이라 넘어가면 됩니다.</small>
+          <small data-l="en">State or Province is disabled for Korea; skip it.</small>
         </div>
         <div class="field">
-          <label for="known">알고 지낸 기간 <span class="en">How long have you known the nominee?</span> <span class="req">*</span></label>
-          <input type="text" id="known" placeholder="예: 2년" autocomplete="off">
-          <small>양식 드롭다운에서 가장 가까운 값을 고르세요.</small>
+          <label for="known"><span data-l="ko">알고 지낸 기간 <span class="en">How long have you known the nominee?</span></span><span data-l="en">How long have you known the nominee?</span> <span class="req">*</span></label>
+          <input type="text" id="known" placeholder="예: 2년" data-ph-en="e.g. 2 years" autocomplete="off">
+          <small data-l="ko">양식 드롭다운에서 가장 가까운 값을 고르세요.</small>
+          <small data-l="en">Pick the closest value in the form's dropdown.</small>
         </div>
       </div>
     </div>
@@ -320,125 +352,137 @@ html { scroll-behavior: smooth; }
 
   <section id="answers">
     <div class="sec-head">
-      <h2>서술형 답변</h2>
-      <p>빈칸을 채우면 아래 영문 답변이 바로 바뀝니다. 완성본은 직접 고쳐도 되고, 고친 뒤에는 '입력값으로 다시 만들기'를 눌러야 다시 연결됩니다.</p>
+      <h2><span data-l="ko">서술형 답변</span><span data-l="en">Written answers</span></h2>
+      <p data-l="ko">빈칸을 채우면 아래 영문 답변이 바로 바뀝니다. 완성본은 직접 고쳐도 되고, 고친 뒤에는 '입력값으로 다시 만들기'를 눌러야 다시 연결됩니다.</p>
+      <p data-l="en">The English answers update as you fill in the blanks. You can edit an answer directly; after that, press "Rebuild from fields" to link it to the fields again.</p>
     </div>
 
     <!-- Q1 -->
     <div class="card" data-q="q1">
       <div class="q-title">
-        <span class="q-tag">QUESTION 1 · 필수</span>
+        <span class="q-tag">QUESTION 1 · <span data-l="ko">필수</span><span data-l="en">Required</span></span>
         <h3>How did you meet and how have you engaged with your nominee?</h3>
-        <span class="ko">후보자를 어떻게 만났고, 어떻게 교류해 왔나요?</span>
+        <span class="ko" data-l="ko">후보자를 어떻게 만났고, 어떻게 교류해 왔나요?</span>
       </div>
-      <div class="note">AI놀이터에서 함께한 내용으로 미리 채워 두었습니다. <strong>만난 해</strong>만 넣으시고, 나머지는 실제 경험에 맞게 고쳐 주세요.</div>
+      <div class="note" data-l="ko">AI놀이터에서 함께한 내용으로 미리 채워 두었습니다. <strong>만난 해</strong>만 넣으시고, 나머지는 실제 경험에 맞게 고쳐 주세요.</div>
+      <div class="note" data-l="en">Pre-filled from our time together at AI Playground. Add <strong>the year we met</strong>, and adjust the rest to match your own experience.</div>
       <div class="grid2">
         <div class="field">
-          <label for="q1Where">처음 만난 곳 <span class="req">*</span></label>
-          <input type="text" id="q1Where" value="the AI Playground community" placeholder="예: the AI Playground community" autocomplete="off">
-          <small>영문으로 입력. 커뮤니티나 행사 이름.</small>
+          <label for="q1Where"><span data-l="ko">처음 만난 곳</span><span data-l="en">Where we met</span> <span class="req">*</span></label>
+          <input type="text" id="q1Where" value="the AI Playground community" placeholder="예: the AI Playground community" data-ph-en="e.g. the AI Playground community" autocomplete="off">
+          <small data-l="ko">영문으로 입력. 커뮤니티나 행사 이름.</small>
+          <small data-l="en">A community or event name.</small>
         </div>
         <div class="field">
-          <label for="q1Year">만난 해 <span class="req">*</span></label>
-          <input type="text" id="q1Year" placeholder="예: 2024" autocomplete="off">
+          <label for="q1Year"><span data-l="ko">만난 해</span><span data-l="en">Year we met</span> <span class="req">*</span></label>
+          <input type="text" id="q1Year" placeholder="예: 2024" data-ph-en="e.g. 2024" autocomplete="off">
         </div>
       </div>
       <div class="field">
-        <label for="q1Did">함께한 활동 <span class="req">*</span></label>
-        <input type="text" id="q1Did" value="worked together there, where Miyoung creates content and supports members and events" placeholder="예: worked together there, where Miyoung creates content and supports members and events" autocomplete="off">
-        <small>"Since then we have ___." 문장에 들어갑니다. 동사 과거분사로 시작하세요.</small>
+        <label for="q1Did"><span data-l="ko">함께한 활동</span><span data-l="en">What we did together</span> <span class="req">*</span></label>
+        <input type="text" id="q1Did" value="worked together there, where Miyoung creates content and supports members and events" placeholder="예: worked together there, where Miyoung creates content and supports members and events" data-ph-en="e.g. worked together there, where Miyoung creates content and supports members and events" autocomplete="off">
+        <small data-l="ko">"Since then we have ___." 문장에 들어갑니다. 동사 과거분사로 시작하세요.</small>
+        <small data-l="en">Completes the sentence "Since then we have ___." Start with a past participle.</small>
       </div>
       <div class="field">
-        <label for="q1Saw">추천인이 본 후보자의 모습</label>
-        <textarea id="q1Saw" rows="2" placeholder="예: Miyoung has a broad understanding of AI and is always ready to take an active part.">Miyoung has a broad understanding of AI and is always ready to take an active part whenever the community needs help.</textarea>
-        <small>AI에 대한 폭넓은 이해, 언제든 적극적인 참여. 직접 본 일화가 있으면 덧붙여도 됩니다. 글자 수가 넘치면 줄여 주세요.</small>
+        <label for="q1Saw"><span data-l="ko">추천인이 본 후보자의 모습</span><span data-l="en">What you have seen in Miyoung</span></label>
+        <textarea id="q1Saw" rows="2" placeholder="예: Miyoung has a broad understanding of AI and is always ready to take an active part." data-ph-en="e.g. Miyoung has a broad understanding of AI and is always ready to take an active part.">Miyoung has a broad understanding of AI and is always ready to take an active part whenever the community needs help.</textarea>
+        <small data-l="ko">AI에 대한 폭넓은 이해, 언제든 적극적인 참여. 직접 본 일화가 있으면 덧붙여도 됩니다. 글자 수가 넘치면 줄여 주세요.</small>
+        <small data-l="en">A broad understanding of AI and active participation. Add a story you witnessed if you like, and shorten if over the limit.</small>
       </div>
       <div class="final"></div>
+      <details data-l="ko"><summary>한국어 뜻 보기</summary><p>AI놀이터 커뮤니티에서 [연도]에 만났습니다. 그곳에서 함께 활동하며, 미영 님은 콘텐츠를 만들고 멤버와 행사를 지원합니다. AI를 폭넓게 이해하고 커뮤니티에 도움이 필요할 때 언제든 적극적으로 나섭니다. GPTers, DDD Seoul, Copilot Club, 맥비기획에서도 사람을 연결하고, 효과 있는 방법을 나누고, Microsoft 365 Copilot을 중심으로 배움을 실천으로 이어 가는 모습을 봤습니다.</p></details>
     </div>
 
     <!-- Q2 -->
     <div class="card" data-q="q2">
       <div class="q-title">
-        <span class="q-tag">QUESTION 2 · 필수</span>
+        <span class="q-tag">QUESTION 2 · <span data-l="ko">필수</span><span data-l="en">Required</span></span>
         <h3>How has your nominee demonstrated impact with technology?</h3>
-        <span class="ko">후보자가 기술 분야에서 어떤 영향을 보여주었나요?</span>
+        <span class="ko" data-l="ko">후보자가 기술 분야에서 어떤 영향을 보여주었나요?</span>
       </div>
       <div class="field">
-        <label for="q2Ex">직접 본 기술 공유 사례 (선택)</label>
-        <textarea id="q2Ex" rows="2" placeholder="예: Miyoung's GPTers post on building a meeting-notes agent in Copilot Studio was reused by many members."></textarea>
-        <small>공개 게시물, 발표, 데모처럼 누구나 확인할 수 있는 사례가 가장 좋습니다.</small>
+        <label for="q2Ex"><span data-l="ko">직접 본 기술 공유 사례 (선택)</span><span data-l="en">A technical example you saw (optional)</span></label>
+        <textarea id="q2Ex" rows="2" placeholder="예: Miyoung's GPTers post on building a meeting-notes agent in Copilot Studio was reused by many members." data-ph-en="e.g. Miyoung's GPTers post on building a meeting-notes agent in Copilot Studio was reused by many members."></textarea>
+        <small data-l="ko">공개 게시물, 발표, 데모처럼 누구나 확인할 수 있는 사례가 가장 좋습니다.</small>
+        <small data-l="en">Public posts, talks or demos that anyone can check work best.</small>
       </div>
       <div class="final"></div>
+      <details data-l="ko"><summary>한국어 뜻 보기</summary><p>Microsoft Certified Trainer로서 Microsoft 365 Copilot을 일반 사용자가 실무에 쓸 수 있게 만듭니다. Modern Work Conference Seoul 2026에서 'Copilot Chat(무료)으로 가능한 모든 것'을 발표했고, Copilot Club 컨퍼런스에서 Planner·Loop 세션을, 한국마이크로소프트에서 열린 AI놀이터 BUILD 밋업에서 Copilot 에이전트로 학습 가이드를 만드는 방법을 발표했습니다. Copilot Pro와 Copilot Studio 노하우를 누구나 따라 할 수 있는 가이드로 만듭니다.</p></details>
     </div>
 
     <!-- Q3 -->
     <div class="card" data-q="q3">
       <div class="q-title">
-        <span class="q-tag">QUESTION 3 · 필수</span>
+        <span class="q-tag">QUESTION 3 · <span data-l="ko">필수</span><span data-l="en">Required</span></span>
         <h3>How has your nominee demonstrated impact and influence as a community leader?</h3>
-        <span class="ko">후보자가 커뮤니티 리더로서 어떤 영향력을 보여주었나요?</span>
+        <span class="ko" data-l="ko">후보자가 커뮤니티 리더로서 어떤 영향력을 보여주었나요?</span>
       </div>
       <div class="field">
-        <label for="q3Stats">GPTers 스터디 규모 (선택)</label>
-        <input type="text" id="q3Stats" placeholder="예: 300+ participants" autocomplete="off">
-        <small>확인된 숫자만 넣어 주세요. 문장 안 괄호로 들어갑니다. 넣으면 500자를 넘을 수 있어 게이지를 확인해 주세요.</small>
+        <label for="q3Stats"><span data-l="ko">GPTers 스터디 규모 (선택)</span><span data-l="en">GPTers study size (optional)</span></label>
+        <input type="text" id="q3Stats" placeholder="예: 300+ participants" data-ph-en="e.g. 300+ participants" autocomplete="off">
+        <small data-l="ko">확인된 숫자만 넣어 주세요. 문장 안 괄호로 들어갑니다. 넣으면 500자를 넘을 수 있어 게이지를 확인해 주세요.</small>
+        <small data-l="en">Only confirmed numbers. Added in parentheses; watch the meter, as it may push the answer over 500.</small>
       </div>
       <div class="field">
-        <label for="q3Story">커뮤니티 사이를 연결한 사례 (선택)</label>
-        <textarea id="q3Story" rows="2" placeholder="예: For example, an AI Playground participant later spoke at DDD Seoul with Miyoung's support."></textarea>
-        <small>실제 연결 사례가 하나 있으면 설득력이 크게 올라갑니다.</small>
+        <label for="q3Story"><span data-l="ko">커뮤니티 사이를 연결한 사례 (선택)</span><span data-l="en">A story of connecting communities (optional)</span></label>
+        <textarea id="q3Story" rows="2" placeholder="예: For example, an AI Playground participant later spoke at DDD Seoul with Miyoung's support." data-ph-en="e.g. For example, an AI Playground participant later spoke at DDD Seoul with Miyoung's support."></textarea>
+        <small data-l="ko">실제 연결 사례가 하나 있으면 설득력이 크게 올라갑니다.</small>
+        <small data-l="en">One real example makes the answer much stronger.</small>
       </div>
       <div class="final"></div>
+      <details data-l="ko"><summary>한국어 뜻 보기</summary><p>커뮤니티 사이의 허브입니다. 회원 100만 명 이상의 GPTers에서 Copilot 스터디를 포함해 12기수 동안 스터디를 이끌었습니다. Snowflake World Tour Seoul의 Microsoft AI놀이터 부스에서 Copilot Studio 데모를 돕고 직접 기획한 퀴즈 이벤트로 Copilot을 알렸습니다. 퍼실리테이터이자 멘토로서 AI놀이터, 맥비기획, Copilot Club, 퓨쳐워커스클럽 멤버들의 Microsoft 365·Copilot 질문에 답합니다.</p></details>
     </div>
 
     <!-- Q4 -->
     <div class="card" data-q="q4">
       <div class="q-title">
-        <span class="q-tag">QUESTION 4 · 선택</span>
+        <span class="q-tag">QUESTION 4 · <span data-l="ko">선택</span><span data-l="en">Optional</span></span>
         <h3>Is there additional information that you would like us to know about your nominee for consideration?</h3>
-        <span class="ko">후보자에 대해 추가로 알리고 싶은 정보가 있나요?</span>
+        <span class="ko" data-l="ko">후보자에 대해 추가로 알리고 싶은 정보가 있나요?</span>
       </div>
       <div class="grid2">
-        <div class="field"><label for="l1">GPTers 스터디 링크</label><input type="url" id="l1" placeholder="https://" autocomplete="off"></div>
-        <div class="field"><label for="l2">Modern Work 발표 링크</label><input type="url" id="l2" placeholder="https://" autocomplete="off"></div>
-        <div class="field"><label for="l3">Snowflake·AI놀이터 링크</label><input type="url" id="l3" placeholder="https://" autocomplete="off"></div>
-        <div class="field"><label for="l4">Copilot Club 링크</label><input type="url" id="l4" placeholder="https://" autocomplete="off"></div>
-        <div class="field"><label for="l5">맥비기획 링크</label><input type="url" id="l5" placeholder="https://" autocomplete="off"></div>
-        <div class="field"><label for="l6">블로그·LinkedIn 링크</label><input type="url" id="l6" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l1"><span data-l="ko">GPTers 스터디 링크</span><span data-l="en">GPTers study link</span></label><input type="url" id="l1" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l2"><span data-l="ko">Modern Work 발표 링크</span><span data-l="en">Modern Work talk link</span></label><input type="url" id="l2" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l3"><span data-l="ko">Snowflake·AI놀이터 링크</span><span data-l="en">Snowflake / AI Playground link</span></label><input type="url" id="l3" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l4"><span data-l="ko">Copilot Club 링크</span><span data-l="en">Copilot Club link</span></label><input type="url" id="l4" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l5"><span data-l="ko">맥비기획 링크</span><span data-l="en">Macbi Planning link</span></label><input type="url" id="l5" placeholder="https://" autocomplete="off"></div>
+        <div class="field"><label for="l6"><span data-l="ko">블로그·LinkedIn 링크</span><span data-l="en">Blog / LinkedIn link</span></label><input type="url" id="l6" placeholder="https://" autocomplete="off"></div>
       </div>
-      <small style="color:var(--muted);font-size:12px">비워 둔 링크는 답변에서 빠집니다. 링크가 길면 500자를 넘을 수 있으니 2~3개만 골라도 됩니다.</small>
+      <small style="color:var(--muted);font-size:12px"><span data-l="ko">비워 둔 링크는 답변에서 빠집니다. 링크가 길면 500자를 넘을 수 있으니 2~3개만 골라도 됩니다.</span><span data-l="en">Empty links are left out. Long links can push the answer over 500 characters, so two or three are enough.</span></small>
       <div class="final"></div>
+      <details data-l="ko"><summary>한국어 뜻 보기</summary><p>미영 님의 강점은 기획자, 연사, 스터디 리더, 퍼실리테이터, 행사 기획자라는 여러 역할을 잇는 데 있습니다. Microsoft Certified Trainer와 AB-730 자격을 갖고 있습니다. MVP가 되면 개발자 중심 프로그램이 잘 닿지 못하는 국내 비즈니스 사용자와 Microsoft를 연결할 것입니다.</p></details>
     </div>
 
     <div class="card">
       <div class="final-head">
-        <h3>네 답변 한 번에 복사</h3>
-        <button type="button" class="primary" id="copyAll">전체 복사</button>
+        <h3><span data-l="ko">네 답변 한 번에 복사</span><span data-l="en">Copy all four answers</span></h3>
+        <button type="button" class="primary" id="copyAll"><span data-l="ko">전체 복사</span><span data-l="en">Copy all</span></button>
       </div>
-      <p style="color:var(--muted);font-size:14px">후보자에게 최종본을 보내 확인받고 싶을 때 쓰세요.</p>
+      <p style="color:var(--muted);font-size:14px"><span data-l="ko">후보자에게 최종본을 보내 확인받고 싶을 때 쓰세요.</span><span data-l="en">Use this to send the final version to the nominee for review.</span></p>
     </div>
   </section>
 
   <section id="evidence">
     <div class="sec-head">
-      <h2>증빙 체크리스트</h2>
-      <p class="progress" id="evProg">0/7 확인</p>
+      <h2><span data-l="ko">증빙 체크리스트</span><span data-l="en">Evidence checklist</span></h2>
+      <p class="progress" id="evProg">0/7</p>
     </div>
     <div class="card" id="evList">
-      <div class="check"><input type="checkbox" id="e0"><div class="body"><label for="e0"><strong>Modern Work · Snowflake</strong></label><span>발표 세션 페이지, 행사 포스터, 부스 이벤트 사진</span></div></div>
-      <div class="check"><input type="checkbox" id="e1"><div class="body"><label for="e1"><strong>맥비기획</strong></label><span>Microsoft 관련 공유 게시글 또는 발표 링크</span></div></div>
-      <div class="check"><input type="checkbox" id="e2"><div class="body"><label for="e2"><strong>GPTers</strong></label><span>스터디 운영 기간, 기수, 참여 인원, 활동 자료</span></div></div>
-      <div class="check"><input type="checkbox" id="e3"><div class="body"><label for="e3"><strong>AI놀이터</strong></label><span>운영 페이지, 제작 포스터, 경험 공유 사례</span></div></div>
-      <div class="check"><input type="checkbox" id="e4"><div class="body"><label for="e4"><strong>DDD Seoul</strong></label><span>참여 행사 이름, 맡은 역할, 행사 기록</span></div></div>
-      <div class="check"><input type="checkbox" id="e5"><div class="body"><label for="e5"><strong>Copilot Club</strong></label><span>발표, 기술 공유, 협업 활동 근거</span></div></div>
-      <div class="check"><input type="checkbox" id="e6"><div class="body"><label for="e6"><strong>추천인과의 관계</strong></label><span>알게 된 시점과 직접 함께한 활동 (Question 1)</span></div></div>
+      <div class="check"><input type="checkbox" id="e0"><div class="body"><label for="e0"><strong>Modern Work · Snowflake</strong></label><span data-l="ko">발표 세션 페이지, 행사 포스터, 부스 이벤트 사진</span><span data-l="en">Session page, event poster, booth photos</span></div></div>
+      <div class="check"><input type="checkbox" id="e1"><div class="body"><label for="e1"><strong><span data-l="ko">맥비기획</span><span data-l="en">Macbi Planning</span></strong></label><span data-l="ko">Microsoft 관련 공유 게시글 또는 발표 링크</span><span data-l="en">Microsoft-related posts or talk links</span></div></div>
+      <div class="check"><input type="checkbox" id="e2"><div class="body"><label for="e2"><strong>GPTers</strong></label><span data-l="ko">스터디 운영 기간, 기수, 참여 인원, 활동 자료</span><span data-l="en">Cohorts led, participants, study materials</span></div></div>
+      <div class="check"><input type="checkbox" id="e3"><div class="body"><label for="e3"><strong><span data-l="ko">AI놀이터</span><span data-l="en">AI Playground</span></strong></label><span data-l="ko">운영 페이지, 제작 포스터, 경험 공유 사례</span><span data-l="en">Community pages, posters, shared stories</span></div></div>
+      <div class="check"><input type="checkbox" id="e4"><div class="body"><label for="e4"><strong>DDD Seoul</strong></label><span data-l="ko">참여 행사 이름, 맡은 역할, 행사 기록</span><span data-l="en">Event names, role, event records</span></div></div>
+      <div class="check"><input type="checkbox" id="e5"><div class="body"><label for="e5"><strong>Copilot Club</strong></label><span data-l="ko">발표, 기술 공유, 협업 활동 근거</span><span data-l="en">Talks, knowledge sharing, collaboration</span></div></div>
+      <div class="check"><input type="checkbox" id="e6"><div class="body"><label for="e6"><strong><span data-l="ko">추천인과의 관계</span><span data-l="en">Your relationship</span></strong></label><span data-l="ko">알게 된 시점과 직접 함께한 활동 (Question 1)</span><span data-l="en">When you met and what you did together (Question 1)</span></div></div>
     </div>
-    <div class="btns"><button type="button" id="resetAll">입력 내용 모두 지우기</button><span id="resetConfirm" hidden><button type="button" id="resetYes" class="primary">정말 지우기</button> <button type="button" id="resetNo">취소</button></span></div>
+    <div class="btns"><button type="button" id="resetAll"><span data-l="ko">입력 내용 모두 지우기</span><span data-l="en">Clear all inputs</span></button><span id="resetConfirm" hidden><button type="button" id="resetYes" class="primary"><span data-l="ko">정말 지우기</span><span data-l="en">Yes, clear</span></button> <button type="button" id="resetNo"><span data-l="ko">취소</span><span data-l="en">Cancel</span></button></span></div>
   </section>
 
 </main>
 
-<footer><div class="wrap">입력값은 이 기기의 브라우저에만 저장되며 다른 사람이나 후보자에게 전달되지 않습니다. 완성한 답변은 MVP 추천 양식에 직접 붙여 넣어 주세요.</div></footer>
+<footer><div class="wrap"><span data-l="ko">입력값은 이 기기의 브라우저에만 저장되며 다른 사람이나 후보자에게 전달되지 않습니다. 완성한 답변은 MVP 추천 양식에 직접 붙여 넣어 주세요.</span><span data-l="en">Your inputs stay in this browser and are not sent to anyone, including the nominee. Paste the finished answers into the MVP nomination form yourself.</span></div></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -449,6 +493,25 @@ html { scroll-behavior: smooth; }
   var v = function (id) { var el = $(id); return el ? el.value.trim() : ""; };
   var or = function (val, ph) { return val || "[" + ph + "]"; };
   var name = function () { return "Miyoung"; };
+  var LANG_KEY = "youni-mvp-lang";
+  var lang = "ko";
+  try { if (localStorage.getItem(LANG_KEY) === "en") lang = "en"; } catch (e) {}
+  var T = function (ko, en) { return lang === "en" ? en : ko; };
+  function applyLang() {
+    var root = document.documentElement;
+    root.setAttribute("data-lang", lang);
+    root.lang = lang;
+    document.querySelectorAll("[data-ph-en]").forEach(function (el) {
+      if (el.dataset.phKo === undefined) el.dataset.phKo = el.placeholder;
+      el.placeholder = lang === "en" ? el.dataset.phEn : el.dataset.phKo;
+    });
+    document.querySelectorAll("[data-t-en]").forEach(function (el) {
+      el.textContent = lang === "en" ? el.dataset.tEn : el.dataset.tKo;
+    });
+    document.querySelectorAll("[data-lang-set]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.langSet === lang));
+    });
+  }
 
   var build = {
     q1: function () {
@@ -497,10 +560,10 @@ html { scroll-behavior: smooth; }
     var q = card.getAttribute("data-q");
     var box = card.querySelector(".final");
     box.innerHTML =
-      '<div class="final-head"><strong>양식에 붙여 넣을 영문</strong><div class="btns">' +
-      '<button type="button" data-regen="' + q + '">입력값으로 다시 만들기</button>' +
-      '<button type="button" class="primary" data-copy="' + q + '">복사</button></div></div>' +
-      '<textarea id="' + q + 'Final" aria-label="' + q.toUpperCase() + ' 최종 영문 답변"></textarea>' +
+      '<div class="final-head"><strong><span data-l="ko">양식에 붙여 넣을 영문</span><span data-l="en">English answer for the form</span></strong><div class="btns">' +
+      '<button type="button" data-regen="' + q + '"><span data-l="ko">입력값으로 다시 만들기</span><span data-l="en">Rebuild from fields</span></button>' +
+      '<button type="button" class="primary" data-copy="' + q + '"><span data-l="ko">복사</span><span data-l="en">Copy</span></button></div></div>' +
+      '<textarea id="' + q + 'Final" aria-label="' + q.toUpperCase() + ' answer"></textarea>' +
       '<div class="meter" id="' + q + 'Meter"><span id="' + q + 'Count">0 / 500</span><div class="bar"><i></i></div></div>' +
       '<div class="pills" id="' + q + 'Pills"></div>';
     var ta = box.querySelector("textarea");
@@ -513,14 +576,14 @@ html { scroll-behavior: smooth; }
     if (!edited[q]) ta.value = build[q]();
     var len = ta.value.length;
     var meter = $(q + "Meter");
-    $(q + "Count").textContent = len + " / " + LIMIT + (len > LIMIT ? " · " + (len - LIMIT) + "자 초과" : "");
+    $(q + "Count").textContent = len + " / " + LIMIT + (len > LIMIT ? " · " + (len - LIMIT) + T("자 초과", " over") : "");
     meter.querySelector("i").style.width = Math.min(100, len / LIMIT * 100) + "%";
     meter.classList.toggle("over", len > LIMIT);
     var holes = ta.value.match(/\[[^\]]+\]/g) || [];
     var pills = [];
-    if (holes.length) pills.push('<span class="pill todo">빈칸 ' + holes.length + '개: ' + holes.join(" ") + '</span>');
-    else pills.push('<span class="pill done">빈칸 없음</span>');
-    if (edited[q]) pills.push('<span class="pill edited">직접 수정됨</span>');
+    if (holes.length) pills.push('<span class="pill todo">' + T("빈칸 " + holes.length + "개: ", holes.length + " blank(s): ") + holes.join(" ") + '</span>');
+    else pills.push('<span class="pill done">' + T("빈칸 없음", "No blanks") + '</span>');
+    if (edited[q]) pills.push('<span class="pill edited">' + T("직접 수정됨", "Edited by hand") + '</span>');
     $(q + "Pills").innerHTML = pills.join("");
   }
   function updateAll() { Object.keys(build).forEach(update); }
@@ -528,7 +591,7 @@ html { scroll-behavior: smooth; }
   function evProgress() {
     var boxes = document.querySelectorAll("#evList input[type=checkbox]");
     var n = Array.prototype.filter.call(boxes, function (b) { return b.checked; }).length;
-    $("evProg").textContent = n + "/" + boxes.length + " 확인";
+    $("evProg").textContent = n + "/" + boxes.length + T(" 확인", " checked");
   }
 
   var toastTimer;
@@ -538,12 +601,12 @@ html { scroll-behavior: smooth; }
   }
   function copyText(text, el, label) {
     function fallback() {
-      if (el && el.select) { el.focus(); el.select(); toast("선택했습니다. Ctrl+C로 복사하세요"); }
-      else toast("복사하지 못했습니다. 직접 선택해 복사하세요");
+      if (el && el.select) { el.focus(); el.select(); toast(T("선택했습니다. Ctrl+C로 복사하세요", "Selected. Press Ctrl+C to copy")); }
+      else toast(T("복사하지 못했습니다. 직접 선택해 복사하세요", "Could not copy. Select the text and copy it"));
     }
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { toast(label + " 복사됨"); }, fallback);
+        navigator.clipboard.writeText(text).then(function () { toast(label + T(" 복사됨", " copied")); }, fallback);
       } else fallback();
     } catch (e) { fallback(); }
   }
@@ -570,6 +633,7 @@ html { scroll-behavior: smooth; }
   }
 
   document.querySelectorAll("[data-q]").forEach(setupFinal);
+  applyLang();
   load();
   updateAll();
   evProgress();
@@ -582,12 +646,17 @@ html { scroll-behavior: smooth; }
 
   document.addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return;
-    if (b.dataset.copy) { var q = b.dataset.copy; copyText(finals[q].value, finals[q], q.toUpperCase()); }
-    else if (b.dataset.copyField) { var el = $(b.dataset.copyField); copyText(el.value, el, "값"); }
-    else if (b.dataset.regen) { edited[b.dataset.regen] = false; update(b.dataset.regen); save(); toast("입력값으로 다시 만들었습니다"); }
+    if (b.dataset.langSet) {
+      lang = b.dataset.langSet;
+      try { localStorage.setItem(LANG_KEY, lang); } catch (err) {}
+      applyLang(); updateAll(); evProgress();
+    }
+    else if (b.dataset.copy) { var q = b.dataset.copy; copyText(finals[q].value, finals[q], q.toUpperCase()); }
+    else if (b.dataset.copyField) { var el = $(b.dataset.copyField); copyText(el.value, el, T("값", "Value")); }
+    else if (b.dataset.regen) { edited[b.dataset.regen] = false; update(b.dataset.regen); save(); toast(T("입력값으로 다시 만들었습니다", "Rebuilt from fields")); }
     else if (b.id === "copyAll") {
       var all = ["q1", "q2", "q3", "q4"].map(function (q, i) { return "Q" + (i + 1) + "\n" + finals[q].value; }).join("\n\n");
-      copyText(all, null, "전체 답변");
+      copyText(all, null, T("전체 답변", "All answers"));
     }
     else if (b.id === "resetAll") { $("resetConfirm").hidden = false; }
     else if (b.id === "resetNo") { $("resetConfirm").hidden = true; }
@@ -597,7 +666,7 @@ html { scroll-behavior: smooth; }
         if (el.type === "checkbox") el.checked = el.defaultChecked; else el.value = el.defaultValue;
         if (el.tagName === "SELECT") el.selectedIndex = 0;
       });
-      edited = {}; updateAll(); evProgress(); $("resetConfirm").hidden = true; toast("모두 지웠습니다");
+      edited = {}; updateAll(); evProgress(); $("resetConfirm").hidden = true; toast(T("모두 지웠습니다", "Cleared"));
     }
   });
 })();
