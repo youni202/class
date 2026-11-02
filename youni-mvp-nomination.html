@@ -51,14 +51,16 @@ h3 { font-size: 16px; margin: 0; }
 p { margin: 0; }
 .lead { color: var(--muted); max-width: 62ch; }
 .hub { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.hub span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 12px; font-size: 13px; }
-.hub span.core { background: var(--accent); color: var(--surface); border-color: var(--accent); font-weight: 700; }
+.hub > span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 12px; font-size: 13px; }
+.hub > span.core { background: var(--accent); color: var(--surface); border-color: var(--accent); font-weight: 700; }
 
 nav.steps {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
   background: var(--surface); border-bottom: 1px solid var(--line);
 }
-nav.steps .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; }
+nav.steps .wrap { display: flex; align-items: center; gap: 8px; padding-block: 6px; }
+nav.steps .links { display: flex; gap: 4px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+nav.steps .links::-webkit-scrollbar { display: none; }
 nav.steps a {
   white-space: nowrap; text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500;
   padding: 6px 12px; border-radius: 6px;
@@ -118,7 +120,7 @@ button.primary { background: var(--accent); border-color: var(--accent); color: 
 .meter.over { color: var(--bad); }
 .meter.over .bar i { background: var(--bad); }
 .pills { display: flex; flex-wrap: wrap; gap: 6px; }
-.pill { font-size: 12px; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+.pill { display: inline-block; line-height: 1.5; font-size: 12px; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
 .pill.todo { background: var(--mark); }
 .pill.done { background: color-mix(in srgb, var(--ok) 18%, var(--surface)); }
 .pill.edited { background: var(--line); }
@@ -153,6 +155,24 @@ nav.steps .wrap { align-items: center; }
 .lang-switch[aria-checked="false"] .lbl-ko, .lang-switch[aria-checked="true"] .lbl-en { color: var(--ink); }
 @media (prefers-reduced-motion: reduce) { .lang-switch .knob, .lang-switch .lbl { transition: none; } }
 details[data-l] { font-size: 14px; }
+
+@media (max-width: 600px) {
+  .card { padding: 16px; }
+  .lang-switch { gap: 6px; }
+  .lang-switch .lbl { font-size: 11px; }
+  #profile table, #activities table { font-size: 14px; }
+  #profile thead, #activities thead { display: none; }
+  #profile tr, #activities tr { display: block; padding-block: 10px; border-bottom: 1px solid var(--line); }
+  #profile tr:last-child, #activities tr:last-child { border-bottom: 0; }
+  #profile td, #activities td { display: block; padding: 0; border: 0; }
+  #profile td:first-child { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  #profile td:first-child strong { color: var(--ink); font-size: 14px; }
+  #activities td:nth-child(1), #activities td:nth-child(2) { display: inline-block; margin: 0 6px 6px 0; vertical-align: middle; }
+  #activities td:nth-child(2) { font-size: 12px; color: var(--muted); }
+  .final textarea { min-height: 220px; }
+  .final-head .btns { width: 100%; }
+  .final-head .btns button { flex: 1; }
+}
 </style>
 
 <header class="top">
@@ -170,12 +190,14 @@ details[data-l] { font-size: 14px; }
 
 <nav class="steps" aria-label="Steps">
   <div class="wrap">
+    <div class="links">
     <a href="#letter">1 · <span data-l="ko">인사말</span><span data-l="en">Letter</span></a>
     <a href="#profile">2 · <span data-l="ko">후보자 소개</span><span data-l="en">Profile</span></a>
     <a href="#activities">3 · <span data-l="ko">MVP 활동</span><span data-l="en">Activities</span></a>
     <a href="#basic">4 · <span data-l="ko">기본 정보</span><span data-l="en">Basic info</span></a>
     <a href="#answers">5 · <span data-l="ko">서술형 답변</span><span data-l="en">Answers</span></a>
     <a href="#evidence">6 · <span data-l="ko">증빙 체크</span><span data-l="en">Evidence</span></a>
+    </div>
     <button type="button" class="lang-switch" id="langSwitch" role="switch" aria-checked="false" aria-label="English">
       <span class="lbl lbl-ko">한국어</span>
       <span class="track"><span class="knob"></span></span>
