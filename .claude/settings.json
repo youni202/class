@@ -2,6 +2,9 @@
   "permissions": {
     "allow": [
       "mcp__Canva",
+      "mcp__canva",
+      "mcp__9f376ad2-7d30-46c6-9857-736362397953",
+      "mcp__claude_ai_Canva",
       "mcp__zapier_mcp",
       "mcp__github",
       "Bash",
@@ -10,6 +13,7 @@
       "Write",
       "WebFetch",
       "WebSearch"
-    ]
+    ],
+    "defaultMode": "auto"
   }
 }
